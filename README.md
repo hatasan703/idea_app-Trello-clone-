@@ -1,25 +1,25 @@
 ## ローカル
 
-rbenvでrubyのインストール<br>
+rbenvでrubyのインストール  
 `$ RUBY_CONFIGURE_OPTS="--with-readline-dir=$(brew --prefix readline)"`
 `$ rbenv install 2.5.1`
 
-ローカルのrubyのバージョン指定<br>
+ローカルのrubyのバージョン指定  
 `rbenv global 2.5.1`
 
-rubyのバージョンの確認<br>
+rubyのバージョンの確認  
 `$ ruby -v`
 
-bundlerのインストール<br>
+bundlerのインストール  
 `$ gem install bundler`
 
-railsをインストール<br>
+railsをインストール  
 `$ gem install rails --version='5.2.3'`
 
-rbenv再読み込み<br>
+rbenv再読み込み  
 `$ rbenv rehash`
 
-railsのバージョン確認<br>
+railsのバージョン確認  
 `$ rails -v`
 
 
@@ -28,5 +28,5 @@ railsのバージョン確認<br>
 `bundle install`
 
 
-mysqlが通らない場合<br>
+mysqlが通らない場合  
 `$ gem install mysql2 -v '0.5.2' --source 'https://rubygems.org/' -- --with-cppflags=-I/usr/local/opt/openssl/include --with-ldflags=-L/usr/local/opt/openssl/lib`
