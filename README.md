@@ -1,10 +1,12 @@
-## ローカル
+## 事前にローカルで行うこと
+
+mysqlのインストール
 
 rbenvでrubyのインストール  
 `$ RUBY_CONFIGURE_OPTS="--with-readline-dir=$(brew --prefix readline)"`
 `$ rbenv install 2.5.1`
 
-ローカルのrubyのバージョン指定  
+全体で利用するバージョンを変更
 `rbenv global 2.5.1`
 
 rubyのバージョンの確認  
@@ -27,6 +29,11 @@ railsのバージョン確認
 
 `bundle install`
 
-
 mysqlが通らない場合  
 `$ gem install mysql2 -v '0.5.2' --source 'https://rubygems.org/' -- --with-cppflags=-I/usr/local/opt/openssl/include --with-ldflags=-L/usr/local/opt/openssl/lib`
+
+dbの作成  
+`$ rails db:create`
+
+マイグレート  
+`$ rails db:migrate`
