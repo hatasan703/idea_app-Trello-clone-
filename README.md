@@ -81,6 +81,7 @@ dbの作成
 ## plans table
 |Column|Type|Options|
 |------|----|-------|
+|title|string|null: false|
 |content|text|null: false|
 |user_id|references|null: false, foreign_key: true|
 |idea_id|references|null: false, foreign_key: true|
