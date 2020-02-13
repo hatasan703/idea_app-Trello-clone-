@@ -3,11 +3,11 @@
 <p><%= @idea.content %></p>
 
 <h3>アイディアメモ</h3>
-<% @idea_memos.each do |memo| %>
-  <p><%= memo.content %></p>
+<% @memos.each do |memo| %>
+<p><%= link_to "#{memo.content}", idea_idea_memo_path(memo) %></p>
 <% end %>
 
-<%= form_with(model: [@idea, @idea_memo], local: true) do |f| %>
+<%= form_with(model: [@idea, @memo], local: true) do |f| %>
   <div>アイディアメモ追加</div>
       <%= f.label :content, "本文", class: '' %><br>
       <%= f.text_area :content, class: '', required: true %><br>

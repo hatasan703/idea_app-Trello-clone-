@@ -17,8 +17,8 @@ class IdeasController < ApplicationController
 
   def show
     @idea = Idea.find(params[:id])
-    @idea_memo = IdeaMemo.new
-    @idea_memos = @idea.idea_memos.includes(:user)
+    @memo = Memo.new
+    @memos = @idea.memos.includes(:user)
   end
 
 
