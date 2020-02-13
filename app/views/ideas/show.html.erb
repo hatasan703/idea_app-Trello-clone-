@@ -4,7 +4,7 @@
 
 <h3>アイディアメモ</h3>
 <% @memos.each do |memo| %>
-<p><%= link_to "#{memo.content}", idea_idea_memo_path(memo) %></p>
+<p><%= link_to "#{memo.content}", idea_memo_path(memo) %></p>
 <% end %>
 
 <%= form_with(model: [@idea, @memo], local: true) do |f| %>

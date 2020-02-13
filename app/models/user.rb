@@ -6,6 +6,6 @@ class User < ApplicationRecord
          
   has_many :ideas
   has_many :plans
-  has_many :idea_memos
+  has_many :memos
   has_many :comments
 end
