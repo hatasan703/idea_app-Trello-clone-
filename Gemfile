@@ -64,3 +64,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 
 gem 'pry-rails'
+gem 'nested_form'
+gem 'nested_form_fields'
+gem 'jquery-rails'
+
+gem "font-awesome-rails"

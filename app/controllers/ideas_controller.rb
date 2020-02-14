@@ -1,5 +1,5 @@
 class IdeasController < ApplicationController
-  before_action :redirect_to_top
+  # before_action :redirect_to_top
 
   def index
     @ideas = Idea.all
@@ -7,12 +7,14 @@ class IdeasController < ApplicationController
 
   def new
     @idea = Idea.new
+    @idea.memos.build
   end
 
   def create
-    @idea = Idea.create(idea_params)
-    
-    redirect_to action: :index
+    idea = Idea.create!(idea_params)
+    # idea = Idea.new(idea_params)
+    # idea.save
+    redirect_to controller: 'ideas', action: 'index'
   end
 
   def show
@@ -23,9 +25,16 @@ class IdeasController < ApplicationController
 
 
   private
+  
   def idea_params
-    params.require(:idea).permit(:title, :content).merge(user_id: current_user.id)
+    params.require(:idea).permit(
+      :title, 
+      :content, 
+      memos_attributes: [:id, :content, :_destroy, :user_id]
+    )
+    .merge(user_id: current_user.id)
   end
+
   def redirect_to_top
     redirect_to controller: :top, action: :index unless user_signed_in?
   end

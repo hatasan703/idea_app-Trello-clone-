@@ -5,7 +5,6 @@ class MemosController < ApplicationController
   end
 
   def show
-
   end
 
   private
