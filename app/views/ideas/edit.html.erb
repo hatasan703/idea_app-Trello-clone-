@@ -1,5 +1,5 @@
-<%= nested_form_for(@idea) do |f| %>
-  <h2>アイディア編集</h2>
+<h2>アイディア編集</h2>
+<%= form_with model: @idea do |f|  %>
   <div class="field">
     <p>
       <%= f.label :title, "タイトル", class: '' %><br>
@@ -10,15 +10,18 @@
       <%= f.text_area :content, class: '', required: true %><br>
     </p>
   </div>
-  <%= f.fields_for :memos do |memo_form| %>
-    <%= memo_form.text_field :content %>
-    <%= memo_form.hidden_field :user_id, value: current_user.id %>
-    <%= memo_form.link_to_remove (fa_icon "remove") %>
-  <% end %>
-  <p><%= f.link_to_add (fa_icon "plus-circle"), :memos %></p>
-  
-  <div class="actions">
-    <%= f.submit "送信" %>
+  <div class="memo_form">
+    <table>
+      <tr>
+        <th>メモ</th>
+      </tr>
+      <%= f.nested_fields_for :memos, wrapper_tag: :tr do |memos| %>
+        <td><%= memos.text_field   :content,     class: '' %></td>
+            <%= memos.hidden_field :user_id, value: current_user.id %>
+        <td><%= memos.remove_nested_fields_link (fa_icon "remove"), class: '', role: 'button' %></td>
+      <% end %>
+    </table>
+    <%= f.add_nested_fields_link :memos, (fa_icon "plus-circle"), class: '', role: 'button' %>
   </div>
-
+  <div class="btn"><%= f.submit "保存", name: "save", class: "save_btn" %></div>
 <% end %>
