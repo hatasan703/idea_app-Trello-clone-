@@ -1,0 +1,14 @@
+<table class="table table-bordered table-sortable">
+  <thead>
+    <tr>
+      <th>メモ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @memos.each do |memo| %>
+      <tr class="item" model_name=<%= memo.class.name.underscore %>, update_url=<%= idea_sort_path(memo) %>>
+        <td><%= memo.content %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

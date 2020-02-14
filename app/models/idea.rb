@@ -1,5 +1,6 @@
 class Idea < ApplicationRecord
   belongs_to :user
+  has_many :memos, -> { order(row_order: :asc) }
   has_many :memos, dependent: :destroy
   has_many :comments
   has_one :pran

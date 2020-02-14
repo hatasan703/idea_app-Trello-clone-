@@ -1,5 +1,7 @@
 class Memo < ApplicationRecord
   belongs_to :user
   belongs_to :idea
-  # belongs_to :idea, inverse_of: :children
+  # acts_as_list scope: :idea
+  include RankedModel
+  ranks :row_order
 end

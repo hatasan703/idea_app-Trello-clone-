@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
   before_action :redirect_to_top
-  before_action :set_idea, only: [:edit]
+  before_action :set_idea, only: [:edit, :show]
 
   def index
     @ideas = Idea.all
@@ -17,7 +17,6 @@ class IdeasController < ApplicationController
   end
 
   def edit
-    @idea = Idea.find(params[:id])
     @memos = @idea.memos.includes(:user)
   end
 
@@ -27,6 +26,14 @@ class IdeasController < ApplicationController
   end
 
   def show
+    @memos = @idea.memos.includes(:user)
+  end
+
+  def sort
+    # idea = Idea.find(params[:id])
+    @memos = @idea.memos.includes(:user)
+    @memos.update(idea_params)
+    render nothing: true
   end
 
   private
@@ -35,7 +42,7 @@ class IdeasController < ApplicationController
     params.require(:idea).permit(
       :title, 
       :content, 
-      memos_attributes: [:id, :content, :_destroy, :user_id]
+      memos_attributes: [:id, :content, :_destroy, :user_id, :row_order_position]
     )
     .merge(user_id: current_user.id)
   end

@@ -11,15 +11,15 @@
     </p>
   </div>
   <div class="memo_form">
-    <table>
+    <table class="table table-bordered table-sortable">
       <tr>
         <th>メモ</th>
       </tr>
-      <%= f.nested_fields_for :memos, wrapper_tag: :tr do |memos| %>
-        <td><%= memos.text_field   :content,     class: '' %></td>
-            <%= memos.hidden_field :user_id, value: current_user.id %>
-        <td><%= memos.remove_nested_fields_link (fa_icon "remove"), class: '', role: 'button' %></td>
-      <% end %>
+        <%= f.nested_fields_for :memos, wrapper_tag: :tr do |memos| %>
+          <td><%= memos.text_field   :content,     class: '' %></td>
+              <%= memos.hidden_field :user_id, value: current_user.id %>
+          <td><%= memos.remove_nested_fields_link (fa_icon "remove"), class: '', role: 'button' %></td>
+        <% end %>
     </table>
     <%= f.add_nested_fields_link :memos, (fa_icon "plus-circle"), class: '', role: 'button' %>
   </div>
