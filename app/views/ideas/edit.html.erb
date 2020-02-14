@@ -1,5 +1,5 @@
 <%= nested_form_for(@idea) do |f| %>
-  <h2>アイディア投稿</h2>
+  <h2>アイディア編集</h2>
   <div class="field">
     <p>
       <%= f.label :title, "タイトル", class: '' %><br>
@@ -16,10 +16,9 @@
     <%= memo_form.link_to_remove (fa_icon "remove") %>
   <% end %>
   <p><%= f.link_to_add (fa_icon "plus-circle"), :memos %></p>
-
+  
   <div class="actions">
     <%= f.submit "送信" %>
   </div>
-  
+
 <% end %>
-  

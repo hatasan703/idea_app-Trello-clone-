@@ -5,6 +5,7 @@
 <div>
   <% @ideas.each do |idea| %>
     <p><%= link_to "#{idea.title}", idea_path(idea) %></p>
+    <p><%= link_to "編集する", edit_idea_path(idea) %></p>
     <p><%= idea.content %></p>
   <% end %>
 </div>
