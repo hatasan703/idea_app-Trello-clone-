@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root "top#index"
   resources :ideas do 
     resources :memos, only: [:create, :show]
+  end
+  resources :memos do 
     put :sort
   end
 end

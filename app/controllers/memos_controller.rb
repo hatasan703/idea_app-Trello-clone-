@@ -7,8 +7,16 @@ class MemosController < ApplicationController
   def show
   end
 
+  def sort
+    # binding.pry
+    memo = Memo.find(params[:memo_id])
+    params[:idea_id] = memo.idea_id
+    memo.update(memo_params)
+    render body: nil 
+  end
+
   private
   def memo_params
-    params.require(:memo).permit(:content).merge(idea_id: params[:idea_id], user_id: current_user.id)
+    params.require(:memo).permit(:content, :row_order_position).merge(idea_id: params[:idea_id], user_id: current_user.id)
   end
 end

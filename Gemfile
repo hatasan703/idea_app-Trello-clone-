@@ -66,8 +66,6 @@ gem 'pry-rails'
 gem 'nested_form_fields'
 gem 'jquery-rails'
 gem "font-awesome-rails"
-# gem 'acts_as_list'
 gem 'ranked-model'
-
 gem 'jquery-ui-rails'
 gem 'jquery-turbolinks'

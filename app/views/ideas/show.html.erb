@@ -1,14 +1,15 @@
-<table class="table table-bordered table-sortable">
+<h1>メモ</h1>
+<table>
   <thead>
     <tr>
       <th>メモ</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-sortable">
     <% @memos.each do |memo| %>
-      <tr class="item" model_name=<%= memo.class.name.underscore %>, update_url=<%= idea_sort_path(memo) %>>
+      <%= content_tag "tr", id: "memo-#{memo.id}", class: "item", data: { model_name: memo.class.name.underscore, update_url: memo_sort_path(memo)} do %>
         <td><%= memo.content %></td>
-      </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
