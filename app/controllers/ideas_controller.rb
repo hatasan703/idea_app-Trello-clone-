@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
   before_action :redirect_to_top
-  before_action :set_idea, only: [:edit, :show, :sort]
+  before_action :set_idea, only: [:edit, :update, :show, :sort]
 
   def index
     @ideas = Idea.all
@@ -21,8 +21,8 @@ class IdeasController < ApplicationController
   end
 
   def update
-    idea = Idea.update(idea_params)
-    redirect_to edit_idea_path(idea)
+    @idea.update(idea_params)
+    redirect_to edit_idea_path(@idea)
   end
 
   def show

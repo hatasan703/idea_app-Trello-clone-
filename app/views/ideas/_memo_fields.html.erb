@@ -1,0 +1,7 @@
+<div class="nested-fields">
+  <%= f.label :content %><br>
+  <%= f.text_field :content %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <%= link_to_remove_association (fa_icon "remove"), f %>
+</div>
+

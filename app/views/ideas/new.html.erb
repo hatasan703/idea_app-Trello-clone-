@@ -1,5 +1,6 @@
+
 <h2>アイディア投稿</h2>
-<%= form_with model: @idea do |f|  %>
+<%= form_with(model: @idea, local: true) do |f| %>
   <div class="field">
     <p>
       <%= f.label :title, "タイトル", class: '' %><br>
@@ -10,20 +11,14 @@
       <%= f.text_area :content, class: '', required: true %><br>
     </p>
   </div>
-  <div class="memo_form">
-    <table>
-      <tr>
-        <th>メモ</th>
-      </tr>
-      <ul id="sortable_list">
-      <%= f.nested_fields_for :memos, wrapper_tag: :tr do |memos| %>
-        <td><%= memos.text_field   :content,     class: '' %></td>
-            <%= memos.hidden_field :user_id, value: current_user.id %>
-        <td><%= memos.remove_nested_fields_link (fa_icon "remove"), class: '', role: 'button' %></td>
-      <% end %>
-      </ul>
-    </table>
-    <%= f.add_nested_fields_link :memos, (fa_icon "plus-circle"), class: '', role: 'button' %>
+
+  <%= f.fields_for :memos do |memos| %>
+    <%= render "memo_fields", f: memos %>
+  <% end %>
+  <div class="links">
+    <%= link_to_add_association (fa_icon "plus-circle"), f, :memos %>
   </div>
-  <div class="btn"><%= f.submit "保存", name: "save", class: "save_btn" %></div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>
