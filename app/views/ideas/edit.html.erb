@@ -11,9 +11,21 @@
     </p>
   </div>
 
-  <%= f.fields_for :memos do |memos| %>
-    <%= render "memo_fields", f: memos %>
-  <% end %>
+  <table>
+    <thead>
+      <tr>
+        <th>メモ</th>
+      </tr>
+    </thead>
+    <tbody class="table-sortable">
+      <% @memos.each do |memo| %>
+        <%= content_tag "tr", id: "memo-#{memo.id}", class: "item", data: { model_name: memo.class.name.underscore, update_url: memo_sort_path(memo)} do %>
+          <td><%= memo.content %></td>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
   <div class="links">
     <%= link_to_add_association (fa_icon "plus-circle"), f, :memos %>
   </div>

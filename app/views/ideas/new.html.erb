@@ -11,7 +11,8 @@
       <%= f.text_area :content, class: '', required: true %><br>
     </p>
   </div>
-
+  
+  <div>メモ</div>
   <%= f.fields_for :memos do |memos| %>
     <%= render "memo_fields", f: memos %>
   <% end %>

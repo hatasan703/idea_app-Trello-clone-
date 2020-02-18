@@ -8,7 +8,6 @@ class MemosController < ApplicationController
   end
 
   def sort
-    # binding.pry
     memo = Memo.find(params[:memo_id])
     params[:idea_id] = memo.idea_id
     memo.update(memo_params)

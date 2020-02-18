@@ -17,7 +17,7 @@ class IdeasController < ApplicationController
   end
 
   def edit
-    @memos = @idea.memos.includes(:user)
+    @memos = @idea.memos.includes(:user).rank(:row_order)
   end
 
   def update
@@ -29,17 +29,7 @@ class IdeasController < ApplicationController
     @memos = @idea.memos.rank(:row_order)
   end
 
-
-  # def sort
-  #   binding.pry
-  #   memos = @idea.memos.includes(:user)
-  #   memo = memos.find(params[:id])
-  #   memo.update(idea_params)
-  #   head :ok
-  # end
-
   private
-  
   def idea_params
     params.require(:idea).permit(
       :title, 
