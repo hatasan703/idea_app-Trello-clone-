@@ -1,5 +1,6 @@
+
 <h2>アイディア編集</h2>
-<%= form_with(model: @idea, local: true) do |f| %>
+<%= form_with(model: @idea, remote: true) do |f| %>
   <div class="field">
     <p>
       <%= f.label :title, "タイトル", class: '' %><br>
@@ -21,6 +22,8 @@
       <% @memos.each do |memo| %>
         <%= content_tag "tr", id: "memo-#{memo.id}", class: "item", data: { model_name: memo.class.name.underscore, update_url: memo_sort_path(memo)} do %>
           <td><%= memo.content %></td>
+          <div id="memo-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+          <td><%= link_to 'メモ編集', edit_idea_memo_path(@idea, memo), remote: true, class: "btn btn-lg, btn-primary" %></td>
         <% end %>
       <% end %>
     </tbody>
@@ -33,3 +36,4 @@
     <%= f.submit %>
   </div>
 <% end %>
+

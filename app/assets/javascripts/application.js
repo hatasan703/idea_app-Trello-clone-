@@ -18,3 +18,6 @@
 //= require_tree .
 //= require jquery-ui/widgets/sortable
 //= require jquery-ui/effects/effect-highlight
+
+//= require popper
+//= require bootstrap-sprockets

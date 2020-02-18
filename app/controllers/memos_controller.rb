@@ -7,6 +7,29 @@ class MemosController < ApplicationController
   def show
   end
 
+  def edit
+    # @idea = Idea.find(params[:idea_id]) 
+    @memo = Memo.find(params[:id])
+  end
+
+  def update
+    binding.pry
+    @memo = Memo.find(memo_params)
+    @memo.update(memo_params)
+
+    respond_to do |format|
+      if @memo.save
+        format.html { redirect_to @memo, notice: 'memo was successfully created.' }
+        format.json { render :show, status: :created, location: @memo }
+        format.js { @status = "success" }
+      else
+        format.html { render :new }
+        format.json { render json: @memo.errors, status: :unprocessable_entity }
+        format.js { @status = "fail" }
+      end
+    end
+  end
+
   def sort
     memo = Memo.find(params[:memo_id])
     params[:idea_id] = memo.idea_id
