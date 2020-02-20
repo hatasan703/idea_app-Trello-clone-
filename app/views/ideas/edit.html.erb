@@ -24,6 +24,7 @@
           <td><%= memo.content %></td>
           <div id="memo-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
           <td><%= link_to 'メモ編集', edit_idea_memo_path(@idea, memo), remote: true, class: "btn btn-lg, btn-primary" %></td>
+          <td><%= link_to "削除", memo_path(memo), method: :delete, class: '', data: { confirm: '削除しますか？' } %></td>
         <% end %>
       <% end %>
     </tbody>

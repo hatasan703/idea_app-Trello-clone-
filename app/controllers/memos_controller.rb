@@ -8,8 +8,9 @@ class MemosController < ApplicationController
   end
 
   def edit
-    # @idea = Idea.find(params[:idea_id]) 
+    @idea = Idea.find(params[:idea_id])
     @memo = Memo.find(params[:id])
+    @memos = @idea.memos.rank(:row_order)
   end
 
   def update
@@ -28,6 +29,12 @@ class MemosController < ApplicationController
         format.js { @status = "fail" }
       end
     end
+  end
+
+  def destroy
+    memo = Memo.find(params[:id])
+    memo.destroy if memo.user_id == current_user.id
+    redirect_to edit_idea_path(memo.idea_id)
   end
 
   def sort
