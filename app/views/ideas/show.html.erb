@@ -22,7 +22,6 @@
     <% end %>
   </tbody>
 </table>
-
 <%= form_with(model: @idea, remote: true) do |f| %>
   <div class="links">
     <%= link_to_add_association (fa_icon "plus-circle"), f, :memos %>
