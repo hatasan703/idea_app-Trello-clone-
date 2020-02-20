@@ -91,11 +91,10 @@ dbの作成
 - belongs_to :idea
 
 
-## idea_memos table
+## memos table
 - content
 |Column|Type|Options|
 |------|----|-------|
-|title|string|null: false|
 |content|text|null: false|
 |idea_id|references|null: false, foreign_key: true|
 |user_id|references|null: false, foreign_key: true|

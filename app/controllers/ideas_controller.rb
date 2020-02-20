@@ -17,7 +17,6 @@ class IdeasController < ApplicationController
   end
 
   def edit
-    # @memo = Memo.find(params[:id])
     @memos = @idea.memos.rank(:row_order)
   end
 

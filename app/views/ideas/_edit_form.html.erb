@@ -20,10 +20,16 @@
         </div>
         <div class="form_fields">
           <%= f.fields_for :memos, @memos do |memo| %>
-            <%= f.label :content, "メモ", class: 'form-control-label' %><br>
-            <%= memo.text_field :content, class: 'form-control' %>
-            <%= memo.hidden_field :user_id, value: current_user.id %>
+            <div class="nested-fields">
+              <%= f.label :content, "メモ", class: 'form-control-label' %><br>
+              <%= memo.text_field :content, class: 'form-control' %>
+              <%= memo.hidden_field :user_id, value: current_user.id %>
+              <%= link_to_remove_association (fa_icon "remove"), memo %>
+            </div>
           <% end %>
+          <div class="links">
+            <%= link_to_add_association (fa_icon "plus-circle"), f, :memos %>
+          </div>
         </div>
       </div>
       <div class="modal-footer actions">

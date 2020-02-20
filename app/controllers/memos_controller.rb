@@ -4,8 +4,8 @@ class MemosController < ApplicationController
     redirect_to idea_path(params[:idea_id])
   end
 
-  def show
-  end
+  # def show
+  # end
 
   # def edit
   #   @idea = Idea.find(params[:idea_id])
@@ -30,11 +30,11 @@ class MemosController < ApplicationController
   #   end
   # end
 
-  def destroy
-    memo = Memo.find(params[:id])
-    memo.destroy if memo.user_id == current_user.id
-    redirect_to idea_path(memo.idea_id)
-  end
+  # def destroy
+  #   memo = Memo.find(params[:id])
+  #   memo.destroy if memo.user_id == current_user.id
+  #   redirect_to idea_path(memo.idea_id)
+  # end
 
   def sort
     memo = Memo.find(params[:memo_id])
