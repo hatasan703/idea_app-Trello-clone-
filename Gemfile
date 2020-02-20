@@ -69,5 +69,5 @@ gem 'ranked-model'
 gem 'jquery-ui-rails'
 gem 'jquery-turbolinks'
 gem 'cocoon'
-
+gem 'jquery-turbolinks'
 gem 'bootstrap', '~> 4.3.1'

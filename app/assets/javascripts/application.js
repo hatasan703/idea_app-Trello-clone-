@@ -14,7 +14,8 @@
 //= require jquery
 //= require rails-ujs
 //= require cocoon
-//= require turbolinks
+//= require jquery.turbolinks
+// = require turbolinks
 //= require_tree .
 //= require jquery-ui/widgets/sortable
 //= require jquery-ui/effects/effect-highlight

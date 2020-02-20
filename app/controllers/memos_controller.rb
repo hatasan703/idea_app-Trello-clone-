@@ -7,34 +7,33 @@ class MemosController < ApplicationController
   def show
   end
 
-  def edit
-    @idea = Idea.find(params[:idea_id])
-    @memo = Memo.find(params[:id])
-    @memos = @idea.memos.rank(:row_order)
-  end
+  # def edit
+  #   @idea = Idea.find(params[:idea_id])
+  #   @memo = Memo.find(params[:id])
+  #   @memos = @idea.memos.rank(:row_order)
+  # end
 
-  def update
-    binding.pry
-    @memo = Memo.find(memo_params)
-    @memo.update(memo_params)
+  # def update
+  #   @memo = Memo.find(memo_params)
+  #   @memo.update(memo_params)
 
-    respond_to do |format|
-      if @memo.save
-        format.html { redirect_to @memo, notice: 'memo was successfully created.' }
-        format.json { render :show, status: :created, location: @memo }
-        format.js { @status = "success" }
-      else
-        format.html { render :new }
-        format.json { render json: @memo.errors, status: :unprocessable_entity }
-        format.js { @status = "fail" }
-      end
-    end
-  end
+  #   respond_to do |format|
+  #     if @memo.save
+  #       format.html { redirect_to @memo, notice: 'memo was successfully created.' }
+  #       format.json { render :show, status: :created, location: @memo }
+  #       format.js { @status = "success" }
+  #     else
+  #       format.html { render :new }
+  #       format.json { render json: @memo.errors, status: :unprocessable_entity }
+  #       format.js { @status = "fail" }
+  #     end
+  #   end
+  # end
 
   def destroy
     memo = Memo.find(params[:id])
     memo.destroy if memo.user_id == current_user.id
-    redirect_to edit_idea_path(memo.idea_id)
+    redirect_to idea_path(memo.idea_id)
   end
 
   def sort

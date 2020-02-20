@@ -1,4 +1,11 @@
-<h1>メモ</h1>
+
+<h2>アイディア詳細ページ</h2>
+<div class="idea">
+  <h4><%= @idea.title %></h4>
+  <h4><%= @idea.content %></h4>
+  <%= link_to (fa_icon "edit"), edit_idea_path(@idea), remote: true, class: "btn btn-lg, btn-primary" %>
+</div>
+
 <table>
   <thead>
     <tr>
@@ -9,7 +16,19 @@
     <% @memos.each do |memo| %>
       <%= content_tag "tr", id: "memo-#{memo.id}", class: "item", data: { model_name: memo.class.name.underscore, update_url: memo_sort_path(memo)} do %>
         <td><%= memo.content %></td>
+        <div id="memo-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+        <td><%= link_to (fa_icon "remove"), memo_path(memo), method: :delete, class: 'btn btn-lg, btn-primary', data: { confirm: '削除しますか？' } %></td>
       <% end %>
     <% end %>
   </tbody>
 </table>
+
+<%= form_with(model: @idea, remote: true) do |f| %>
+  <div class="links">
+    <%= link_to_add_association (fa_icon "plus-circle"), f, :memos %>
+  </div>
+  <div class="actions">
+    <%= f.submit "更新" %>
+  </div>
+<% end %>
+

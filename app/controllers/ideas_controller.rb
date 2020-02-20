@@ -17,16 +17,17 @@ class IdeasController < ApplicationController
   end
 
   def edit
-    @memos = @idea.memos.includes(:user).rank(:row_order)
+    # @memo = Memo.find(params[:id])
+    @memos = @idea.memos.rank(:row_order)
   end
 
   def update
     @idea.update(idea_params)
-    redirect_to edit_idea_path(@idea)
+    redirect_to idea_path(@idea)
   end
 
   def show
-    @memos = @idea.memos.rank(:row_order)
+    @memos = @idea.memos.includes(:user).rank(:row_order)
   end
 
   private
