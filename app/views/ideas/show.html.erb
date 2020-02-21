@@ -1,8 +1,8 @@
 
 <h2>アイディア詳細ページ</h2>
-<div class="idea">
-  <h4><%= @idea.title %></h4>
-  <h4><%= @idea.content %></h4>
+<div class="idea_list">
+  <div class="idea_list_title"><%= link_to "#{@idea.title}", idea_path(@idea) %></div>
+  <div class="idea_list_content"><%= @idea.content %></div>
   <%= link_to (fa_icon "edit"), edit_idea_path(@idea), remote: true, class: "btn btn-lg, btn-primary" %>
 </div>
 <table>
@@ -20,4 +20,6 @@
     <% end %>
   </tbody>
 </table>
+
+
 

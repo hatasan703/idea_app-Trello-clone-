@@ -1,8 +1,11 @@
 <h1>アイディア一覧</h1>
-<%= link_to "アイディア新規投稿", new_idea_path %>
-<div>
-  <% @ideas.each do |idea| %>
-    <p><%= link_to "#{idea.title}", idea_path(idea) %></p>
-    <p><%= idea.content %></p><br>
-  <% end %>
+<div class="idea_new_btn">
+  <%= link_to "＋新規投稿", new_idea_path %>
 </div>
+  <% @ideas.each do |idea| %>
+    <div class="idea_list">
+      <div class="idea_list_title"><%= link_to "#{idea.title}", idea_path(idea) %></div>
+      <div class="idea_list_content"><%= idea.content %></div>
+    </div>
+  <% end %>
+
