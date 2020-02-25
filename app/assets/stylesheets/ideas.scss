@@ -14,27 +14,41 @@
   }
 }
 
-.idea_list{
-  width: 500px;
-  background-color: #ebecf0;
+.idea_board{
+  display: flex;
+  overflow-x: scroll;
+}
+
+.idea_lists{
   border-radius: 3px;
   box-sizing: border-box;
   padding: 10px;
-  margin: 10px;
+  min-width: 300px;
+  background-color: #ebecf0;
+  margin: 15px;
+  border-radius: 3px;
+  box-sizing: border-box;
 
-  &_title{
+  .idea_content{
+    margin: 10px;
+  }
+
+  .idea_lists_memo{
+    border-radius: 3px;
+    width: 300px;
     height: 50px;
-    background-color: #ffffff;
-    margin: 15px;
-    border-radius: 3px;
-    box-sizing: border-box;
+    background: #fff;
+    margin-top: 10px; 
   }
 
-  &_content{
-    height: 300px;
-    background-color: #ffffff;
-    margin: 15px;
-    border-radius: 3px;
-    box-sizing: border-box;
-  }
 }
+
+
+
+// jkanban
+body{font-family: "Lato"; margin:0; padding: 0;}
+#myKanban{overflow-x: auto; padding:20px 0;}
+.success{background: #00B961; color:#fff}
+.info{background: #2A92BF; color:#fff}
+.warning{background: #F4CE46; color:#fff}
+.error{background: #FB7D44; color:#fff}

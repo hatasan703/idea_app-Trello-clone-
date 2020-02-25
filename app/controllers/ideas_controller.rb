@@ -22,7 +22,7 @@ class IdeasController < ApplicationController
 
   def update
     @idea.update(idea_params)
-    redirect_to idea_path(@idea)
+    redirect_to root_path
   end
 
   def show

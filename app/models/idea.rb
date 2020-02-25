@@ -5,5 +5,4 @@ class Idea < ApplicationRecord
   has_one :pran
 
   accepts_nested_attributes_for :memos, allow_destroy: true
-
 end
