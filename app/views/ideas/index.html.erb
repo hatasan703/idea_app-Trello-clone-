@@ -1,6 +1,7 @@
 <h1>アイディア一覧</h1>
 <div class="idea_new_btn">
-  <%= link_to "＋新規投稿", new_idea_path %>
+  <%= link_to '＋新規投稿', new_idea_path, remote: true, class: "btn btn-lg, btn-primary" %>
+  <div id="idea-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
 </div>
 <div class="idea_board">
   <% @ideas.each do |idea| %>
@@ -12,7 +13,7 @@
       <table>
         <tbody class="table-sortable">
           <% idea.memos.rank(:row_order).each do |memo| %>
-            <%= content_tag "tr", id: "memo-#{memo.id}", class: "item", data: { model_name: memo.class.name.underscore, update_url: memo_sort_path(memo)} do %>
+            <%= content_tag "tr", id: "memo-#{memo.id}", class: "idea_lists_memo", data: { model_name: memo.class.name.underscore, update_url: memo_sort_path(memo)} do %>
               <td class="idea_lists_memo"><%= memo.content %></td>
             <% end %>
           <% end %>

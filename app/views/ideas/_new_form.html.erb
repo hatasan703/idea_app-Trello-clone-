@@ -1,8 +1,9 @@
+
 <div class="modal-dialog" role="document">
   <div class="modal-content">
     <%= form_with(model: @idea, local: true) do |f| %>
       <div class="modal-header">
-        <h5 class="modal-title">編集</h5>
+        <h5 class="modal-title">投稿</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -19,7 +20,7 @@
           </p>
         </div>
         <div class="form_fields">
-          <%= f.fields_for :memos, @memos do |memo| %>
+          <%= f.fields_for :memos do |memo| %>
             <div class="nested-fields">
               <%= f.label :content, "メモ", class: 'form-control-label' %><br>
               <%= memo.text_field :content, class: 'form-control' %>
