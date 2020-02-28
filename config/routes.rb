@@ -7,4 +7,14 @@ Rails.application.routes.draw do
   resources :memos do 
     put :sort
   end
+  resources :lists do  
+    member do
+      patch :move
+    end
+  end
+  resources :cards do
+    member do
+      patch :move
+    end
+  end
 end

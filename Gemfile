@@ -70,3 +70,6 @@ gem 'jquery-ui-rails'
 gem 'cocoon'
 gem 'jquery-turbolinks'
 gem 'bootstrap', '~> 4.3.1'
+
+gem 'acts_as_list'
+gem 'webpacker', github: 'rails/webpacker'
