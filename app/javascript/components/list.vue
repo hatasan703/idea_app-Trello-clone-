@@ -1,8 +1,8 @@
 <template>
   <div class="list">
     <h6 @click="editing=true">{{ list.name }}</h6>
-    <div v-if='editing' class="modal-backdrop show"></div>
-    <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
+    <!-- <div v-if='editing' class="modal-backdrop show"></div> -->
+    <!-- <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
       <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -17,7 +17,7 @@
             </div>
           </div>
       </div>
-    </div>
+    </div> -->
 
     <draggable v-model="list.cards" :options="{group: 'cards'}" class="dragArea" @change="cardMoved">
       <card v-for="card in list.cards" :card="card" :list='list'></card>
