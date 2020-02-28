@@ -1,58 +1,38 @@
 <template>
   <draggable v-model="lists" :options="{group: 'lists'}" class="board dragArea" @end="listMoved">
-    <div v-for="(list, index) in lists" class="list">
-      <h6>{{ list.name }}</h6>
+    <list v-for="(list, index) in lists" :list="list"></list> 
 
-      <draggable v-model="list.cards" :options="{group: 'cards'}" class="dragArea" @change="cardMoved">
-        <div v-for="(card, index) in list.cards" class="card card-body mb-3">
-          {{ card.name }}
-        </div> 
-      </draggable>
-
-      <textarea v-model="messages[list.id]" class="form-control mb-1"></textarea>
-      <button v-on:click="submitMessages(list.id)" class="btn btn-secondary">Add</button>
+    <div class="list">
+      <a v-if="!editing" v-on:click="startEditing">Add a List</a>
+      <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1"></textarea>
+      <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">Add</button>
+      <a v-if="editing" v-on:click="editing=false">Cancel</a>
     </div>
+
   </draggable>
 </template>
 
 <script>
 import draggable from 'vuedraggable'
+import list from 'components/list'
 
 export default {
-  components: { draggable },
+  components: { draggable, list },
 
   props: ["original_lists"],
   data: function() {
     return{
-      messages: {},
       lists: this.original_lists,
+      editing: false,
+      message: "",
     }
   },
   methods: {
-    // カードのソートと別リストへの移動
-    cardMoved: function(event) {
-      const evt = event.added || event.moved
-      if (evt == undefined) { return }
-
-      const element = evt.element 
-      const list_index = this.lists.findIndex((list) => {
-        return list.cards.find((card) => {
-          return card.id === element.id
-        })
-      })
-
-      var data =  new FormData
-      data.append("card[list_id]", this.lists[list_index].id)
-      data.append("card[position]", evt.newIndex + 1)
-
-      Rails.ajax({
-        url: `/cards/${element.id}/move`,
-        type: "PATCH",
-        data: data,
-        dataType: "json"
-      })
+    // リストの追加
+     startEditing: function() {
+      this.editing = true
+      this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時にフォームを入力状態にする
     },
-
     // リストのソート
     listMoved: function(event) {
       var data =  new FormData
@@ -67,22 +47,21 @@ export default {
       })
     },
 
-    // カードの新規作成
-    submitMessages: function(list_id) {
+     // カードの新規作成
+    submitMessage: function() {
       var data = new FormData
-      data.append("card[list_id]", list_id)
-      data.append("card[name]", this.messages[list_id])
+      data.append("list[name]", this.message)
 
       Rails.ajax({
-        url: "/cards",
+        url: "/lists",
         type: "POST",
         data: data,
         dataType: "json",
         beforeSend: function() { return true },
         success: (data) => {
-          const index = this.lists.findIndex(item => item.id == list_id)
-          this.lists[index].cards.push(data)
-          this.messages[list_id] = undefined
+          window.store.lists.push(data)
+          this.message = ""
+          this.editing = false
         }
       })
     }
@@ -111,4 +90,6 @@ export default {
   vertical-align: top;
   width: 270px;
 }
+
+
 </style>
