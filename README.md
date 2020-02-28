@@ -41,23 +41,23 @@ dbの作成
 
 ## vue.js 導入手順
 
-gem 'webpacker', github: 'rails/webpacker'を読み込む
+gem 'webpacker', github: 'rails/webpacker'を読み込む 
 `$ bundle install`
 
-brewでyarnのインストール(brewの場合)
+brewでyarnのインストール(brewの場合) 
 `$ brew install yarn`
 
-Webpacker & vueの初期化
+Webpacker & vueの初期化 
 `$ bin/rails webpacker:install`
 もしくは
 `$ rails webpacker:install`
 
-Vue.jsのインストール
+Vue.jsのインストール 
 `$ bin/rails webpacker:install:vue`
 もしくは
 `$ rails webpacker:install:vue`
 
-コンパイル（起動させておけば自動でコンパイルされる）
+コンパイル（起動させておけば自動でコンパイルされる） 
 `$ bin/webpack-dev-server`
 
 # DB設計
@@ -113,7 +113,6 @@ Vue.jsのインストール
 
 
 ## memos table
-- content
 |Column|Type|Options|
 |------|----|-------|
 |content|text|null: false|
