@@ -17,6 +17,7 @@
           </div>
           <div class="modal-footer">
             <button @click="save" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="destroy" type="button" class="btn btn-primary">Delete</button>
           </div>
         </div>
       </div>
@@ -36,6 +37,7 @@ export default {
   },
 
   methods: {
+    // カード編集（モーダル）
     closeModal: function(event) {
       if (event.target.classList.contains("modal")) { this.editing = false }
     },
@@ -58,6 +60,10 @@ export default {
         }
       })
     },
+
+    destroy: function() {
+      //カード削除機能実装
+    }
   }
 }
 </script>

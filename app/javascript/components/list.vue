@@ -1,6 +1,23 @@
 <template>
   <div class="list">
-    <h6>{{ list.name }}</h6>
+    <h6 @click="editing=true">{{ list.name }}</h6>
+    <div v-if='editing' class="modal-backdrop show"></div>
+    <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
+      <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{ list.name }}</h5>
+            </div>
+            <div class="modal-body">
+              <input v-model="name" class="form-control"></input>
+            </div>
+            <div class="modal-footer">
+              <button @click="save" type="button" class="btn btn-primary">Save changes</button>
+              <button @click="destroy" type="button" class="btn btn-primary">Delete</button>
+            </div>
+          </div>
+      </div>
+    </div>
 
     <draggable v-model="list.cards" :options="{group: 'cards'}" class="dragArea" @change="cardMoved">
       <card v-for="card in list.cards" :card="card" :list='list'></card>
@@ -30,6 +47,30 @@ export default {
   },
 
   methods: {
+    // リスト編集（モーダル）
+    closeModal: function(event) {
+      if (event.target.classList.contains("modal")) { this.editing = false }
+    },
+
+    save: function() {
+      var data = new FormData
+      data.append("list[name]", this.name)
+
+      Rails.ajax({
+        url: `/lists/${this.list.id}`,
+        type: "PATCH",
+        data: data,
+        dataType: "json",
+        success: (data) => {
+          // 未実装
+          // const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
+          // const card_index = window.store.lists[list_index].cards.findIndex((item) => item.id == this.card.id)
+          // window.store.lists[list_index].cards.splice(card_index, 1, data)
+          this.editing = false
+        }
+      })
+    },
+
     startEditing: function() {
       this.editing = true
       this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時にフォームを入力状態にする
