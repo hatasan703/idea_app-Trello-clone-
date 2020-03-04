@@ -1,8 +1,13 @@
 class Idea < ApplicationRecord
+  acts_as_list
   belongs_to :user
-  has_many :memos, dependent: :destroy
+  has_many :memos, ->{ order(position: :asc)  }, dependent: :destroy
   has_many :comments
   has_one :pran
 
-  accepts_nested_attributes_for :memos, allow_destroy: true
+  scope :sorted, ->{ order(position: :asc)  }
+  validates :content, presence: true
+
+
+
 end

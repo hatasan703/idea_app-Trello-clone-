@@ -1,40 +1,58 @@
 class MemosController < ApplicationController
-  def create
-    @memo = Memo.create(memo_params)
-    redirect_to idea_path(params[:idea_id])
+  before_action :set_memo, only: [:show, :edit, :update, :destroy, :move]
+
+  def index
+    @memos = Memo.sorted
   end
 
-  # def show
-  # end
+  def new
+    @memo = Memo.new
+  end
+  
+  def create
+    @memo = Memo.new(memo_params)
+    respond_to do |format|
+      if @memo.save
+        format.html { redirect_to @memo, notice: 'Memo was successfully created.' }
+        format.json { render :show, status: :created, location: @memo }
+      else
+        format.html { render :new }
+        format.json { render json: @memo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-  # def edit
-  #   @idea = Idea.find(params[:idea_id])
-  #   @memo = Memo.find(params[:id])
-  #   @memos = @idea.memos.rank(:row_order)
-  # end
+  def update
+    respond_to do |format|
+      if @memo.update(memo_params)
+        format.html { redirect_to @memo, notice: 'Memo was successfully updated.' }
+        format.json { render :show, status: :ok, location: @memo }
+      else
+        format.html { render :edit }
+        format.json { render json: @memo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-  # def update
-  #   @memo = Memo.find(memo_params)
-  #   @memo.update(memo_params)
+  def destroy
+    @memo.destroy
+    respond_to do |format|
+      format.html { redirect_to memos_url, notice: 'memo was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
 
-  #   respond_to do |format|
-  #     if @memo.save
-  #       format.html { redirect_to @memo, notice: 'memo was successfully created.' }
-  #       format.json { render :show, status: :created, location: @memo }
-  #       format.js { @status = "success" }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @memo.errors, status: :unprocessable_entity }
-  #       format.js { @status = "fail" }
-  #     end
-  #   end
-  # end
+  def move
+    @memo.update(memo_params)
+    render action: :show
+  end
 
-  # def destroy
-  #   memo = Memo.find(params[:id])
-  #   memo.destroy if memo.user_id == current_user.id
-  #   redirect_to idea_path(memo.idea_id)
-  # end
+
+
+  private
+  def set_memo
+    @memo = Memo.find(params[:id])
+  end
 
   def sort
     memo = Memo.find(params[:memo_id])
@@ -43,8 +61,8 @@ class MemosController < ApplicationController
     render body: nil 
   end
 
-  private
   def memo_params
-    params.require(:memo).permit(:content, :row_order_position).merge(idea_id: params[:idea_id], user_id: current_user.id)
+    params.require(:memo).permit(:idea_id, :content, :position).merge(user_id: current_user.id)
   end
+
 end

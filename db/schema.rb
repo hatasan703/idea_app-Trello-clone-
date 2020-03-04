@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_26_070242) do
+ActiveRecord::Schema.define(version: 2020_03_04_105435) do
 
   create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "list_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_02_26_070242) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["user_id"], name: "index_ideas_on_user_id"
   end
 
@@ -59,7 +60,7 @@ ActiveRecord::Schema.define(version: 2020_02_26_070242) do
     t.bigint "idea_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "row_order"
+    t.integer "position"
     t.index ["idea_id"], name: "index_memos_on_idea_id"
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
