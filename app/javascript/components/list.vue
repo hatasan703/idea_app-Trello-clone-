@@ -1,23 +1,7 @@
 <template>
   <div class="list">
-    <h6 @click="editing=true">{{ list.name }}</h6>
-    <div v-if='editing' class="modal-backdrop show"></div>
-    <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
-      <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">{{ list.name }}</h5>
-            </div>
-            <div class="modal-body">
-              <input v-model="name" class="form-control"></input>
-            </div>
-            <div class="modal-footer">
-              <button @click="save" type="button" class="btn btn-primary">Save changes</button>
-              <button @click="destroy" type="button" class="btn btn-primary">Delete</button>
-            </div>
-          </div>
-      </div>
-    </div>
+    <h6>{{ list.name }}</h6>
+    <listEdit :listEdit="listEdit"></listEdit>
 
     <draggable v-model="list.cards" :options="{group: 'cards'}" class="dragArea" @change="cardMoved">
       <card v-for="card in list.cards" :card="card" :list='list'></card>
@@ -34,13 +18,15 @@
 <script>
 import draggable from 'vuedraggable'
 import card from 'components/card'
+import listEdit from 'components/listEdit'
 
 export default {
-  components: { card, draggable },
+  components: { card, draggable, listEdit },
   props: ["list"],
 
   data: function() {
     return {
+      listEdit: this.list,
       editing: false,
       message: ""
     }
@@ -52,41 +38,41 @@ export default {
       if (event.target.classList.contains("modal")) { this.editing = false }
     },
 
-    save: function() {
-      var data = new FormData
-      data.append("list[name]", this.name)
+  //   save: function() {
+  //     var data = new FormData
+  //     data.append("list[name]", this.name)
 
-      Rails.ajax({
-        beforeSend: () => true,
-        url: `/lists/${this.list.id}`,
-        type: "PATCH",
-        data: data,
-        dataType: "json",
-        success: (data) => {
-          const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
-          window.store.lists.splice(list_index, 1, data)
-          this.editing = false
-        }
-      })
-    },
+  //     Rails.ajax({
+  //       beforeSend: () => true,
+  //       url: `/lists/${this.list.id}`,
+  //       type: "PATCH",
+  //       data: data,
+  //       dataType: "json",
+  //       success: (data) => {
+  //         const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
+  //         window.store.lists.splice(list_index, 1, data)
+  //         this.editing = false
+  //       }
+  //     })
+  //   },
 
-    destroy: function() {
-      var data = new FormData
-      data.append("list[name]", this.name)
+    // destroy: function() {
+    //   var data = new FormData
+    //   data.append("list[name]", this.name)
 
-      Rails.ajax({
-        beforeSend: () => true,
-        url: `/lists/${this.list.id}`,
-        type: "DELETE",
-        data: data,
-        dataType: "json",
-        success: (data) => {
-          const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
-          window.store.lists.splice(list_index, 1)
-          this.editing = false
-        }
-      })
-    },
+    //   Rails.ajax({
+    //     beforeSend: () => true,
+    //     url: `/lists/${this.list.id}`,
+    //     type: "DELETE",
+    //     data: data,
+    //     dataType: "json",
+    //     success: (data) => {
+    //       const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
+    //       window.store.lists.splice(list_index, 1)
+    //       this.editing = false
+    //     }
+    //   })
+    // },
 
     startEditing: function() {
       this.editing = true

@@ -1,12 +1,12 @@
 <template>
   <div class="list_edit">
-    <div @click="editing=true" class="mb-3">編集</div>
+    <div @click="editing=true">編集</div>
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ list.name }}</h5>
+            <h5 class="modal-title">{{ listEdit.name }}</h5>
           </div>
           <div class="modal-body">
             <input v-model="name" class="form-control"></input>
@@ -25,11 +25,11 @@
 
 <script>
 export default {
-  props: ['listEdit'],
+  props: ['listEdit','list'],
   data: function() {
     return {
       editing: false,
-      name: this.list.name,
+      name: this.listEdit.name,
     }
   },
 
@@ -45,12 +45,12 @@ export default {
 
       Rails.ajax({
         beforeSend: () => true,
-        url: `/lists/${this.list.id}`,
+        url: `/lists/${this.listEdit.id}`,
         type: "PATCH",
         data: data,
         dataType: "json",
         success: (data) => {
-          const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
+          const list_index = window.store.lists.findIndex((item) => item.id == this.listEdit.id)
           window.store.lists.splice(list_index, 1, data)
           this.editing = false
         }
@@ -64,12 +64,12 @@ export default {
 
       Rails.ajax({
         beforeSend: () => true,
-        url: `/lists/${this.list.id}`,
+        url: `/lists/${this.listEdit.id}`,
         type: "DELETE",
         data: data,
         dataType: "json",
         success: (data) => {
-          const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
+          const list_index = window.store.lists.findIndex((item) => item.id == this.listEdit.id)
           window.store.lists.splice(list_index, 1)
           this.editing = false
         }
