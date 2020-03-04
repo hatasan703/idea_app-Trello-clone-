@@ -62,7 +62,22 @@ export default {
     },
 
     destroy: function() {
-      //カード削除機能実装
+      var data = new FormData
+      data.append("card[name]", this.name)
+
+      Rails.ajax({
+        url: `/cards/${this.card.id}`,
+        type: "DELETE",
+        data: data,
+        dataType: "json",
+        success: (data) => {
+          const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
+          const card_index = window.store.lists[list_index].cards.findIndex((item) => item.id == this.card.id)
+          window.store.lists[list_index].cards.splice(card_index, 1)
+
+          this.editing = false
+        }
+      })
     }
   }
 }

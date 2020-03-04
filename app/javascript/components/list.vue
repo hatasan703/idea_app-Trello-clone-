@@ -63,9 +63,26 @@ export default {
         data: data,
         dataType: "json",
         success: (data) => {
-          // 未実装
           const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
           window.store.lists.splice(list_index, 1, data)
+          this.editing = false
+        }
+      })
+    },
+
+    destroy: function() {
+      var data = new FormData
+      data.append("list[name]", this.name)
+
+      Rails.ajax({
+        beforeSend: () => true,
+        url: `/lists/${this.list.id}`,
+        type: "DELETE",
+        data: data,
+        dataType: "json",
+        success: (data) => {
+          const list_index = window.store.lists.findIndex((item) => item.id == this.list.id)
+          window.store.lists.splice(list_index, 1)
           this.editing = false
         }
       })
