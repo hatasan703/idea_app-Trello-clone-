@@ -1,6 +1,0 @@
-<% if @status == 'success' %>
-    $("tbody").append("<%= j(render("tr", memo: @memo)) %>");
-<%  elsif @status == 'fail' %>
-    alert('error!');
-<% end %>
-$("#memo-modal").modal("hide");

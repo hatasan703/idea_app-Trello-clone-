@@ -11,20 +11,4 @@ Rails.application.routes.draw do
       patch :move
     end
   end
-
-  # resources :ideas do 
-  #   resources :memos, only: [:create, :show, :edit, :update, :destroy]
-  # end
-  resources :lists do  
-    member do
-      patch :move
-    end
-  end
-  resources :cards do
-    member do
-      patch :move
-    end
-  end
-
-  
 end
