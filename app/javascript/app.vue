@@ -1,9 +1,9 @@
 <template>
-  <draggable v-model="lists" :options="{group: 'lists'}" class="board dragArea" @end="listMoved">
-    <list v-for="(list, index) in lists" :list="list"></list> 
+  <draggable v-model="ideas" :options="{group: 'ideas'}" class="board dragArea" @end="ideaMoved">
+    <idea v-for="(idea, index) in ideas" :idea="idea"></idea> 
 
-    <div class="list">
-      <a v-if="!editing" v-on:click="startEditing">Add a List</a>
+    <div class="idea">
+      <a v-if="!editing" v-on:click="startEditing">Add a idea</a>
       <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1"></textarea>
       <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">Add</button>
       <a v-if="editing" v-on:click="editing=false">Cancel</a>
@@ -14,15 +14,15 @@
 
 <script>
 import draggable from 'vuedraggable'
-import list from 'components/list'
+import idea from 'components/idea'
 
 export default {
-  components: { draggable, list },
+  components: { draggable, idea },
 
-  props: ["original_lists"],
+  props: ["original_ideas"],
   data: function() {
     return{
-      lists: this.original_lists,
+      ideas: this.original_ideas,
       editing: false,
       message: "",
     }
@@ -34,13 +34,13 @@ export default {
       this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時にフォームを入力状態にする
     },
     // リストのソート
-    listMoved: function(event) {
+    ideaMoved: function(event) {
       var data =  new FormData
-      data.append("list[position]", event.newIndex + 1)
+      data.append("idea[position]", event.newIndex + 1)
 
       Rails.ajax({
         beforeSend: () => true,
-        url: `/lists/${this.lists[event.newIndex].id}/move`,
+        url: `/ideas/${this.ideas[event.newIndex].id}/move`,
         type: "PATCH",
         data: data,
         dataType: "json",
@@ -50,16 +50,16 @@ export default {
      // カードの新規作成
     submitMessage: function() {
       var data = new FormData
-      data.append("list[name]", this.message)
+      data.append("idea[content]", this.message)
 
       Rails.ajax({
-        url: "/lists",
+        url: "/ideas",
         type: "POST",
         data: data,
         dataType: "json",
         beforeSend: function() { return true },
         success: (data) => {
-          window.store.lists.push(data)
+          window.store.ideas.push(data)
           this.message = ""
           this.editing = false
         }
@@ -81,7 +81,7 @@ export default {
   overflow-x: auto;
 }
 
-.list{
+.idea{
   background: #E2E4E6;
   border-radius: 3px;
   display: inline-block;

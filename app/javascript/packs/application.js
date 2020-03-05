@@ -23,12 +23,12 @@ window.store = {}
 document.addEventListener("turbolinks:load", function() {
   var element = document.querySelector("#boards")
   if (element != undefined) {
-    window.store.lists = JSON.parse(element.dataset.lists)
+    window.store.ideas = JSON.parse(element.dataset.ideas)
 
     const app = new Vue({
       el: element,
       data: window.store,
-      template: "<App :original_lists='lists' />",
+      template: "<App :original_ideas='ideas' />",
       components: { App }
     })
   }
