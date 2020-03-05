@@ -35,7 +35,7 @@ export default {
   methods: {
     // リスト(content)編集（モーダル）
     closeModal: function(event) {
-      if (event.target.classidea.contains("modal")) { this.editing = false }
+      if (event.target.classList.contains("modal")) { this.editing = false }
     },
 
   //   save: function() {
