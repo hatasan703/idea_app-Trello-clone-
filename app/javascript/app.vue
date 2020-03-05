@@ -47,7 +47,7 @@ export default {
       })
     },
 
-     // カードの新規作成
+     // リストの新規作成
     submitMessage: function() {
       var data = new FormData
       data.append("idea[content]", this.message)
