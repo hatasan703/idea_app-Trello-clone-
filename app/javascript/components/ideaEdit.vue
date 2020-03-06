@@ -1,12 +1,13 @@
 <template>
   <div class="idea_edit">
+    <h6>{{ idea.content }}</h6>
     <div @click="editing=true">編集</div>
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ ideaEdit.content }}</h5>
+            <h5 class="modal-title">{{ idea.content }}</h5>
           </div>
           <div class="modal-body">
             <input v-model="content" class="form-control"></input>
@@ -25,16 +26,16 @@
 
 <script>
 export default {
-  props: ['ideaEdit','idea'],
+  props: ['idea'],
   data: function() {
     return {
       editing: false,
-      content: this.ideaEdit.content,
+      content: this.idea.content,
     }
   },
 
   methods: {
-    // リスト(content)編集（モーダル）
+    // アイディア(content)編集（モーダル）
     closeModal: function(event) {
       if (event.target.classList.contains("modal")) { this.editing = false }
     },
@@ -45,31 +46,31 @@ export default {
 
       Rails.ajax({
         beforeSend: () => true,
-        url: `/ideas/${this.ideaEdit.id}`,
+        url: `/ideas/${this.idea.id}`,
         type: "PATCH",
         data: data,
         dataType: "json",
         success: (data) => {
-          const idea_index = window.store.ideas.findIndex((item) => item.id == this.ideaEdit.id)
+          const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
           window.store.ideas.splice(idea_index, 1, data)
           this.editing = false
         }
       })
     },
     
-    // リスト削除
+    // アイディア削除
      destroy: function() {
       var data = new FormData
       data.append("idea[content]", this.content)
 
       Rails.ajax({
         beforeSend: () => true,
-        url: `/ideas/${this.ideaEdit.id}`,
+        url: `/ideas/${this.idea.id}`,
         type: "DELETE",
         data: data,
         dataType: "json",
         success: (data) => {
-          const idea_index = window.store.ideas.findIndex((item) => item.id == this.ideaEdit.id)
+          const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
           window.store.ideas.splice(idea_index, 1)
           this.editing = false
         }

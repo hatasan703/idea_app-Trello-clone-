@@ -1,7 +1,7 @@
 <template>
   <div class="idea">
-    <h6>{{ idea.content }}</h6>
-    <ideaEdit :ideaEdit="ideaEdit"></ideaEdit>
+
+    <ideaEdit :idea="idea"></ideaEdit>
 
     <draggable v-model="idea.memos" :options="{group: 'memos'}" class="dragArea" @change="memoMoved">
       <memo v-for="memo in idea.memos" :memo="memo" :idea='idea'></memo>
@@ -33,53 +33,17 @@ export default {
   },
 
   methods: {
-    // リスト(content)編集（モーダル）
+    // アイディア(content)編集（モーダル）
     closeModal: function(event) {
       if (event.target.classList.contains("modal")) { this.editing = false }
     },
-
-  //   save: function() {
-  //     var data = new FormData
-  //     data.append("idea[content]", this.content)
-
-  //     Rails.ajax({
-  //       beforeSend: () => true,
-  //       url: `/ideas/${this.idea.id}`,
-  //       type: "PATCH",
-  //       data: data,
-  //       dataType: "json",
-  //       success: (data) => {
-  //         const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
-  //         window.store.ideas.splice(idea_index, 1, data)
-  //         this.editing = false
-  //       }
-  //     })
-  //   },
-
-    // destroy: function() {
-    //   var data = new FormData
-    //   data.append("idea[content]", this.content)
-
-    //   Rails.ajax({
-    //     beforeSend: () => true,
-    //     url: `/ideas/${this.idea.id}`,
-    //     type: "DELETE",
-    //     data: data,
-    //     dataType: "json",
-    //     success: (data) => {
-    //       const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
-    //       window.store.ideas.splice(idea_index, 1)
-    //       this.editing = false
-    //     }
-    //   })
-    // },
 
     startEditing: function() {
       this.editing = true
       this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時にフォームを入力状態にする
     },
 
-        // カードのソートと別リストへの移動
+        // アイディアのソートと別リストへの移動
     memoMoved: function(event) {
       const evt = event.added || event.moved
       if (evt == undefined) { return }
@@ -103,7 +67,7 @@ export default {
       })
     },
 
-     // カードの新規作成
+     // メモの新規作成
     submitMessage: function() {
       var data = new FormData
       data.append("memo[idea_id]", this.idea.id)
