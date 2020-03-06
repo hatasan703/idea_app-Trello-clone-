@@ -4,13 +4,13 @@
     <ideaEdit :idea="idea"></ideaEdit>
 
     <draggable v-model="idea.memos" :options="{group: 'memos'}" class="dragArea" @change="memoMoved">
-      <memo v-for="memo in idea.memos" :memo="memo" :idea='idea'></memo>
+      <memo v-for="memo in idea.memos" :key="memo.id" :memo="memo" :idea='idea'></memo>
     </draggable>
 
-    <a v-if="!editing" v-on:click="startEditing">Add a memo</a>
-    <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1"></textarea>
-    <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">Add</button>
-    <a v-if="editing" v-on:click="editing=false">Cancel</a>
+    <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i> メモを追加</a>
+    <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
+    <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">メモを追加</button>
+    <a v-if="editing" v-on:click="editing=false">キャンセル</a>
 
   </div>
 </template>
@@ -91,11 +91,17 @@ export default {
 }
 </script>
 
-<style scoped>
+
+<style lang="scss" scoped>
+@import "../assets/test.scss";
 
 .dragArea {
   min-height: 10px;
 }
 
+
+/* .content_form{
+  height: 200px;
+} */
 
 </style>

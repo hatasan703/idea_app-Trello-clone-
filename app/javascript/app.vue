@@ -1,12 +1,12 @@
 <template>
   <draggable v-model="ideas" :options="{group: 'ideas'}" class="board dragArea" @end="ideaMoved">
-    <idea v-for="(idea, index) in ideas" :idea="idea"></idea> 
+    <idea v-for="idea in ideas" :key="idea.id" :idea="idea"></idea> 
 
     <div class="idea">
-      <a v-if="!editing" v-on:click="startEditing">Add a idea</a>
-      <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1"></textarea>
-      <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">Add</button>
-      <a v-if="editing" v-on:click="editing=false">Cancel</a>
+      <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i> アイディアを追加</a>
+      <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
+      <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">アイディアを追加</button>
+      <a v-if="editing" v-on:click="editing=false">キャンセル</a>
     </div>
 
   </draggable>
@@ -69,7 +69,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "assets/test.scss";
 
 .dragArea {
   min-height: 10px;
@@ -90,6 +91,10 @@ export default {
   vertical-align: top;
   width: 270px;
 }
+
+/* .content_form{
+  height: 200px;
+} */
 
 
 </style>

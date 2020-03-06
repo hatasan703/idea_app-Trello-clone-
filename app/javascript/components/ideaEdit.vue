@@ -1,16 +1,18 @@
 <template>
   <div class="idea_edit">
-    <h6>{{ idea.content }}</h6>
-    <div @click="editing=true">編集</div>
+    <div>
+    <h6 @click="editing=true" class="idea_content">{{ content }} <i class="fa fa-edit" aria-hidden="true"></i></h6>
+
+    </div>
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ idea.content }}</h5>
+            <h5 class="modal-title">{{ content }}</h5>
           </div>
           <div class="modal-body">
-            <input v-model="content" class="form-control"></input>
+            <textarea v-model="content" class="form-control content_form"></textarea>
           </div>
           <div class="modal-footer">
             <button @click="save" type="button" class="btn btn-primary">Save changes</button>
@@ -81,5 +83,15 @@ export default {
 }
 </script>
 
-<style scoped>
+
+<style lang="scss" scoped>
+@import "../assets/test.scss";
+
+.idea_content{
+  word-wrap: break-word;
+}
+
+/* .content_form{
+  height: 200px;
+} */
 </style>
