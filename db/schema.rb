@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_10_050717) do
+ActiveRecord::Schema.define(version: 2020_03_04_105435) do
+
+  create_table "cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "list_id"
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_id"], name: "index_cards_on_list_id"
+  end
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
@@ -28,23 +37,31 @@ ActiveRecord::Schema.define(version: 2020_02_10_050717) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "idea_memos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "ideas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "position"
+    t.index ["user_id"], name: "index_ideas_on_user_id"
+  end
+
+  create_table "lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "memos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "content"
     t.bigint "user_id", null: false
     t.bigint "idea_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["idea_id"], name: "index_idea_memos_on_idea_id"
-    t.index ["user_id"], name: "index_idea_memos_on_user_id"
-  end
-
-  create_table "ideas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "title", null: false
-    t.text "content", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_ideas_on_user_id"
+    t.integer "position"
+    t.index ["idea_id"], name: "index_memos_on_idea_id"
+    t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
   create_table "plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -66,15 +83,15 @@ ActiveRecord::Schema.define(version: 2020_02_10_050717) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "user_name", null: false
-    t.integer "user_number", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "comments", "ideas"
   add_foreign_key "comments", "users"
-  add_foreign_key "idea_memos", "ideas"
-  add_foreign_key "idea_memos", "users"
   add_foreign_key "ideas", "users"
+  add_foreign_key "memos", "ideas"
+  add_foreign_key "memos", "users"
   add_foreign_key "plans", "ideas"
   add_foreign_key "plans", "users"
 end

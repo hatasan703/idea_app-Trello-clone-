@@ -39,6 +39,23 @@ dbの作成
 `$ rails db:migrate`
 
 
+## vue.js 導入手順
+
+gem 'webpacker', github: 'rails/webpacker'を読み込む  
+`$ bundle install`
+
+brewでyarnのインストール(brewの場合)  
+`$ brew install yarn`
+
+Webpacker & vueの初期化  
+`$ bundle exec rails webpacker:install`  
+
+Vue.jsのインストール  
+`$ bundle exec rails webpacker:install:vue`  
+
+コンパイル（起動させておけば自動でコンパイルされる）  
+`$ bin/webpack-dev-server`
+
 # DB設計
 
 ## companiesテーブル
@@ -64,7 +81,7 @@ dbの作成
 - has_many :comments
 
 
-##　ideas table
+## ideas table
 |Column|Type|Options|
 |------|----|-------|
 |title|string|null: false|
@@ -91,11 +108,9 @@ dbの作成
 - belongs_to :idea
 
 
-## idea_memos table
-- content
+## memos table
 |Column|Type|Options|
 |------|----|-------|
-|title|string|null: false|
 |content|text|null: false|
 |idea_id|references|null: false, foreign_key: true|
 |user_id|references|null: false, foreign_key: true|

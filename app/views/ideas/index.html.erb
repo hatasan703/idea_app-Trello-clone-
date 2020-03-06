@@ -1,10 +1,8 @@
-<h1>アイディア一覧</h1>
 
-<%= link_to "アイディア新規投稿", new_idea_path %>
 
-<div>
-  <% @ideas.each do |idea| %>
-    <p><%= link_to "#{idea.title}", idea_path(idea) %></p>
-    <p><%= idea.content %></p>
-  <% end %>
-</div>
+<%= link_to 'New Idea', new_idea_path %>
+<hr />
+
+<%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: :memos) } %>
+
+

@@ -62,5 +62,14 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
-
 gem 'pry-rails'
+gem 'jquery-rails'
+gem "font-awesome-rails"
+gem 'ranked-model'
+gem 'jquery-ui-rails'
+gem 'cocoon'
+gem 'jquery-turbolinks'
+gem 'bootstrap', '~> 4.3.1'
+
+gem 'acts_as_list'
+gem 'webpacker', github: 'rails/webpacker'
