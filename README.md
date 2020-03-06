@@ -48,14 +48,10 @@ brewでyarnのインストール(brewの場合)
 `$ brew install yarn`
 
 Webpacker & vueの初期化  
-`$ bin/rails webpacker:install`  
-もしくは  
-`$ rails webpacker:install`
+`$ bundle exec rails webpacker:install`  
 
 Vue.jsのインストール  
-`$ bin/rails webpacker:install:vue`  
-もしくは  
-`$ rails webpacker:install:vue`
+`$ bundle exec rails webpacker:install:vue`  
 
 コンパイル（起動させておけば自動でコンパイルされる）  
 `$ bin/webpack-dev-server`
