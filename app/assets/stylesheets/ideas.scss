@@ -1,54 +1,20 @@
-.idea_new_btn{
+.dragArea {
+  min-height: 10px;
+}
+
+.board{
+  
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.idea{
+  background: #E2E4E6;
+  border-radius: 3px;
   display: inline-block;
-  width: 247px;
-  background: #3D3F44;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-  line-height: 1;
-  padding: 1em;
-  a{
-    color:#fff;
-  }
-}
-
-.idea_board{
-  display: flex;
-  overflow-x: scroll;
-}
-
-.idea_lists{
-  border-radius: 3px;
-  box-sizing: border-box;
+  margin-right: 20px;
   padding: 10px;
-  min-width: 300px;
-  background-color: #ebecf0;
-  margin: 15px;
-  border-radius: 3px;
-  box-sizing: border-box;
-
-  .idea_content{
-    margin: 10px;
-  }
-
-  .idea_lists_memo{
-    border-radius: 3px;
-    width: 300px;
-    height: 50px;
-    background: #fff;
-    margin-top: 10px; 
-  }
-
+  vertical-align: top;
+  width: 270px;
+  margin-bottom: 50px;
 }
-
-
-
-// jkanban
-body{font-family: "Lato"; margin:0; padding: 0;}
-#myKanban{overflow-x: auto; padding:20px 0;}
-.success{background: #00B961; color:#fff}
-.info{background: #2A92BF; color:#fff}
-.warning{background: #F4CE46; color:#fff}
-.error{background: #FB7D44; color:#fff}

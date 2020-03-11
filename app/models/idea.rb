@@ -1,5 +1,5 @@
 class Idea < ApplicationRecord
-  acts_as_list
+  acts_as_list scope: :user
   belongs_to :user
   has_many :memos, ->{ order(position: :asc)  }, dependent: :destroy
   has_many :comments

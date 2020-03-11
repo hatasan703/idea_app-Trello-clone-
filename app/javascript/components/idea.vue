@@ -43,7 +43,7 @@ export default {
       this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時にフォームを入力状態にする
     },
 
-    // アイディアのソートと別リストへの移動
+    // アイディアのソートと別アイディアへの移動
     memoMoved: function(event) {
       const evt = event.added || event.moved
         if (evt == undefined) { return }

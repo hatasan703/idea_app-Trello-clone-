@@ -4,7 +4,11 @@ class IdeasController < ApplicationController
 
 
   def index
-    @ideas = Idea.sorted
+    @ideas = Idea.where(user_id: current_user.id).sorted
+  end
+
+  def public
+    @ideas = Idea.order(created_at: "DESC") 
   end
 
   def show

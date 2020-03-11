@@ -1,0 +1,12 @@
+<h1>みんなのアイディア</h1>
+<%= link_to "自分のアイディアへ", ideas_path %>
+<hr >
+<% @ideas.each do |idea| %>
+<div class="idea">
+  <%= idea.content%>
+  </div>
+<% end %>
+
+
+
+  

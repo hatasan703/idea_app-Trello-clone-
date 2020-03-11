@@ -1,7 +1,6 @@
-
-
-<%= link_to 'New Idea', new_idea_path %>
-<hr />
+<h1>あなたのアイディア</h1>
+<%= link_to "みんなのアイディアへ", public_ideas_path %>
+<hr >
 
 <%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: :memos) } %>
 
