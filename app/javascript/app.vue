@@ -1,8 +1,8 @@
 <template>
   <draggable v-model="ideas" :options="{group: 'ideas'}" class="board dragArea" @end="ideaMoved">
     <idea v-for="idea in ideas" :key="idea.id" :idea="idea"></idea> 
-
-    <div class="idea">
+    
+    <div class="idea add_idea">
       <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i> アイディアを追加</a>
       <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
       <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">アイディアを追加</button>
@@ -28,12 +28,13 @@ export default {
     }
   },
   methods: {
-    // リストの追加
+
+    // アイディアの追加
      startEditing: function() {
       this.editing = true
-      this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時にフォームを入力状態にする
+      this.$nextTick(() => { this.$refs.message.focus() }) //メモ追加時にフォームを入力状態にする
     },
-    // リストのソート
+    // アイディアのソート
     ideaMoved: function(event) {
       var data =  new FormData
       data.append("idea[position]", event.newIndex + 1)
@@ -47,7 +48,7 @@ export default {
       })
     },
 
-     // リストの新規作成
+     // アイディアの新規作成
     submitMessage: function() {
       var data = new FormData
       data.append("idea[content]", this.message)
@@ -64,7 +65,8 @@ export default {
           this.editing = false
         }
       })
-    }
+    },
+
   }
 }
 </script>

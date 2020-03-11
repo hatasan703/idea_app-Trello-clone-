@@ -15,8 +15,8 @@
             <textarea v-model="content" class="form-control content_form"></textarea>
           </div>
           <div class="modal-footer">
-            <button @click="save" type="button" class="btn btn-primary">Save changes</button>
-            <button @click="destroy" type="button" class="btn btn-primary">Delete</button>
+            <button @click="save" type="button" class="btn btn-primary">保存</button>
+            <button @click="destroy" type="button" class="btn btn-primary">削除</button>
           </div>
         </div>
       </div>

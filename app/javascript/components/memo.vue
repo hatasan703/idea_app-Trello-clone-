@@ -1,8 +1,8 @@
 <template>
 <!-- メモ編集フォーム (モーダルウインドウ)-->
   <div>
-    <div @click="editing=true" class="card card-body mb-3">
-      {{ memo.content }}
+    <div class="card card-body mb-3" >
+      <div @click="editing=true">{{ memo.content }}</div>
     </div> 
     <div v-if='editing' class="modal-backdrop show"></div>
 
@@ -12,12 +12,13 @@
           <div class="modal-header">
             <h5 class="modal-title">{{ memo.content }}</h5>
           </div>
-          <div class="modal-body">
+          <div draggable="true" class="modal-body">
             <textarea v-model="content" class="form-control content_form"></textarea>
           </div>
           <div class="modal-footer">
-            <button @click="save" type="button" class="btn btn-primary">Save changes</button>
-            <button @click="destroy" type="button" class="btn btn-primary">Delete</button>
+            <button @click="save" type="button" class="btn btn-primary">保存</button>
+            <button @click="destroy" type="button" class="btn btn-primary">削除</button>
+            <button @click="changeIdea" type="button" class="btn btn-primary">アイディアへ移行</button>
           </div>
         </div>
       </div>
@@ -60,7 +61,7 @@ export default {
         }
       })
     },
-
+    // メモ削除
     destroy: function() {
       var data = new FormData
       data.append("memo[content]", this.content)
@@ -78,7 +79,48 @@ export default {
           this.editing = false
         }
       })
-    }
+    },
+
+    // メモをアイディアに移動
+    changeIdea: function() {
+      console.log("a")
+    
+      // メモの削除
+      var data = new FormData
+      data.append("memo[content]", this.content)
+
+      Rails.ajax({
+        url: `/memos/${this.memo.id}`,
+        type: "DELETE",
+        data: data,
+        dataType: "json",
+        success: (data) => {
+          const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
+          const memo_index = window.store.ideas[idea_index].memos.findIndex((item) => item.id == this.memo.id)
+          window.store.ideas[idea_index].memos.splice(memo_index, 1)
+
+          this.editing = false
+        }
+      })
+
+      // メモのcontentをアイディアのcontentとして追加
+      var data = new FormData
+      data.append("idea[content]", this.content)
+
+      Rails.ajax({
+        url: "/ideas",
+        type: "POST",
+        data: data,
+        dataType: "json",
+        beforeSend: function() { return true },
+        success: (data) => {
+          window.store.ideas.push(data)
+          this.message = ""
+          this.editing = false
+        }
+      })
+    },
+
   }
 }
 </script>
