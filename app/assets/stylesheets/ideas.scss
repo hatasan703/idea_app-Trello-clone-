@@ -1,20 +1,65 @@
+// ヘッダー
+
+.header{
+  height: 35px;
+  display: flex;
+}
+
+.header_logo{
+  padding-left: 10px;
+  font-size: 30px;
+  margin-right: 950px;
+  color: #4589ce;
+}
+
+.nav{
+  width: 480px;
+  a{
+    margin-left: 300px;
+    line-height: 2;
+    color: #18BC9C;
+  }
+}
+
+
+
+
+
+
+
+
+
+body{
+}
+
+.container_fluid{
+  background: #34495e; 
+
+}
+
+.page_title{
+  padding: 10px;
+  color: #ffffff;
+}
+
 .dragArea {
   min-height: 10px;
 }
 
-.board{
-  
-  white-space: nowrap;
-  overflow-x: auto;
-}
-
 .idea{
-  background: #E2E4E6;
+  color: #172b4d;
+  background: #ebecf0;
   border-radius: 3px;
   display: inline-block;
-  margin-right: 20px;
+  margin: 0 0 20px 20px;
   padding: 10px;
   vertical-align: top;
-  width: 270px;
-  margin-bottom: 50px;
+  width: 250px;
+}
+
+.idea_content{
+  display: inline-block;
+  min-height: 100px;
+  min-width: 230px;
+  padding: 20px;
 }
