@@ -65,7 +65,6 @@ export default {
     destroy: function() {
       var data = new FormData
       data.append("memo[content]", this.content)
-
       Rails.ajax({
         url: `/memos/${this.memo.id}`,
         type: "DELETE",

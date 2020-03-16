@@ -1,4 +1,7 @@
 class CommentsController < ApplicationController
+
+  before_action :set_comment, only: [:destroy]
+
   
   def create
     @comment = Comment.new(comment_params)
@@ -13,8 +16,21 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @comment.destroy
+    respond_to do |format|
+      format.html { redirect_to comments_url, notice: 'comment was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
+
   private
   def comment_params
     params.require(:comment).permit(:idea_id, :content).merge(user_id: current_user.id)
+  end
+
+  def set_comment
+    @comment = Comment.find(params[:id])
   end
 end

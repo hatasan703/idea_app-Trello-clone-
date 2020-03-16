@@ -3,7 +3,8 @@
     <div class="idea idea_content">
       <div>{{ idea.content }}</div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
-        {{comment.content}}
+        <div>{{comment.content}}</div>
+        <div @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
       </div>
 
       <div class="comment_form">
@@ -18,12 +19,12 @@
 
 <script>
 export default {
-  props: ["idea"],
+  props: ['idea'],
   data: function() {
     return{
-      // ideas: this.comment_ideas,
       editing: false,
       message: "",
+      // content: this.comment.content,
     }
   },
 
@@ -53,6 +54,26 @@ export default {
         }
       })
     },
+
+    destroy: function (comment) {
+      // console.log(comment)
+      var data = new FormData
+      data.append("comment[content]", comment.content)
+      Rails.ajax({
+        url: `/comments/${comment.id}`,
+        type: "DELETE",
+        data: data,
+        dataType: "json",
+        success: (data) => {
+          const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
+          const comment_index = window.store.ideas[idea_index].comments.findIndex((item) => item.id == comment.id)
+          window.store.ideas[idea_index].comments.splice(comment_index, 1)
+
+          this.editing = false
+        }
+      })
+    },
+
 
   }
   
