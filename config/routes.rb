@@ -16,4 +16,9 @@ Rails.application.routes.draw do
       patch :move
     end
   end
+
+  post  "ideas/:id/comment" => "comments#create"
+  resources :comments
+
+
 end

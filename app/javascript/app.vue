@@ -1,15 +1,16 @@
 <template>
-  <draggable v-model="ideas" :options="{group: 'ideas'}" class="board dragArea" @end="ideaMoved">
-    <idea v-for="idea in ideas" :key="idea.id" :idea="idea"></idea> 
-    
+  <div>
     <div class="idea add_idea">
       <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i> アイディアを追加</a>
       <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
       <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">アイディアを追加</button>
       <a v-if="editing" v-on:click="editing=false">キャンセル</a>
     </div>
-
-  </draggable>
+    <draggable v-model="ideas" :options="{group: 'ideas'}" class="board dragArea" @end="ideaMoved">
+      <idea v-for="idea in ideas" :key="idea.id" :idea="idea">
+      </idea>
+    </draggable>
+  </div>
 </template>
 
 <script>
@@ -78,25 +79,16 @@ export default {
   min-height: 10px;
 }
 
-.board{
-  
-  white-space: nowrap;
-  overflow-x: auto;
-}
-
 .idea{
-  background: #E2E4E6;
+  color: #172b4d;
+  background: #ebecf0;
   border-radius: 3px;
   display: inline-block;
-  margin-right: 20px;
+  margin: 0 0 20px 20px;
   padding: 10px;
   vertical-align: top;
-  width: 270px;
+  width: 250px;
 }
-
-/* .content_form{
-  height: 200px;
-} */
 
 
 </style>

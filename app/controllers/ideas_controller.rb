@@ -8,7 +8,7 @@ class IdeasController < ApplicationController
   end
 
   def public
-    @ideas = Idea.order(created_at: "DESC") 
+    @ideas = Idea.order(created_at: "DESC")
   end
 
   def show

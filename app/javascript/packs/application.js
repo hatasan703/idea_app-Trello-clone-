@@ -17,10 +17,12 @@
 
 import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
+import IdeaPublic from '../components/ideaPublic.vue'
 
 window.store = {}
 
 document.addEventListener("turbolinks:load", function() {
+
   var element = document.querySelector("#boards")
   if (element != undefined) {
     window.store.ideas = JSON.parse(element.dataset.ideas)
@@ -30,6 +32,18 @@ document.addEventListener("turbolinks:load", function() {
       data: window.store,
       template: "<App :original_ideas='ideas' />",
       components: { App }
-    })
+    });
   }
+
+  var element = document.querySelector("#idea_public")
+  if (element != undefined) {
+    window.store.ideas = JSON.parse(element.dataset.ideas)
+    const app = new Vue({
+      el: element,
+      data: window.store,
+      template: "<IdeaPublic :comment_ideas='ideas' />",
+      components: { IdeaPublic }
+    });
+  }
+
 });

@@ -126,9 +126,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/test.scss";
-
-/* .content_form{
-  height: 200px;
-} */
 </style>

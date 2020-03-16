@@ -85,13 +85,12 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../assets/test.scss";
 
 .idea_content{
-  word-wrap: break-word;
+  display: inline-block;
+  min-height: 100px;
+  min-width: 230px;
+  padding: 20px;
 }
 
-/* .content_form{
-  height: 200px;
-} */
 </style>

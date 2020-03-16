@@ -40,7 +40,7 @@ export default {
 
     startEditing: function() {
       this.editing = true
-      this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時にフォームを入力状態にする
+      this.$nextTick(() => { this.$refs.message.focus() }) //メモ追加時にフォームを入力状態にする
     },
 
     // アイディアのソートと別アイディアへの移動
@@ -82,25 +82,20 @@ export default {
           const index = window.store.ideas.findIndex(item => item.id == this.idea.id)
           window.store.ideas[index].memos.push(data)
           this.message = ""
-          this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時に次のフォームを入力状態にする
+          this.$nextTick(() => { this.$refs.message.focus() }) //メモ追加時に次のフォームを入力状態にする
         }
       })
     }
+
   }
 }
 </script>
 
 
 <style lang="scss" scoped>
-@import "../assets/test.scss";
 
 .dragArea {
   min-height: 10px;
 }
-
-
-/* .content_form{
-  height: 200px;
-} */
 
 </style>
