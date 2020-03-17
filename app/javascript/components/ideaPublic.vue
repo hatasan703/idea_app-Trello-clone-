@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <comment v-for="idea in ideas" :key="idea.id" :idea="idea" :comment="comment">
       <!-- <div class="idea idea_content">
         <div>{{ idea.content }}</div>
@@ -35,6 +35,10 @@ export default {
 
 
 
-<style>
+<style lang="scss" scoped>
+
+.public_idea{
+  display: flex;
+}
 
 </style>

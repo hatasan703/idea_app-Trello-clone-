@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="idea idea_content">
+  <div class="idea">
+    <div class="">
       <div>{{ idea.content }}</div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
         <div>{{comment.content}}</div>
@@ -24,7 +24,6 @@ export default {
     return{
       editing: false,
       message: "",
-      // content: this.comment.content,
     }
   },
 
@@ -55,8 +54,8 @@ export default {
       })
     },
 
+    // コメント削除機能
     destroy: function (comment) {
-      // console.log(comment)
       var data = new FormData
       data.append("comment[content]", comment.content)
       Rails.ajax({
@@ -82,6 +81,8 @@ export default {
 
 
 
-<style>
+<style lang="scss" scoped>
+
+
 
 </style>
