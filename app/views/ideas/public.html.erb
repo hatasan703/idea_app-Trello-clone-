@@ -1,0 +1,6 @@
+<h1 class="page_title">みんなのアイディア</h1>
+<%= link_to "自分のアイディアへ", ideas_path %>
+<hr >
+
+<%= tag.div id: :idea_public, data: { ideas: @ideas.to_json(include: [:memos, :comments]) } %>
+

@@ -40,20 +40,19 @@ export default {
 
     startEditing: function() {
       this.editing = true
-      this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時にフォームを入力状態にする
+      this.$nextTick(() => { this.$refs.message.focus() }) //メモ追加時にフォームを入力状態にする
     },
 
-        // アイディアのソートと別リストへの移動
+    // アイディアのソートと別アイディアへの移動
     memoMoved: function(event) {
       const evt = event.added || event.moved
-      if (evt == undefined) { return }
-
-      const element = evt.element 
-      const idea_index = window.store.ideas.findIndex((idea) => {
-        return idea.memos.find((memo) => {
-          return memo.id === element.id
+        if (evt == undefined) { return }
+        const element = evt.element 
+        const idea_index = window.store.ideas.findIndex((idea) => {
+          return idea.memos.find((memo) => {
+            return memo.id === element.id
+          })
         })
-      })
 
       var data =  new FormData
       data.append("memo[idea_id]", window.store.ideas[idea_index].id)
@@ -83,25 +82,20 @@ export default {
           const index = window.store.ideas.findIndex(item => item.id == this.idea.id)
           window.store.ideas[index].memos.push(data)
           this.message = ""
-          this.$nextTick(() => { this.$refs.message.focus() }) //カード追加時に次のフォームを入力状態にする
+          this.$nextTick(() => { this.$refs.message.focus() }) //メモ追加時に次のフォームを入力状態にする
         }
       })
     }
+
   }
 }
 </script>
 
 
 <style lang="scss" scoped>
-@import "../assets/test.scss";
 
 .dragArea {
   min-height: 10px;
 }
-
-
-/* .content_form{
-  height: 200px;
-} */
 
 </style>

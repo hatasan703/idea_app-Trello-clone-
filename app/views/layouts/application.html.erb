@@ -9,25 +9,26 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag    'application', 'data-turbolinks-track': 'reload' %>
-    <%# <link rel="stylesheet" href="dist/jkanban.min.css">
-    <script src="dist/jkanban.min.js"></script> %>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.23.2/vuedraggable.umd.min.js"></script>
   </head>
 
   <body>
-    <header>
-    <h1><%= link_to "pbot", ideas_path %></h1>
-      <% if user_signed_in? %>
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: '' %>
-      <% else %>
-        <%= link_to "ログイン", new_user_session_path, class: '' %>
-        <%= link_to "ユーザー登録", new_user_registration_path, class: '' %>
-      <% end %>
+    <header class="header">
+      <h1 class="header_logo"><%= link_to "pbot", ideas_path %></h1>
+      <div class="nav">
+        <% if user_signed_in? %>
+          <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: '' %>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path, class: '' %>
+          <%= link_to "ユーザー登録", new_user_registration_path, class: '' %>
+        <% end %>
+      </div>
     </header>
-    <div class="container-fluid">
+    <div class="container_fluid">
       <%= yield %>
     </div>
+    <footer></footer>
   </body>
 </html>
 
