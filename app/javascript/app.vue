@@ -19,8 +19,7 @@ import idea from 'components/idea'
 
 export default {
   components: { draggable, idea },
-
-  props: ["original_ideas"],
+  props: ['original_ideas'],
   data: function() {
     return{
       ideas: this.original_ideas,
@@ -29,7 +28,6 @@ export default {
     }
   },
   methods: {
-
     // アイディアの追加
      startEditing: function() {
       this.editing = true

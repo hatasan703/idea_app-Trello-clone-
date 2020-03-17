@@ -4,4 +4,10 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     ideas_path
   end
+
+  def shared_data
+    @shared_data ||= {}
+  end
+  helper_method :shared_data
+  
 end

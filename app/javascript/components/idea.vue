@@ -28,15 +28,11 @@ export default {
     return {
       ideaEdit: this.idea,
       editing: false,
-      message: ""
+      message: "",
     }
   },
 
   methods: {
-    // アイディア(content)編集（モーダル）
-    closeModal: function(event) {
-      if (event.target.classList.contains("modal")) { this.editing = false }
-    },
 
     startEditing: function() {
       this.editing = true

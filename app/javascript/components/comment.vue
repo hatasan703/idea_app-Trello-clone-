@@ -4,7 +4,7 @@
       <div>{{ idea.content }}</div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
         <div>{{comment.content}}</div>
-        <div @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+        <div v-if='(user_id==comment.user_id)' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
       </div>
 
       <div class="comment_form">
@@ -24,6 +24,7 @@ export default {
     return{
       editing: false,
       message: "",
+      user_id: sharedData.user_id,
     }
   },
 
