@@ -2,6 +2,9 @@
   <div>
     <div class="idea add_idea">
       <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i> アイディアを追加</a>
+      <label v-if="editing" for="">タイトル</label>
+      <textarea v-if="editing" ref="title" v-model="title" class="form-control mb-1 content_form"></textarea>
+      <label v-if="editing" for="">詳細</label>
       <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
       <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">アイディアを追加</button>
       <a v-if="editing" v-on:click="editing=false">キャンセル</a>
@@ -31,6 +34,7 @@ export default {
     // アイディアの追加
      startEditing: function() {
       this.editing = true
+      this.$nextTick(() => { this.$refs.title.focus() }) //メモ追加時にフォームを入力状態にする
       this.$nextTick(() => { this.$refs.message.focus() }) //メモ追加時にフォームを入力状態にする
     },
     // アイディアのソート
@@ -50,7 +54,9 @@ export default {
      // アイディアの新規作成
     submitMessage: function() {
       var data = new FormData
-      data.append("idea[content]", this.message)
+      data.append("idea[content]", this.message, )
+      data.append("idea[title]]", this.title, )
+
 
       Rails.ajax({
         url: "/ideas",

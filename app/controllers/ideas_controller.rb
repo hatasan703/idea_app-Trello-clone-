@@ -72,7 +72,7 @@ class IdeasController < ApplicationController
 
   private
   def idea_params
-    params.require(:idea).permit(:content, :position)
+    params.require(:idea).permit(:title, :content, :position)
     .merge(user_id: current_user.id)
   end
 

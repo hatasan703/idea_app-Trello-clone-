@@ -1,17 +1,17 @@
 <template>
   <div class="idea_edit">
-    <div>
-    <h6 @click="editing=true" class="idea_content">{{ content }} <i class="fa fa-edit" aria-hidden="true"></i></h6>
-
+    <div class="idea_card">
+      <div @click="editing=true" class="idea_title">{{ title }} <i class="fa fa-edit" aria-hidden="true"></i></div>
+      <div class="idea_content">{{ content }}</div>
     </div>
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">{{ content }}</h5>
-          </div>
           <div class="modal-body">
+            <label for="">タイトル</label>
+            <textarea v-model="title" class="form-control title_form"></textarea>
+            <label for="">詳細</label>
             <textarea v-model="content" class="form-control content_form"></textarea>
           </div>
           <div class="modal-footer">
@@ -32,7 +32,9 @@ export default {
   data: function() {
     return {
       editing: false,
+      title: this.idea.title,
       content: this.idea.content,
+      
     }
   },
 
@@ -44,6 +46,7 @@ export default {
 
     save: function() {
       var data = new FormData
+      data.append("idea[title]", this.title)
       data.append("idea[content]", this.content)
 
       Rails.ajax({
@@ -86,11 +89,23 @@ export default {
 
 <style lang="scss" scoped>
 
-.idea_content{
+.idea_card{
   display: inline-block;
-  min-height: 100px;
   min-width: 230px;
-  padding: 20px;
+  padding: 10px;
+}
+
+.idea_title{
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.idea_content{
+  font-size: 13px;
+}
+
+.content_form{
+  height: 300px;
 }
 
 </style>

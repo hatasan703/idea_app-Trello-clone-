@@ -8,7 +8,7 @@
     </draggable>
 
     <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i> メモを追加</a>
-    <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
+    <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 memo_form"></textarea>
     <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">メモを追加</button>
     <a v-if="editing" v-on:click="editing=false">キャンセル</a>
 
@@ -93,5 +93,9 @@ export default {
 .dragArea {
   min-height: 10px;
 }
+
+// .memo_form{
+//   height: 40px;
+// }
 
 </style>
