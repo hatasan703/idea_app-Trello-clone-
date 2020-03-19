@@ -40,7 +40,7 @@ class IdeasController < ApplicationController
   end
 
   def update
-    if current_user.id == params[:user_id]
+    if current_user.id == @idea.user_id
       respond_to do |format|
         if @idea.update(idea_params)
           format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
@@ -54,7 +54,7 @@ class IdeasController < ApplicationController
   end
 
   def destroy
-    if current_user.id == params[:user_id]
+    if current_user.id == @idea.user_id
       @idea.destroy
       respond_to do |format|
         format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
@@ -64,7 +64,7 @@ class IdeasController < ApplicationController
   end
 
   def move
-    if current_user.id == params[:user_id]
+    if current_user.id == @idea.user_id
       @idea.insert_at(idea_params[:position].to_i)
       render action: :show
     end

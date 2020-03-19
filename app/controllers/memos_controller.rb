@@ -23,7 +23,7 @@ class MemosController < ApplicationController
   end
 
   def update
-    if current_user.id == params[:user_id]
+    if current_user.id == @memo.user_id
       respond_to do |format|
         if @memo.update(memo_params)
           format.html { redirect_to @memo, notice: 'Memo was successfully updated.' }
@@ -37,7 +37,7 @@ class MemosController < ApplicationController
   end
 
   def destroy
-    if current_user.id == params[:user_id]
+    if current_user.id == @memo.user_id
       @memo.destroy
       respond_to do |format|
         format.html { redirect_to memos_url, notice: 'memo was successfully destroyed.' }
@@ -47,7 +47,7 @@ class MemosController < ApplicationController
   end
 
   def move
-    if current_user.id == params[:user_id]
+    if current_user.id == @memo.user_id
       @memo.update(memo_params)
       render action: :show
     end
