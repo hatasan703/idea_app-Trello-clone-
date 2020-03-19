@@ -50,9 +50,6 @@ test:
 production:
     
   <<: *default
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
   database: pbot2_production
   username: pbot2
   password: <%= ENV['PBOT2_DATABASE_PASSWORD'] %>
