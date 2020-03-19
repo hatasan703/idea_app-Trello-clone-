@@ -1,6 +1,7 @@
 // ヘッダー
 
 .header{
+  width: 100%;
   height: 35px;
   display: flex;
 }
@@ -13,11 +14,20 @@
 }
 
 .nav{
-  width: 480px;
-  a{
-    margin-left: 300px;
-    line-height: 2;
+  width: 30%;
+  display: flex;
+  margin: 5px;
+  text-align: right;
+  .logout{
+    // margin-left: 300px;
+    // line-height: 2;
+  text-align: right;
+  color: #18BC9C;
+  }
+  .login{
+    margin:0 5px;
     color: #18BC9C;
+
   }
 }
 
@@ -26,11 +36,12 @@
 
 
 
-
-
-
-body{
-}
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
+  }
 
 .container_fluid{
   background: #34495e; 
