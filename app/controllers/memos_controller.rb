@@ -23,28 +23,34 @@ class MemosController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @memo.update(memo_params)
-        format.html { redirect_to @memo, notice: 'Memo was successfully updated.' }
-        format.json { render :show, status: :ok, location: @memo }
-      else
-        format.html { render :edit }
-        format.json { render json: @memo.errors, status: :unprocessable_entity }
+    if current_user.id == @memo.user_id
+      respond_to do |format|
+        if @memo.update(memo_params)
+          format.html { redirect_to @memo, notice: 'Memo was successfully updated.' }
+          format.json { render :show, status: :ok, location: @memo }
+        else
+          format.html { render :edit }
+          format.json { render json: @memo.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
   def destroy
-    @memo.destroy
-    respond_to do |format|
-      format.html { redirect_to memos_url, notice: 'memo was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.id == @memo.user_id
+      @memo.destroy
+      respond_to do |format|
+        format.html { redirect_to memos_url, notice: 'memo was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
   def move
-    @memo.update(memo_params)
-    render action: :show
+    if current_user.id == @memo.user_id
+      @memo.update(memo_params)
+      render action: :show
+    end
   end
 
 

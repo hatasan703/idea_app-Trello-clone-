@@ -17,10 +17,12 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.destroy
-    respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'comment was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.id == params[:user_id]
+      @comment.destroy
+      respond_to do |format|
+        format.html { redirect_to comments_url, notice: 'comment was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 

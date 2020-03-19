@@ -1,14 +1,16 @@
 class IdeasController < ApplicationController
-  before_action :redirect_to_top
+  before_action :redirect_to_top, except: [:public]
   before_action :set_idea, only: [:edit, :update, :show, :destroy, :move]
 
 
   def index
-    @ideas = Idea.where(user_id: current_user.id).sorted
+      @ideas = Idea.where(user_id: current_user.id).sorted
   end
 
   def public
     @ideas = Idea.order(created_at: "DESC")
+    @user = current_user
+    shared_data[:user_id] = @user.try(:id)
   end
 
   def show
@@ -38,33 +40,39 @@ class IdeasController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @idea.update(idea_params)
-        format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
-        format.json { render :show, status: :ok, location: @idea }
-      else
-        format.html { render :edit }
-        format.json { render json: @idea.errors, status: :unprocessable_entity }
+    if current_user.id == @idea.user_id
+      respond_to do |format|
+        if @idea.update(idea_params)
+          format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
+          format.json { render :show, status: :ok, location: @idea }
+        else
+          format.html { render :edit }
+          format.json { render json: @idea.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
   def destroy
-    @idea.destroy
-    respond_to do |format|
-      format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.id == @idea.user_id
+      @idea.destroy
+      respond_to do |format|
+        format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
   def move
-    @idea.insert_at(idea_params[:position].to_i)
-    render action: :show
+    if current_user.id == @idea.user_id
+      @idea.insert_at(idea_params[:position].to_i)
+      render action: :show
+    end
   end
 
   private
   def idea_params
-    params.require(:idea).permit(:content, :position)
+    params.require(:idea).permit(:title, :content, :position)
     .merge(user_id: current_user.id)
   end
 

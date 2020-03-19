@@ -1,10 +1,12 @@
 <template>
   <div class="idea">
-    <div class="">
-      <div>{{ idea.content }}</div>
+    <div class="idea_card">
+      <div class="idea_title">{{ idea.title }}</div>
+      <div class="idea_content">{{ idea.content }}</div>
+    </div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
         <div>{{comment.content}}</div>
-        <div @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+        <div v-if='(user_id==comment.user_id)' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
       </div>
 
       <div class="comment_form">
@@ -13,7 +15,6 @@
         <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">コメントを追加</button>
         <a v-if="editing" v-on:click="editing=false">キャンセル</a>
       </div>
-    </div>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ export default {
     return{
       editing: false,
       message: "",
+      user_id: sharedData.user_id,
     }
   },
 
@@ -84,5 +86,23 @@ export default {
 <style lang="scss" scoped>
 
 
+.idea_card{
+  display: inline-block;
+  min-width: 230px;
+  padding: 10px;
+}
+
+.idea_title{
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.idea_content{
+  font-size: 13px;
+}
+
+.card-body{
+  padding: 10px;
+}
 
 </style>

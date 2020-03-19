@@ -9,9 +9,6 @@
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">{{ memo.content }}</h5>
-          </div>
           <div draggable="true" class="modal-body">
             <textarea v-model="content" class="form-control content_form"></textarea>
           </div>
@@ -125,4 +122,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.card-body{
+  padding: 10px;
+}
 </style>
