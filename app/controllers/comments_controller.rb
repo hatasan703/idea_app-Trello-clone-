@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    if current_user.id == params[:user_id]
+    if current_user.id == @comment.user_id
       @comment.destroy
       respond_to do |format|
         format.html { redirect_to comments_url, notice: 'comment was successfully destroyed.' }

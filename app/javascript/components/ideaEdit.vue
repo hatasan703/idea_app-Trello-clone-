@@ -15,12 +15,15 @@
             <textarea v-model="content" class="form-control content_form"></textarea>
           </div>
           <div class="modal-footer">
+            <input type="checkbox" v-model="open" true-value=true false-value=false>
+            <label for="open">公開　</label>
             <button @click="save" type="button" class="btn btn-primary">保存</button>
             <button @click="destroy" type="button" class="btn btn-primary">削除</button>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -34,20 +37,21 @@ export default {
       editing: false,
       title: this.idea.title,
       content: this.idea.content,
-      
+      open: this.idea.open,
     }
   },
-
   methods: {
-    // アイディア(content)編集（モーダル）
     closeModal: function(event) {
       if (event.target.classList.contains("modal")) { this.editing = false }
     },
 
+    // アイディア(content)編集（モーダル）
     save: function() {
       var data = new FormData
       data.append("idea[title]", this.title)
       data.append("idea[content]", this.content)
+      data.append("idea[open]", this.open)
+
 
       Rails.ajax({
         beforeSend: () => true,
