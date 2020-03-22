@@ -8,7 +8,7 @@ class IdeasController < ApplicationController
   end
 
   def public
-    @ideas = Idea.order(created_at: "DESC")
+    @ideas = Idea.where(open: true).order(created_at: "DESC")
     @user = current_user
     shared_data[:user_id] = @user.try(:id)
   end
@@ -72,7 +72,7 @@ class IdeasController < ApplicationController
 
   private
   def idea_params
-    params.require(:idea).permit(:title, :content, :position)
+    params.require(:idea).permit(:title, :content, :position, :open)
     .merge(user_id: current_user.id)
   end
 
