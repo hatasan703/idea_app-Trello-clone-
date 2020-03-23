@@ -1,6 +1,7 @@
 class IdeasController < ApplicationController
   before_action :redirect_to_top, except: [:public]
   before_action :set_idea, only: [:edit, :update, :show, :destroy, :move]
+  include IdeasHelper
 
 
   def index
@@ -14,9 +15,8 @@ class IdeasController < ApplicationController
   end
 
   def show
-
+    # ニュース取得
     @news_query=URI.encode(@idea.query_word)
-
     @rss = FeedNormalizer::FeedNormalizer.parse(open("https://news.google.com/atom/search?q=#{@news_query}&hl=ja&gl=JP&ceid=JP:ja"))
 
     respond_to do |format|
@@ -30,27 +30,11 @@ class IdeasController < ApplicationController
   end
 
   def create
-    # ニュースクエリ取得、保存(あとで切り分ける)
-    @query = URI.encode(params[:idea][:content].gsub(/[\r\n]/,""))
-    @res = Hash.from_xml(open("http://jlp.yahooapis.jp/KeyphraseService/V1/extract?appid=dj00aiZpPUhhNUpvV1BUa2tMNiZzPWNvbnN1bWVyc2VjcmV0Jng9NWE-&sentence=#{@query}"))
-    if @res
-      @words = "(新規事業 ベンチャー スタートアップ) "
-      if @res["ResultSet"]["Result"]
-          @res["ResultSet"]["Result"].each.with_index do |key, index|
-            if index <= 4
-              begin
-                @words = @words << key["Keyphrase"].to_s << " "
-              rescue => error
-                
-              end
-            end
-          end
-      end
-    end
-    params[:idea][:query_word] = @words
-    
-    @idea = Idea.new(idea_params)
+    # ニュースクエリ取得、保存
+    @idea_content = params[:idea][:content]
+    params[:idea][:query_word] = get_query_word(@idea_content)
 
+    @idea = Idea.new(idea_params)
     respond_to do |format|
       if @idea.save
         format.html { redirect_to @idea, notice: 'Idea was successfully created.' }
@@ -68,25 +52,9 @@ class IdeasController < ApplicationController
 
   def update
     if current_user.id == @idea.user_id
-      # ニュースクエリ取得、保存(あとで切り分ける)
-      @query = URI.encode(params[:idea][:content].gsub(/[\r\n]/,""))
-      @res = Hash.from_xml(open("http://jlp.yahooapis.jp/KeyphraseService/V1/extract?appid=dj00aiZpPUhhNUpvV1BUa2tMNiZzPWNvbnN1bWVyc2VjcmV0Jng9NWE-&sentence=#{@query}"))
-      if @res
-        @words = "(新規事業 ベンチャー スタートアップ) "
-        if @res["ResultSet"]["Result"]
-            @res["ResultSet"]["Result"].each.with_index do |key, index|
-              if index <= 4
-                begin
-                  @words = @words << key["Keyphrase"].to_s << " "
-                rescue => error
-                  
-                end
-              end
-            end
-        end
-      end
-      params[:idea][:query_word] = @words
-
+      # ニュースクエリ取得、保存
+      @idea_content = params[:idea][:content]
+      params[:idea][:query_word] = get_query_word(@idea_content)
 
       respond_to do |format|
         if @idea.update(idea_params)

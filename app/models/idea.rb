@@ -7,7 +7,4 @@ class Idea < ApplicationRecord
 
   scope :sorted, ->{ order(position: :asc)  }
   validates :content, presence: true
-
-
-
 end
