@@ -28,6 +28,7 @@ export default {
       ideas: this.original_ideas,
       editing: false,
       message: "",
+      title: "",
     }
   },
   methods: {

@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_03_22_084055) do
     t.integer "position"
     t.string "title"
     t.boolean "open", default: false
+    t.string "query_word"
     t.index ["user_id"], name: "index_ideas_on_user_id"
   end
 

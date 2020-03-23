@@ -1,7 +1,9 @@
 <template>
   <div class="idea_edit">
     <div class="idea_card">
-      <div @click="editing=true" class="idea_title">{{ title }} <i class="fa fa-edit" aria-hidden="true"></i></div>
+      <div class="idea_title">{{ title }}</div>
+      <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
+      <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
       <div class="idea_content">{{ content }}</div>
     </div>
     <div v-if='editing' class="modal-backdrop show"></div>
@@ -84,6 +86,11 @@ export default {
           this.editing = false
         }
       })
+    },
+
+    // idea#show ニュースページ
+    newsPage: function() {
+      location.href = `/ideas/${this.idea.id}`
     },
 
   }

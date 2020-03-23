@@ -14,7 +14,15 @@ class IdeasController < ApplicationController
   end
 
   def show
-    @memos = @idea.memos.includes(:user).rank(:row_order)
+
+    @news_query=URI.encode(@idea.query_word)
+
+    @rss = FeedNormalizer::FeedNormalizer.parse(open("https://news.google.com/atom/search?q=#{@news_query}&hl=ja&gl=JP&ceid=JP:ja"))
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @idea }
+    end
   end
 
   def new
@@ -22,6 +30,25 @@ class IdeasController < ApplicationController
   end
 
   def create
+    # ニュースクエリ取得、保存(あとで切り分ける)
+    @query = URI.encode(params[:idea][:content].gsub(/[\r\n]/,""))
+    @res = Hash.from_xml(open("http://jlp.yahooapis.jp/KeyphraseService/V1/extract?appid=dj00aiZpPUhhNUpvV1BUa2tMNiZzPWNvbnN1bWVyc2VjcmV0Jng9NWE-&sentence=#{@query}"))
+    if @res
+      @words = "(新規事業 ベンチャー スタートアップ) "
+      if @res["ResultSet"]["Result"]
+          @res["ResultSet"]["Result"].each.with_index do |key, index|
+            if index <= 4
+              begin
+                @words = @words << key["Keyphrase"].to_s << " "
+              rescue => error
+                
+              end
+            end
+          end
+      end
+    end
+    params[:idea][:query_word] = @words
+    
     @idea = Idea.new(idea_params)
 
     respond_to do |format|
@@ -41,6 +68,26 @@ class IdeasController < ApplicationController
 
   def update
     if current_user.id == @idea.user_id
+      # ニュースクエリ取得、保存(あとで切り分ける)
+      @query = URI.encode(params[:idea][:content].gsub(/[\r\n]/,""))
+      @res = Hash.from_xml(open("http://jlp.yahooapis.jp/KeyphraseService/V1/extract?appid=dj00aiZpPUhhNUpvV1BUa2tMNiZzPWNvbnN1bWVyc2VjcmV0Jng9NWE-&sentence=#{@query}"))
+      if @res
+        @words = "(新規事業 ベンチャー スタートアップ) "
+        if @res["ResultSet"]["Result"]
+            @res["ResultSet"]["Result"].each.with_index do |key, index|
+              if index <= 4
+                begin
+                  @words = @words << key["Keyphrase"].to_s << " "
+                rescue => error
+                  
+                end
+              end
+            end
+        end
+      end
+      params[:idea][:query_word] = @words
+
+
       respond_to do |format|
         if @idea.update(idea_params)
           format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
@@ -72,7 +119,7 @@ class IdeasController < ApplicationController
 
   private
   def idea_params
-    params.require(:idea).permit(:title, :content, :position, :open)
+    params.require(:idea).permit(:title, :content, :position, :open, :query_word)
     .merge(user_id: current_user.id)
   end
 
