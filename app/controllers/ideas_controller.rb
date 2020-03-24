@@ -1,6 +1,7 @@
 class IdeasController < ApplicationController
   before_action :redirect_to_top, except: [:public]
   before_action :set_idea, only: [:edit, :update, :show, :destroy, :move]
+  include IdeasHelper
 
 
   def index
@@ -14,7 +15,14 @@ class IdeasController < ApplicationController
   end
 
   def show
-    @memos = @idea.memos.includes(:user).rank(:row_order)
+    # ニュース取得
+    @news_query=URI.encode(@idea.query_word)
+    @rss = FeedNormalizer::FeedNormalizer.parse(open("https://news.google.com/atom/search?q=#{@news_query}&hl=ja&gl=JP&ceid=JP:ja"))
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @idea }
+    end
   end
 
   def new
@@ -22,8 +30,11 @@ class IdeasController < ApplicationController
   end
 
   def create
-    @idea = Idea.new(idea_params)
+    # ニュースクエリ取得、保存
+    @idea_content = params[:idea][:content]
+    params[:idea][:query_word] = get_query_word(@idea_content)
 
+    @idea = Idea.new(idea_params)
     respond_to do |format|
       if @idea.save
         format.html { redirect_to @idea, notice: 'Idea was successfully created.' }
@@ -41,6 +52,10 @@ class IdeasController < ApplicationController
 
   def update
     if current_user.id == @idea.user_id
+      # ニュースクエリ取得、保存
+      @idea_content = params[:idea][:content]
+      params[:idea][:query_word] = get_query_word(@idea_content)
+
       respond_to do |format|
         if @idea.update(idea_params)
           format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
@@ -72,7 +87,7 @@ class IdeasController < ApplicationController
 
   private
   def idea_params
-    params.require(:idea).permit(:title, :content, :position, :open)
+    params.require(:idea).permit(:title, :content, :position, :open, :query_word)
     .merge(user_id: current_user.id)
   end
 

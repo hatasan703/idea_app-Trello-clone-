@@ -79,7 +79,6 @@ export default {
 
     // メモをアイディアに移動
     changeIdea: function() {
-      console.log("a")
     
       // メモの削除
       var data = new FormData

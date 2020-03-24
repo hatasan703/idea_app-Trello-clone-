@@ -77,3 +77,5 @@ gem 'bootstrap', '~> 4.3.1'
 
 gem 'acts_as_list'
 gem 'webpacker', github: 'rails/webpacker'
+
+gem 'feed-normalizer'
