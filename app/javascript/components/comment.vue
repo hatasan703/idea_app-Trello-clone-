@@ -1,7 +1,16 @@
 <template>
   <div class="idea">
     <div class="idea_card">
-      <div class="idea_title">{{ idea.title }}</div>
+      <div class="idea_title">{{ idea.title }}
+        <div>
+          <div v-if="isLiked" @click="deleteLike()">
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count }}
+          </div>
+          <div v-else @click="registerLike()">
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ count }}
+          </div>
+        </div>
+      </div>
       <div class="idea_content">{{ idea.content }}</div>
     </div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
@@ -19,6 +28,12 @@
 </template>
 
 <script>
+import axios from 'axios'
+axios.defaults.headers.common = {
+  'X-Requested-With': 'XMLHttpRequest',
+  'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
+
 export default {
   props: ['idea'],
   data: function() {
@@ -26,7 +41,26 @@ export default {
       editing: false,
       message: "",
       user_id: sharedData.user_id,
+      likeList: [],
     }
+  },
+
+  computed: {
+    // いいね数を返す
+    count() {
+      return this.likeList.length
+    },
+    // ログインユーザが既にいいねしているかを判定する
+    isLiked() {
+      if (this.likeList.length === 0) { return false }
+      return Boolean(this.findLikeId())
+    }
+  },
+  // Vueインスタンスの作成・初期化直後に実行される
+  created: function() {
+    this.fetchLikeByIdeaId().then(result => {
+      this.likeList = result
+    })
   },
 
   methods: {
@@ -73,6 +107,35 @@ export default {
           this.editing = false
         }
       })
+    },
+
+    // rails側のlikes/indexアクションにリクエストするメソッド
+    fetchLikeByIdeaId: async function() {
+      const res = await axios.get(`/api/likes/?idea_id=${this.idea.id}`)
+      if (res.status !== 200) { process.exit() }
+      return res.data
+    },
+    // rails側のlikes/createアクションにリクエストするメソッド
+    registerLike: async function() {
+      const res = await axios.post('/api/likes', { idea_id: this.idea.id })
+      if (res.status !== 201) { process.exit() }
+      this.fetchLikeByIdeaId().then(result => {
+        this.likeList = result
+      })
+    },
+    // rails側のlikes/destroyアクションにリクエストするメソッド
+    deleteLike: async function() {
+      const likeId = this.findLikeId()
+      const res = await axios.delete(`/api/likes/${likeId}`)
+      if (res.status !== 200) { process.exit() }
+      this.likeList = this.likeList.filter(n => n.id !== likeId)
+    },
+    // ログインユーザがいいねしているlikeモデルのidを返す
+    findLikeId: function() {
+      const like = this.likeList.find((like) => {
+        return (like.user_id === this.user_id)
+      })
+      if (like) { return like.id }
     },
 
 

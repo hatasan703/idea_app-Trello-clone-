@@ -27,5 +27,8 @@ Rails.application.routes.draw do
   post  "ideas/:id/comment" => "comments#create"
   resources :comments
 
+  namespace :api, { format: 'json' } do
+    resources :likes, only: [:index, :create, :destroy]
+  end
 
 end
