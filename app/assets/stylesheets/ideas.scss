@@ -1,18 +1,3 @@
-// ヘッダー
-
-.header{
-  width: 100%;
-  height: 35px;
-  display: flex;
-}
-
-.header_logo{
-  padding-left: 10px;
-  font-size: 30px;
-  margin-right: 950px;
-  color: #4589ce;
-}
-
 .nav{
   width: 30%;
   display: flex;
@@ -31,27 +16,20 @@
   }
 }
 
-
-
-
-
-
-  body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-tap-highlight-color: transparent;
-    tap-highlight-color: transparent;
-  }
-
-.container_fluid{
-  background: #34495e; 
-
-}
-
+// アイディアページ
 .page_title{
-  padding: 10px;
-  color: #ffffff;
+  text-align: center;
+  color: #fff;
+  font-size: 1.2em;
+  padding: 5px;
 }
+
+
+
+  .container_fluid{
+    background: #34495e; 
+
+  }
 
 .dragArea {
   min-height: 10px;
@@ -67,12 +45,3 @@
   vertical-align: top;
   width: 250px;
 }
-
-// .idea_card{
-//   display: inline-block;
-//   min-height: 100px;
-//   min-width: 230px;
-//   padding: 20px;
-// }
-
-
