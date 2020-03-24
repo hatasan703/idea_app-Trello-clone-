@@ -3,6 +3,7 @@ class Idea < ApplicationRecord
   belongs_to :user
   has_many :memos, ->{ order(position: :asc)  }, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :likes, dependent: :destroy
   has_one :pran
 
   scope :sorted, ->{ order(position: :asc)  }
