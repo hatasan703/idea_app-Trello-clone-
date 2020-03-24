@@ -1,38 +1,16 @@
-<style>
 
-div.alert{
-    width:600px;
-    margin: 0.5em auto 1em auto;
-}
-div.news_div{
-    max-width:900px;
-    padding: 0.5em 1em;
-    margin: 0.5em auto 1em auto;
-}
-div.news_div a{
-  font-weight:bold;
-  font-size:1em;
-  color:#E0EFF9!important;
-}
-div.news_div font{
-  color:#fff!important;
-  float:right;
-}
-</style>
-
-<div style="text-align:center;margin-top:10px;">
-  <span style="font-size:1.25em;color:#fff;font-weight:bold;">関連ＮＥＷＳ</span>
-</div>
-
-<div style="text-align:center">
-  <p style="font-size:1em;margin:10px;color:#fff;"><%= @idea.title %></p>
-</div>
-
-
-
-<% @rss.entries.map do |item| %>
-  <div class="news_div" style="">
-    <img style="height:20px;" src="/assets/icons/check.png">
-    <%=item.content.html_safe%>
+<div class="news_header">
+  <h1 class="news_header_title">関連ＮＥＷＳ</h1>
+  <div class="news_header_idea">
+    <p><%= @idea.title %></p>
   </div>
-<% end %>
+</div>
+
+<div class="news_contents">
+  <% @rss.entries.map do |item| %>
+    <div class="news_title" style="">
+      <%= image_tag 'icons/check.png', alt: "チェック" %>
+      <%=item.content.html_safe%>
+    </div>
+  <% end %>
+</div>
