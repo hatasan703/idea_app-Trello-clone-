@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  members: MyString
+  group: 
+  user: 
+  admin: false
+  activate: false
+
+two:
+  members: MyString
+  group: 
+  user: 
+  admin: false
+  activate: false

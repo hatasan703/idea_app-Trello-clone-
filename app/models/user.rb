@@ -7,4 +7,6 @@ class User < ApplicationRecord
   has_many :plans
   has_many :memos
   has_many :comments
+  has_many :members
+  has_many :groups ,through: :members
 end

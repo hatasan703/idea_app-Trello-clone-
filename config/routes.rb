@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :groups
   devise_for :users
   devise_scope :user do
     authenticated :user do
@@ -10,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   resources :users
-  resources :ideas do  
+  resources :ideas do
     collection do
       get :public
     end

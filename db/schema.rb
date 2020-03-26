@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_22_084055) do
+ActiveRecord::Schema.define(version: 2020_03_24_132813) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(version: 2020_03_22_084055) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ideas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
     t.bigint "user_id", null: false
@@ -37,6 +43,19 @@ ActiveRecord::Schema.define(version: 2020_03_22_084055) do
     t.string "title"
     t.boolean "open", default: false
     t.index ["user_id"], name: "index_ideas_on_user_id"
+  end
+
+  create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
+    t.boolean "admin", default: false
+    t.boolean "activate", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_type_id"
+    t.index ["group_id"], name: "index_members_on_group_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
+    t.index ["user_type_id"], name: "index_members_on_user_type_id"
   end
 
   create_table "memos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -59,6 +78,14 @@ ActiveRecord::Schema.define(version: 2020_03_22_084055) do
     t.datetime "updated_at", null: false
     t.index ["idea_id"], name: "index_plans_on_idea_id"
     t.index ["user_id"], name: "index_plans_on_user_id"
+  end
+
+  create_table "user_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_right", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_user_types_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
