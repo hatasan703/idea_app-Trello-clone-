@@ -1,20 +1,4 @@
-.nav{
-  width: 30%;
-  display: flex;
-  margin: 5px;
-  text-align: right;
-  .logout{
-    // margin-left: 300px;
-    // line-height: 2;
-  text-align: right;
-  color: #18BC9C;
-  }
-  .login{
-    margin:0 5px;
-    color: #18BC9C;
 
-  }
-}
 
 // アイディアページ
 .page_title{
@@ -23,13 +7,6 @@
   font-size: 1.2em;
   padding: 5px;
 }
-
-
-
-  .container_fluid{
-    background: #34495e; 
-
-  }
 
 .dragArea {
   min-height: 10px;
