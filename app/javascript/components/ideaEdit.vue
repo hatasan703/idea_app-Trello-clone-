@@ -89,7 +89,7 @@ export default {
 
     // idea#show ニュースページ
     newsPage: function() {
-      location.href = `/ideas/${this.idea.id}`
+      location.href = `/ideas/${this.idea.id}/news`
     },
 
   }
