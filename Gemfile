@@ -71,7 +71,7 @@ gem 'jquery-rails'
 gem "font-awesome-rails"
 gem 'ranked-model'
 gem 'jquery-ui-rails'
-gem 'cocoon'
+gem 'nested_form_fields'
 gem 'jquery-turbolinks'
 gem 'bootstrap', '~> 4.3.1'
 
@@ -79,3 +79,6 @@ gem 'acts_as_list'
 gem 'webpacker', github: 'rails/webpacker'
 
 gem 'feed-normalizer'
+
+gem 'carrierwave'
+gem 'rmagick'

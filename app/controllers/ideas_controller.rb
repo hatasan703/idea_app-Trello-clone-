@@ -15,7 +15,14 @@ class IdeasController < ApplicationController
   end
 
   def show
-   
+    # @plan_questions = PlanQuestion.all
+    # @plans = @idea.plans
+
+    # # if @plan.empty?
+    # #   # binding.pry
+    # #   @plans = PlanCollection.new
+    # #   @plan = Plan.new
+    # # end
   end
 
   def news
