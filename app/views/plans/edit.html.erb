@@ -1,17 +1,14 @@
 <div class="planning_container">
   <%= form_with model: @plan, url: idea_plan_path(@idea, @plan), local: true do |f| %>
-
-    <div class="form-group">
-      <% if @plan.image? %>
-        <%= image_tag @plan.image.url, class: "file-preview" %>
-      <% else %>
-        <p>noimage</p>
-      <% end %>
-
-      <label for="file-sample" id="input-label" class="upload_btn">ビジネスモデルを選択</label>
-      <%= f.file_field :image, id:"file-sample", class: "hidden" %><label for="file-sample" id="input-label"></label>
-      <%= f.hidden_field :user_id, value: current_user.id %>
-      <%= f.hidden_field :idea_id, value: @idea.id %>
+    <% if @plan.image? %>
+      <%= image_tag @plan.image.url, class: "file-preview" %>
+    <% else %>
+      <p>noimage</p>
+    <% end %>
+    <label for="file-sample" id="input-label" class="upload_btn">ビジネスモデルを選択</label>
+    <%= f.file_field :image, id:"file-sample", class: "hidden" %><label for="file-sample" id="input-label"></label>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :idea_id, value: @idea.id %>
 
 
     <div class="planning_form">
@@ -23,9 +20,7 @@
         <%= plan.hidden_field :plan_question_id, value: @plan_questions[@num].id %>
         <% @num+= 1 %>
       <% end %>
-      </div>
-
-      <%= f.submit "更新する",class:"btn btn-info planning_btn" %><br>
     </div>
+    <%= f.submit "更新する",class:"btn btn-info planning_btn" %><br>
   <% end %>
 </div>
