@@ -1,6 +1,6 @@
 class IdeasController < ApplicationController
   before_action :redirect_to_top, except: [:public]
-  before_action :set_idea, only: [:edit, :update, :show, :destroy, :move]
+  before_action :set_idea, only: [:edit, :update, :show, :destroy, :move, :news]
   include IdeasHelper
 
 
@@ -14,15 +14,15 @@ class IdeasController < ApplicationController
     shared_data[:user_id] = @user.try(:id)
   end
 
-  def show
-    # ニュース取得
-    @news_query=URI.encode(@idea.query_word)
-    @rss = FeedNormalizer::FeedNormalizer.parse(open("https://news.google.com/atom/search?q=#{@news_query}&hl=ja&gl=JP&ceid=JP:ja"))
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @idea }
-    end
+  def news
+     # ニュース取得
+     @news_query=URI.encode(@idea.query_word)
+     @rss = FeedNormalizer::FeedNormalizer.parse(open("https://news.google.com/atom/search?q=#{@news_query}&hl=ja&gl=JP&ceid=JP:ja"))
+ 
+     respond_to do |format|
+       format.html # show.html.erb
+       format.json { render json: @idea }
+     end
   end
 
   def new

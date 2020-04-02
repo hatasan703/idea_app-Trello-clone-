@@ -9,12 +9,15 @@ Rails.application.routes.draw do
     end
   end
 
+  
   resources :users
-  resources :ideas do  
+  resources :ideas do
+    resources :plans, only: [:index, :new, :edit, :create, :update]
     collection do
       get :public
     end
     member do
+      get :news
       patch :move
     end
   end
