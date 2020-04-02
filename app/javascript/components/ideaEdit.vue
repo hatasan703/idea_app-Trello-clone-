@@ -5,6 +5,7 @@
       <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
       <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
       <div class="idea_content">{{ content }}</div>
+      <p @click="planningPage" class="create_plan">プランニングへ</p>
     </div>
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
@@ -92,6 +93,11 @@ export default {
       location.href = `/ideas/${this.idea.id}/news`
     },
 
+    planningPage: function() {
+      location.href = `/ideas/${this.idea.id}/plans/new`
+    },
+    
+
   }
 }
 </script>
@@ -116,6 +122,17 @@ export default {
 
 .content_form{
   height: 300px;
+}
+
+.create_plan{
+  font-size: 15px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.create_plan:hover{
+  opacity: 0.5;  
+  
 }
 
 </style>
