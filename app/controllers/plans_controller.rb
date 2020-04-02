@@ -1,28 +1,27 @@
 class PlansController < ApplicationController
-  # before_action :set_plan, only: [:index]
+  before_action :redirect_to_top
+  before_action :set_planning_page, only: [:new, :edit]
 
-  def index
-    @plan_questions = PlanQuestion.all
-    @idea = Idea.find(params[:idea_id])
-    @plan = Plan.find_by(idea_id: @idea.id)
-    @plan_contents = @plan.plan_contents if @plan.present?
-    if @plan.nil?
-      @plan = Plan.new
-      4.times do
-        @plan.plan_contents.build
-      end
+  def new
+    redirect_to edit_idea_plan_path(@idea, @plan) if @plan.present?
+    @plan = Plan.new
+    4.times do
+      @plan.plan_contents.build
     end
+  end
+
+  def edit
+    @plan_contents = @plan.plan_contents if @plan.present?
   end
 
   def create
     @plans = Plan.create(plan_params)
-    redirect_to idea_plans_path
+    redirect_to edit_idea_plan_path
   end
 
   def update
-    binding.pry
     @plan = Plan.update(plan_params)
-    redirect_to idea_plans_path
+    redirect_to edit_idea_plan_path
   end
 
   private
@@ -38,12 +37,15 @@ class PlansController < ApplicationController
         )
   end
 
-  # def redirect_to_top
-  #   redirect_to controller: :top, action: :index unless user_signed_in?
-  # end
+  def redirect_to_top
+    redirect_to controller: :top, action: :index unless user_signed_in?
+  end
 
-  def set_plan
-    @plan = Plan.find(params[:id])
+  def set_planning_page
+    @num = 0
+    @plan_questions = PlanQuestion.all
+    @idea = Idea.find(params[:idea_id])
+    @plan = Plan.find_by(idea_id: @idea.id)
   end
 
 

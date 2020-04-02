@@ -1,3 +1,33 @@
-// Place all the styles related to the plans controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.planning_container{
+  width:90%;
+  max-width:800px;
+  ;margin:0 auto 0 auto;color:#fff;
+  text-align:center;
+}
+.plan_question_content{
+  font-size:0.8em;
+}
+.planning_form{
+  text-align:left;
+}
+.file-preview{
+  margin-top: 15px;
+  max-height: 600px;
+  max-width: 100%;
+  min-width: 650px;
+}
+.hidden{
+  display: none;
+}
+
+.upload_btn {
+  margin-top: 15px;
+  background: #74b9ff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  display: inline-block;
+  position: relative;
+}
+.planning_btn{
+  margin: 5px 0 20px;
+}

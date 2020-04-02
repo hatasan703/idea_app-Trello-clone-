@@ -14,17 +14,6 @@ class IdeasController < ApplicationController
     shared_data[:user_id] = @user.try(:id)
   end
 
-  def show
-    # @plan_questions = PlanQuestion.all
-    # @plans = @idea.plans
-
-    # # if @plan.empty?
-    # #   # binding.pry
-    # #   @plans = PlanCollection.new
-    # #   @plan = Plan.new
-    # # end
-  end
-
   def news
      # ニュース取得
      @news_query=URI.encode(@idea.query_word)

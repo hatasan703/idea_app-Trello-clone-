@@ -1,0 +1,25 @@
+<div class="planning_container">
+ 
+  <%= form_with model: @plan, url: idea_plans_path, local: true do |f| %>
+    <div class="form-group">
+      <%= image_tag 'bm/default-bm.png', class: "file-preview", alt: 'ビジネスモデル' %>
+      <label for="file-sample" id="input-label" class="upload_btn">ビジネスモデルを選択</label>
+      <%= f.file_field :image, id:"file-sample", class: "hidden" %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :idea_id, value: @idea.id %>
+
+
+      <div class="planning_form">
+      <%= f.fields_for :plan_contents do |plan| %>
+        <p class="plan_question_title">【確認事項】 <%= @plan_questions[@num].title %></p>
+        <p class="plan_question_content"><%= @plan_questions[@num].content %></p>
+        <%= plan.text_area :content, rows:4, class:"form-control" %><br>
+        <%= plan.hidden_field :user_id, value: current_user.id %>
+        <%= plan.hidden_field :plan_question_id, value: @plan_questions[@num].id %>
+        <% @num+= 1 %>
+      <% end %>
+      </div>
+      <%= f.submit "作成する",class:"btn btn-info planning_btn" %><br>
+    </div>
+  <% end %>
+</div>
