@@ -1,0 +1,29 @@
+<%= form_with(model: @management_authorization,url:management_authorization_path, local: true) do |form| %>
+  <% if @management_authorization.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@management_authorization.errors.count, "error") %> prohibited this @management_authorization from being saved:</h2>
+
+      <ul>
+      <% @management_authorization.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%=form.fields_for :members do |member|%>
+      <%unless member.object.user.id == current_user.id%>
+      <p><%=member.label :email ,member.object.user.email%></p>
+      <%=member.check_box :admin %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="field">
+
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

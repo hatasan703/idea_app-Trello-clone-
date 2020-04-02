@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   resources :groups
+  resources :joingroups
+  resources :management_authorizations ,only: [:edit, :update, :destroy]
   devise_for :users
   devise_scope :user do
     authenticated :user do

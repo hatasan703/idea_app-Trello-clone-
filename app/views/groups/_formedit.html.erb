@@ -16,10 +16,7 @@
     <%= form.text_field :name %>
   </div>
   <div class="field">
-    <%=form.fields_for :members do |mem|%>
-    <p><%=mem.label :email,mem.object.user.email%></p>
-    admin?:<%=mem.check_box :admin%>
-    <% end %>
+    <%=form.collection_check_boxes :user_ids,User.where.not(id:current_user.id),:id,:email%>
   </div>
   <div class="field">
 

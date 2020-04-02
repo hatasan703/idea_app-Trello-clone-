@@ -1,27 +1,77 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Groups</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @groups.each do |group| %>
-      <tr>
-        <td><%= group.name %></td>
-        <td><%= link_to 'Show', group %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<nav class="nav">
+  <a class="nav-link" data-toggle="collapse" href="#management" role="button" aria-expanded="false" aria-controls="management">管理者の設定</a>
+  <a class="nav-link"data-toggle="collapse" href="#activate" role="button" aria-expanded="false" aria-controls="activate">招待を承認</a>
+  <a class="nav-link"data-toggle="collapse" href="#owner" role="button" aria-expanded="false" aria-controls="owner">グループを編集</a>
+</nav>
+    <div class="collapse" id="owner">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <% @groups.each do |group| %>
+          <% group.members.each do |d|%>
+            <%if (d.user_id == current_user.id)&&(d.admin == true)%>
+            <tbody>
+              <tr>
+                <td><%= group.name %></td>
+                <td><%= link_to 'Show', group %></td>
+                <td><%= link_to 'Edit', edit_group_path(group) %></td>
+                <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              </tr>
+            </tbody>
+            <% end%>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+    <div class="collapse" id="management">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">グループ名</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+    <%current_user.groups.each do |invited|%>
+      <%invited.members.each do |mem|%>
+        <% if( mem.admin == true)&&(mem.user_id ==current_user.id) %>
+            <tbody>
+              <th scope="row"></th>
+              <tr>
+                <td><%=invited.name%></td>
+                <td><%= link_to "管理者を変更",edit_management_authorization_path(mem.group_id) %></td>
+              </tr>
+            </tbody>
+        <% end %>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
+      </table>
+    </div>
+    <div class="collapse" id="activate">
+      <table class="table">
+        <thead>
+          <th scope="col">グループ名</th>
+          <th scope="col"></th>
+        </thead>
+    <%current_user.groups.each do |invited|%>
+      <%invited.members.each do |mem|%>
+        <%if (mem.activate == false)&&(mem.user_id ==current_user.id)%>
+        <tbody>
+          <th scope="row"></th>
+          <tr>
+            <td><%=invited.name%></td>
+            <td><%= link_to"招待を受け入れる",edit_joingroup_path(mem.group_id)%></td>
+          </tr>
+        </tbody>
+        <% end %>
+      <% end %>
+    <% end %>
+      </table>
+    </div>
 <%= link_to 'New Group', new_group_path %>
