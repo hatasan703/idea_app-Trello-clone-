@@ -1,4 +1,9 @@
 <div class="planning_container">
+  <div class="planning_idea">
+    <p class="planning_idea_title"><%= @idea.title %></p>
+    <p class="planning_idea_content"><%= @idea.content %></p>
+  </div>
+  
   <%= form_with model: @plan, url: idea_plan_path(@idea, @plan), local: true do |f| %>
     <% if @plan.image? %>
       <%= image_tag @plan.image.url, class: "file-preview" %>

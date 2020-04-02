@@ -1,4 +1,8 @@
 <div class="planning_container">
+  <div class="planning_idea">
+    <p class="planning_idea_title"><%= @idea.title %></p>
+    <p class="planning_idea_content"><%= @idea.content %></p>
+  </div>
  
   <%= form_with model: @plan, url: idea_plans_path, local: true do |f| %>
     <%= image_tag 'bm/default-bm.png', class: "file-preview", alt: 'ビジネスモデル' %>
