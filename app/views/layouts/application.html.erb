@@ -16,16 +16,20 @@
   <body>
   <%= render 'shared/shared_data' %>
     <header class="header">
-      <h1 class="header_logo"><%= link_to "pbot", ideas_path %></h1>
-        <div class="nav">
+      <li class="header_logo"><%= link_to image_tag("logo.svg"), ideas_path %></li>
+      <li class="header_middle"></li>
+        <div class="header_right">
           <% if user_signed_in? %>
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'logout' %>
+            <span><i class="fa fa-user" aria-hidden="true"></i>@hatakeda</span>|
+            <span><i class="fa fa-star" aria-hidden="true"></i>12</span>|
+            <span><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "logout" %></span>
           <% else %>
-              <%= link_to "ログイン", new_user_session_path, class: 'login' %>
-              <%= link_to "ユーザー登録", new_user_registration_path, class: 'login' %>
+            <div>
+              <span><%= link_to "ログイン", new_user_session_path, class: 'login'%></span> 
+              <span><%= link_to "ユーザー登録", new_user_registration_path, class: 'login'%></span> 
+            </div>
           <% end %>
         </div>
-      </div>
     </header>
     <div class="container_fluid">
       <%= yield %>
@@ -33,5 +37,3 @@
     <footer></footer>
   </body>
 </html>
-
-

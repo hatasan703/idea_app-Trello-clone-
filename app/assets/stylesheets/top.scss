@@ -1,3 +1,61 @@
-// Place all the styles related to the top controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// ヘッダー
+
+.header{
+  width: 100%;
+  height: 35px;
+  display: flex;
+  border-bottom: solid 2px #91969b;
+}
+
+.header_logo{
+  padding: 0 15px;
+  font-size: 30px;
+  color: #4589ce;
+  width : calc(100% / 3) ;
+  img{
+    height: 25px;
+    vertical-align: top;
+    margin: 2px;
+  }
+}
+
+.header_middle{
+  width : calc(100% / 3) ;
+  padding: 0 15px;
+}
+
+.header_right{
+  width : calc(100% / 3) ;
+  padding: 0 15px;
+  text-align: right;
+  i{
+    color: #000000;
+  }
+  span{
+    font-size: 15px;
+  }
+  .logout{
+    color: #18BC9C;
+    line-height: 2;
+  }
+  .login{
+    margin:0 5px;
+    color: #18BC9C;
+    line-height: 2;
+  }
+}
+
+// body
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
+.container_fluid{
+  background: #34495e; 
+  min-height: 700px;
+}

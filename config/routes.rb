@@ -12,12 +12,15 @@ Rails.application.routes.draw do
     end
   end
 
+
   resources :users
   resources :ideas do
+    resources :plans, only: [:index, :new, :edit, :create, :update]
     collection do
       get :public
     end
     member do
+      get :news
       patch :move
     end
   end
@@ -30,5 +33,8 @@ Rails.application.routes.draw do
   post  "ideas/:id/comment" => "comments#create"
   resources :comments
 
+  namespace :api, { format: 'json' } do
+    resources :likes, only: [:index, :create, :destroy]
+  end
 
 end

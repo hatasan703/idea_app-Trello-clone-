@@ -13,7 +13,7 @@
 //= require activestorage
 //= require jquery
 //= require rails-ujs
-//= require cocoon
+//= require nested_form_fields
 // = require turbolinks
 //= require_tree .
 //= require jquery-ui/widgets/sortable

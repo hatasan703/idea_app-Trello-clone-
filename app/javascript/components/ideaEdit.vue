@@ -1,8 +1,11 @@
 <template>
   <div class="idea_edit">
     <div class="idea_card">
-      <div @click="editing=true" class="idea_title">{{ title }} <i class="fa fa-edit" aria-hidden="true"></i></div>
+      <div class="idea_title">{{ title }}</div>
+      <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
+      <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
       <div class="idea_content">{{ content }}</div>
+      <p @click="planningPage" class="create_plan">プランニングへ</p>
     </div>
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
@@ -23,7 +26,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -86,6 +88,16 @@ export default {
       })
     },
 
+    // idea#show ニュースページ
+    newsPage: function() {
+      location.href = `/ideas/${this.idea.id}/news`
+    },
+
+    planningPage: function() {
+      location.href = `/ideas/${this.idea.id}/plans/new`
+    },
+    
+
   }
 }
 </script>
@@ -110,6 +122,17 @@ export default {
 
 .content_form{
   height: 300px;
+}
+
+.create_plan{
+  font-size: 15px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.create_plan:hover{
+  opacity: 0.5;  
+  
 }
 
 </style>

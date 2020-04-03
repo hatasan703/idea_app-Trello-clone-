@@ -133,5 +133,13 @@ Vue.jsのインストール
 - belongs_to :idea
 
 
+## plan_questions table
+|Column|Type|Options|
+|------|----|-------|
+|content|text|null: false|
 
+
+
+### Association
+- has_many :plans
 
