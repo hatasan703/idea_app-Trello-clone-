@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :groups
+  resources :joingroups
+  resources :management_authorizations ,only: [:edit, :update, :destroy]
   devise_for :users
   devise_scope :user do
     authenticated :user do
@@ -9,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
-  
+
   resources :users
   resources :ideas do
     resources :plans, only: [:index, :new, :edit, :create, :update]

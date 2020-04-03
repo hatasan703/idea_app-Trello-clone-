@@ -1,0 +1,13 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @group.name %>
+  <%= @group.members.each do|mem|%>
+   <%= mem%>
+  <% end %>
+
+</p>
+
+<%= link_to 'Edit', edit_group_path(@group) %> |
+<%= link_to 'Back', groups_path %>

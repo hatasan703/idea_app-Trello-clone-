@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(version: 2020_03_31_103021) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ideas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
     t.text "content", null: false
@@ -47,6 +53,17 @@ ActiveRecord::Schema.define(version: 2020_03_31_103021) do
     t.datetime "updated_at", null: false
     t.index ["idea_id"], name: "index_likes_on_idea_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
+    t.boolean "admin", default: false
+    t.boolean "activate", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_members_on_group_id"
+    t.index ["user_id"], name: "index_members_on_user_id"
   end
 
   create_table "memos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
