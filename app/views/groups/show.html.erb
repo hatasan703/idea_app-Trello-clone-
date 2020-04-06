@@ -3,8 +3,8 @@
 <p>
   <strong>Name:</strong>
   <%= @group.name %>
-  <%= @group.members.each do|mem|%>
-   <%= mem%>
+  <% @group_users.each do|user|%>
+   <%= user.email %>
   <% end %>
 
 </p>

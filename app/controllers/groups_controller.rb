@@ -10,6 +10,7 @@ class GroupsController < ApplicationController
   # GET /groups/1
   # GET /groups/1.json
   def show
+    @group_users = @group.users
   end
 
   # GET /groups/new
@@ -67,12 +68,12 @@ class GroupsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_group
-      @group = Group.find(params[:id])
-    end
+  def set_group
+    @group = Group.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def group_params
-      params.require(:group).permit(:name,user_ids:[],members_attributes:[:admin,:activate,:user_id,:id])
-    end
+  # Only allow a list of trusted parameters through.
+  def group_params
+    params.require(:group).permit(:name,user_ids:[],members_attributes:[:admin,:activate,:user_id,:id])
+  end
 end

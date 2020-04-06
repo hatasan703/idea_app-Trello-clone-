@@ -25,7 +25,7 @@
                 <td><%= link_to 'Destroy', group, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               </tr>
             </tbody>
-            <% end%>
+            <% end %>
           <% end %>
         <% end %>
       </table>
@@ -38,9 +38,9 @@
             <th scope="col"></th>
           </tr>
         </thead>
-    <%current_user.groups.each do |invited|%>
-      <%invited.members.each do |mem|%>
-        <% if( mem.admin == true)&&(mem.user_id ==current_user.id) %>
+    <%current_user.groups.each do |invited| %>
+      <%invited.members.each do |mem| %>
+        <% if( mem.admin == true)&&(mem.user_id == current_user.id) %>
             <tbody>
               <th scope="row"></th>
               <tr>
@@ -59,14 +59,14 @@
           <th scope="col">グループ名</th>
           <th scope="col"></th>
         </thead>
-    <%current_user.groups.each do |invited|%>
-      <%invited.members.each do |mem|%>
-        <%if (mem.activate == false)&&(mem.user_id ==current_user.id)%>
+    <% current_user.groups.each do |invited|%>
+      <% invited.members.each do |mem|%>
+        <% if (mem.activate == false)&&(mem.user_id ==current_user.id)%>
         <tbody>
           <th scope="row"></th>
           <tr>
             <td><%=invited.name%></td>
-            <td><%= link_to"招待を受け入れる",edit_joingroup_path(mem.group_id)%></td>
+            <td><%= link_to"招待を受け入れる",joingroup_path(mem.group_id), method: :patch %></td>
           </tr>
         </tbody>
         <% end %>

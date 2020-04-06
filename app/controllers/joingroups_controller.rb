@@ -1,15 +1,10 @@
 class JoingroupsController < ApplicationController
   before_action :set_joingroups, only: [:edit, :update, :show, :destroy]
+  
   def update
-    respond_to do |format|
-      if @joingroups.update(joingroups_params)
-        format.html { redirect_to @joingroups, notice: 'Group was successfully updated.' }
-        format.json { render :show, status: :ok, location: @joingroups }
-      else
-        format.html { render :edit }
-        format.json { render json: @joingroups.errors, status: :unprocessable_entity }
-      end
-    end
+    @member = Member.where(group_id: @joingroups.id, user_id: current_user.id)
+    @member.update(activate: true)
+    redirect_to @joingroups
   end
 
   def destroy

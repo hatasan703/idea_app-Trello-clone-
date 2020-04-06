@@ -9,6 +9,7 @@
           <div v-else @click="registerLike()">
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ count }}
           </div>
+          <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
         </div>
       </div>
       <div class="idea_content">{{ idea.content }}</div>
