@@ -25,8 +25,9 @@
             <span><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "logout" %></span>
           <% else %>
             <div>
-              <span><%= link_to "ログイン", new_user_session_path, class: 'login'%></span> 
-              <span><%= link_to "ユーザー登録", new_user_registration_path, class: 'login'%></span> 
+              <span><%=link_to "管理者としてログイン",new_company_session_path%></span>
+              <span><%= link_to "ログイン", new_user_session_path, class: 'login'%></span>
+              <span><%= link_to "ユーザー登録", new_user_registration_path, class: 'login'%></span>
             </div>
           <% end %>
         </div>

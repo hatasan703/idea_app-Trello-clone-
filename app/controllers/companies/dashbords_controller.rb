@@ -1,6 +1,6 @@
 class Companies::DashbordsController < ApplicationController
   def index
-    @User = User.all
+    @User = current_company.users
   end
   def show
     @information = InvitingManagement.find(params[:id])

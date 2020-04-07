@@ -1,7 +1,7 @@
 class Employee::FormalRegistrationForm
   include ActiveModel::Model
 
-  attr_accessor :email,:password,:company_id
+  attr_accessor :email,:password,:company_id,:token
   def initialize(attributes={})
     super
     @omg ||= true
@@ -10,17 +10,14 @@ class Employee::FormalRegistrationForm
   #   tokens=InvitingManagement.find_by(token:token)
   # end
   def save
-    password =password(password)
-    new_user = User.new(email:email,encrypted_password:password)
+    company_id_from_token = InvitingManagement.find_by(token:token)
+    company_id =company_id_from_token.company_id
+    new_user = User.new(email:email,password:password)
     new_user.tap(&:save)
     employee= Employee.new(company_id:company_id,user_id:new_user.id)
-  end
-  private
-  def password(raw_pass)
-    if raw_pass.kind_of?(String)
-      self.encrypted_password = BCrypt::Password.create(raw_pass)
-    elsif raw_pass.nil?
-      self.encrypted_password = nil
+    # employee.tap(&:save)
+    if employee.tap(&:save)
+      company_id_from_token.destroy
     end
   end
 end

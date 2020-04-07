@@ -10,4 +10,6 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :members
   has_many :groups ,through: :members
+  has_many :employees
+  has_many :companies ,through: :employees
 end

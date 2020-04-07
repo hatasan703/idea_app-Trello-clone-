@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :dashbords
     resources :formal_registrations ,param: :token
   end
+  get "accept/:token"=>"companies/formal_registrations#new",param: :token ,as: :inviting
   resources :groups
   resources :joingroups
   resources :management_authorizations ,only: [:edit, :update, :destroy]

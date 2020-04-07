@@ -2,6 +2,7 @@
 <div>
   <%=f.label :email%>
   <%=f.text_field :email%>
+  <%=f.hidden_field :token,value:params[:token]%>
 </div>
 <div>
   <%=f.label :password%>
