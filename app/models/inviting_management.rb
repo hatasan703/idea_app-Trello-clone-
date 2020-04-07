@@ -1,0 +1,2 @@
+class InvitingManagement < ApplicationRecord
+end

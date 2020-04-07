@@ -1,0 +1,4 @@
+<%@User.each do |k|%>
+  <%=k%>
+<% end %>
+<%=link_to "logout" ,destroy_company_session_path, method: :delete%>

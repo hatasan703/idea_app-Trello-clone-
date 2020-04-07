@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :companies
+  namespace :companies do
+    resources :dashbords
+    resources :formal_registrations ,param: :token
+  end
   resources :groups
   resources :joingroups
   resources :management_authorizations ,only: [:edit, :update, :destroy]
