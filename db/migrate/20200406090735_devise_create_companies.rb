@@ -2,7 +2,7 @@
 
 class DeviseCreateCompanies < ActiveRecord::Migration[5.2]
   def change
-    drop_table :companies
+    # drop_table :companies
     create_table :companies do |t|
       ## Database authenticatable
       t.string :name,              null: false, default: ""
