@@ -6,7 +6,7 @@ class Companies::FormalRegistrationsController < ApplicationController
   end
 
   def create
-    @data =Employee::FormalRegistrationForm.new(isamu_params)
+    @data =Employee::FormalRegistrationForm.new(formal_registration_form_params)
     puts params[:token]
     if @data.save
       redirect_to authenticated_root_path
@@ -17,7 +17,7 @@ class Companies::FormalRegistrationsController < ApplicationController
   end
 
   private
-  def isamu_params
+  def formal_registration_form_params
     params.require(:employee_formal_registration_form).permit(:email,:password,:token)
   end
 end

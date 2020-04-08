@@ -1,5 +1,20 @@
-<%@User.each do |k|%>
-  <%=k%>
-<% end %>
+<table>
+  <tr>
+    <th>email</th><th>like数</th><th>アイデア数</th>
+  </tr>
+  <% current_company.users.each do |user|%>
+  <tr>.
+    <td>
+      <%=user.email%>
+    </td>
+    <td>
+      <%=user.likes.count%>
+    </td>
+    <td>
+      <%=user.ideas.count%>
+    </td>
+  </tr>
+  <% end %>
+</table>
 <p><%=link_to "招待用urlを発行",new_companies_dashbord_path%></p>
 <p><%=link_to "logout" ,destroy_company_session_path, method: :delete%></p>

@@ -1,6 +1,7 @@
 class Companies::DashbordsController < ApplicationController
+  before_action :authenticate_company!
   def index
-    @User = current_company.users
+    #@User = current_company.users
   end
   def show
     @information = InvitingManagement.find(params[:id])
@@ -9,8 +10,8 @@ class Companies::DashbordsController < ApplicationController
     @form = Employee::SignUpForm.new
   end
   def create
-    puts maeno_params
-    @data = Employee::SignUpForm.new(maeno_params)
+    puts company_params
+    @data = Employee::SignUpForm.new(company_params)
     result = @data.save
     if result
       puts result.token
@@ -22,7 +23,7 @@ class Companies::DashbordsController < ApplicationController
 
   private
 
-  def maeno_params
+  def company_params
     params.require(:employee_sign_up_form).permit(:company_id)
   end
 end
