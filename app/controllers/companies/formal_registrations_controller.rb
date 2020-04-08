@@ -7,11 +7,10 @@ class Companies::FormalRegistrationsController < ApplicationController
 
   def create
     @data =Employee::FormalRegistrationForm.new(formal_registration_form_params)
-    puts params[:token]
     if @data.save
-      redirect_to authenticated_root_path
+      sign_in User.find_by(email:@data.email) unless user_signed_in?
+      redirect_to new_user_session_path
     else
-      logger.debug @data.errors.inspect
       redirect_to new_user_registration
     end
   end
