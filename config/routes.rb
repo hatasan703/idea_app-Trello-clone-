@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :companies, only: [:index, :new, :create]
-  resources :companies, only: :show do
-    resources :ideas, only: [:index, :create]
+  resources :companies do
+    resources :ideas, only: [:index, :create, :update] do 
+      collection do
+        get :public
+      end
+    end
   end
   namespace :companies do
     resources :dashbords

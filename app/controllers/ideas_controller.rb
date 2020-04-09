@@ -10,7 +10,7 @@ class IdeasController < ApplicationController
   end
 
   def public
-    @ideas = Idea.where(open: true).order(created_at: "DESC")
+    @ideas = Idea.where(open: true, company_id: params[:company_id]).order(created_at: "DESC")
     @user = current_user
     shared_data[:user_id] = @user.try(:id)
   end

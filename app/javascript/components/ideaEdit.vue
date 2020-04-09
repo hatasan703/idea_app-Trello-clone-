@@ -57,7 +57,7 @@ export default {
 
       Rails.ajax({
         beforeSend: () => true,
-        url: `/ideas/${this.idea.id}`,
+        url: `ideas/${this.idea.id}`,
         type: "PATCH",
         data: data,
         dataType: "json",

@@ -3,12 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def after_sign_in_path_for(resource)
-    puts resource
-    if resource.is_a?(Company)
-      companies_dashbords_path
-    else
-      companies_index_path
-    end
+    companies_path
   end
 
   def after_inactive_sign_up_path_for(resource)

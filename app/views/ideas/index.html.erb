@@ -1,6 +1,4 @@
 <h1 class="page_title">あなたのアイディア</h1>
-<div class="page_title"><%= link_to "みんなのアイディアへ", public_ideas_path %></div>
+<div class="page_title"><%= link_to "みんなのアイディアへ", public_company_ideas_path %></div>
 <hr >
 <%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: :memos) }%>
-
-<%# 次はユーザー招待機能 %>
