@@ -5,7 +5,8 @@ class IdeasController < ApplicationController
 
 
   def index
-      @ideas = Idea.where(user_id: current_user.id).sorted
+    @ideas = Idea.where(user_id: current_user.id, company_id: params[:company_id]).sorted
+    @company_id = params[:company_id]
   end
 
   def public
@@ -88,7 +89,7 @@ class IdeasController < ApplicationController
   private
   def idea_params
     params.require(:idea).permit(:title, :content, :position, :open, :query_word)
-    .merge(user_id: current_user.id)
+    .merge(user_id: current_user.id, company_id: params[:company_id])
   end
 
   def redirect_to_top

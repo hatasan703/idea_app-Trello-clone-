@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_130252) do
+ActiveRecord::Schema.define(version: 2020_04_09_083030) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
@@ -23,22 +23,14 @@ ActiveRecord::Schema.define(version: 2020_04_08_130252) do
   end
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_companies_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
   end
 
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "user_id", null: false
-    t.boolean "suspend", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_employees_on_company_id"
@@ -60,6 +52,8 @@ ActiveRecord::Schema.define(version: 2020_04_08_130252) do
     t.integer "position"
     t.boolean "open", default: false
     t.string "query_word"
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_ideas_on_company_id"
     t.index ["user_id"], name: "index_ideas_on_user_id"
   end
 
@@ -148,6 +142,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_130252) do
   add_foreign_key "comments", "users"
   add_foreign_key "employees", "companies"
   add_foreign_key "employees", "users"
+  add_foreign_key "ideas", "companies"
   add_foreign_key "ideas", "users"
   add_foreign_key "inviting_managements", "companies"
   add_foreign_key "likes", "ideas"
