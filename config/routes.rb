@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   devise_for :companies
+  resources :companies, only: [:index, :new]
+  post  "/companies" => "companies#create_a"
   namespace :companies do
     resources :dashbords
     resources :formal_registrations ,param: :token

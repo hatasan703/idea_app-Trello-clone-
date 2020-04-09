@@ -1,0 +1,12 @@
+<div class="field_container">
+  <h1>会社名を入力してください</h1>
+  <%= form_with model: @company, url: {controller: 'companies', action: 'create_a' } do |f| %>
+    <div class="field">
+      <%= f.label "会社名" %><br>
+      <%= f.text_field :name %><br>
+    </div>
+    <div class="actions">
+      <%= f.submit "作成" %>
+    </div>
+  <% end %>
+</div>

@@ -7,15 +7,19 @@ class ApplicationController < ActionController::Base
     if resource.is_a?(Company)
       companies_dashbords_path
     else
-      ideas_path
+      companies_index_path
     end
+  end
+
+  def after_inactive_sign_up_path_for(resource)
+    companies_new_path
   end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
   end
 
-  # Vue渡すデータ
+  # Vueに渡すデータ
   def shared_data
     @shared_data ||= {}
   end
