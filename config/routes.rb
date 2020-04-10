@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'companies#index'
   resources :companies, only: [:index, :new, :create]
   resources :companies do
     resources :ideas, only: [:index, :create, :update] do 
@@ -7,15 +8,22 @@ Rails.application.routes.draw do
       end
     end
   end
-  namespace :companies do
-    resources :dashbords
-    resources :formal_registrations ,param: :token
-  end
+  # namespace :companies do
+  #   resources :dashbords
+  #   resources :formal_registrations ,param: :token
+  # end
   get "accept/:token"=>"companies/formal_registrations#new",param: :token ,as: :inviting
   resources :groups
   resources :joingroups
   resources :management_authorizations ,only: [:edit, :update, :destroy]
+
   devise_for :users
+  resources :companies do
+    devise_for :users, controller: {
+      invitations: 'users/invitations'
+    }
+  end
+
   devise_scope :user do
     authenticated :user do
       root :to => "top#index", as: :authenticated_root

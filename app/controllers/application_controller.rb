@@ -13,6 +13,9 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+
+    # :inviteと:accept_invitationに:nameを許可する
+    devise_parameter_sanitizer.permit(:accept_invitation, keys: [:name])
   end
 
   # Vueに渡すデータ
