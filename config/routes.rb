@@ -42,5 +42,7 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     resources :likes, only: [:index, :create, :destroy]
   end
+  resources :profiles
+  resources :search_user_profiles
 
 end

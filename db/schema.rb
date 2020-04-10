@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_07_043444) do
+ActiveRecord::Schema.define(version: 2020_04_08_093736) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
@@ -131,6 +131,17 @@ ActiveRecord::Schema.define(version: 2020_04_07_043444) do
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
+  create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "image"
+    t.string "name", null: false
+    t.integer "sex", null: false
+    t.string "self_introduction", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -158,4 +169,5 @@ ActiveRecord::Schema.define(version: 2020_04_07_043444) do
   add_foreign_key "plan_contents", "users"
   add_foreign_key "plans", "ideas"
   add_foreign_key "plans", "users"
+  add_foreign_key "profiles", "users"
 end

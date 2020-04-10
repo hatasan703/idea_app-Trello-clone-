@@ -23,6 +23,11 @@
             <span><i class="fa fa-user" aria-hidden="true"></i>@hatakeda</span>|
             <span><i class="fa fa-star" aria-hidden="true"></i>12</span>|
             <span><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "logout" %></span>
+            <%if current_user.profile == nil%>
+            <span><%=link_to"プロフィールを作成",edit_profile_path(current_user.id)%></span>
+            <% else %>
+            <span><%=link_to"プロフィールを編集",edit_profile_path(current_user.id)%></span>
+            <% end %>
           <% else %>
             <div>
               <span><%=link_to "管理者としてログイン",new_company_session_path%></span>

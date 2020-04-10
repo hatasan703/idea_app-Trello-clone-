@@ -1,8 +1,6 @@
 class Companies::FormalRegistrationsController < ApplicationController
   def new
     @form = Employee::FormalRegistrationForm.new
-    puts params[:token]
-    # @form.company_id=InvitingManagement.find_by(token:params[:token]).company_id
   end
 
   def create

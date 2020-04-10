@@ -9,7 +9,6 @@ class Employee::SignUpForm
   end
   def save
     token =SecureRandom.hex(8)
-    puts token
     inviting_user = InvitingManagement.new(company_id:company_id,token:token)
     inviting_user.tap(&:save)
   end

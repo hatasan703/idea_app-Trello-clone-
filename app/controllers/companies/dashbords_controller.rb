@@ -10,11 +10,9 @@ class Companies::DashbordsController < ApplicationController
     @form = Employee::SignUpForm.new
   end
   def create
-    puts company_params
     @data = Employee::SignUpForm.new(company_params)
     result = @data.save
     if result
-      puts result.token
       redirect_to companies_dashbord_path(result.id)
     else
       redirect_to root_path
