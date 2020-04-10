@@ -4,6 +4,7 @@ class Idea < ApplicationRecord
   require 'json'
   before_save :create_news_query
   acts_as_list scope: :user
+  acts_as_list scope: :company
   belongs_to :user
   has_many :memos, ->{ order(position: :asc)  }, dependent: :destroy
   has_many :comments, dependent: :destroy
