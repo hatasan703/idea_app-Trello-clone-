@@ -13,18 +13,5 @@ class Idea < ApplicationRecord
   scope :sorted, ->{ order(position: :asc)  }
   validates :content, presence: true
   def create_news_query
-    words = URI.escape("#{self.content}")
-    uri = URI.parse("https://jlp.yahooapis.jp/KeyphraseService/V1/extract?appid=dj00aiZpPWMwNFNqT2g0NGlNRiZzPWNvbnN1bWVyc2VjcmV0Jng9MzI-&sentence=#{words}&output=json")
-    response = Net::HTTP.get_response(uri)
-    hsh =JSON.parse(response.body)
-    news_query = ""
-    count =0
-    hsh.each_key do |k|
-      news_query +="#{k}"
-      count +=1
-      break if count==3
-      news_query +="+"
-    end
-    self.query_word =news_query
   end
 end
