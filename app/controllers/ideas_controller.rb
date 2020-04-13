@@ -5,11 +5,14 @@ class IdeasController < ApplicationController
 
 
   def index
-      @ideas = Idea.where(user_id: current_user.id).sorted
+    @ideas = Idea.where(user_id: current_user.id, company_id: params[:company_id]).sorted
+    @company_id = params[:company_id]
+    @company = Company.find(@company_id)
+    @employees = @company.users
   end
 
   def public
-    @ideas = Idea.where(open: true).order(created_at: "DESC")
+    @ideas = Idea.where(open: true, company_id: params[:company_id]).order(created_at: "DESC")
     @user = current_user
     shared_data[:user_id] = @user.try(:id)
   end
@@ -89,7 +92,7 @@ class IdeasController < ApplicationController
   private
   def idea_params
     params.require(:idea).permit(:title, :content, :position, :open, :query_word)
-    .merge(user_id: current_user.id)
+    .merge(user_id: current_user.id, company_id: params[:company_id])
   end
 
   def redirect_to_top

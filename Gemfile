@@ -88,3 +88,5 @@ gem 'feed-normalizer'
 
 gem 'carrierwave'
 gem 'rmagick'
+
+gem 'devise_invitable'

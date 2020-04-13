@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :invitable, :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable, invite_for: 24.hours
   has_many :ideas, ->{ order(position: :asc)  }, dependent: :destroy
   has_many :plans
   has_many :memos
@@ -12,6 +12,13 @@ class User < ApplicationRecord
   has_many :groups ,through: :members
   has_many :employees
   has_many :companies ,through: :employees
+
+  attr_accessor :invitation_instructions
+  attr_reader :raw_invitation_token
+
+  def self.invite_guest!(attributes={}, invited_by=nil, company_id)
+    self.invite!(attributes, invited_by, company_id)
+  end
   has_one :profile
   accepts_nested_attributes_for :profile
 end

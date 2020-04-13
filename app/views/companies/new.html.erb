@@ -1,0 +1,16 @@
+<div class="field_container">
+  <h1>会社名を入力してください</h1>
+  <%= form_with model: @company do |f| %>
+    <div class="field">
+      <%= f.label "会社名" %><br>
+      <%= f.text_field :name %><br>
+      <%= f.fields_for :employees do |e| %>
+        <%= e.hidden_field :admin, value: true %>
+        <%= e.hidden_field :user_id, value: current_user.id %>
+      <% end %>
+    </div>
+    <div class="actions">
+      <%= f.submit "作成" %>
+    </div>
+  <% end %>
+</div>

@@ -60,7 +60,7 @@ export default {
 
 
       Rails.ajax({
-        url: "/ideas",
+        url: "ideas",
         type: "POST",
         data: data,
         dataType: "json",

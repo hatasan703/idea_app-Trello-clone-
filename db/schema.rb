@@ -23,22 +23,15 @@ ActiveRecord::Schema.define(version: 2020_04_13_084634) do
   end
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_companies_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
   end
 
   create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.bigint "user_id", null: false
-    t.boolean "suspend", default: false, null: false
+    t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_employees_on_company_id"
@@ -60,6 +53,8 @@ ActiveRecord::Schema.define(version: 2020_04_13_084634) do
     t.integer "position"
     t.boolean "open", default: false
     t.string "query_word"
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_ideas_on_company_id"
     t.index ["user_id"], name: "index_ideas_on_user_id"
   end
 
@@ -150,7 +145,20 @@ ActiveRecord::Schema.define(version: 2020_04_13_084634) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.bigint "invited_by_id"
+    t.integer "invitations_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
+    t.index ["invitations_count"], name: "index_users_on_invitations_count"
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by_type_and_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -158,6 +166,7 @@ ActiveRecord::Schema.define(version: 2020_04_13_084634) do
   add_foreign_key "comments", "users"
   add_foreign_key "employees", "companies"
   add_foreign_key "employees", "users"
+  add_foreign_key "ideas", "companies"
   add_foreign_key "ideas", "users"
   add_foreign_key "inviting_managements", "companies"
   add_foreign_key "likes", "ideas"
