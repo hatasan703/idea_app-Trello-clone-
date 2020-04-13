@@ -11,7 +11,6 @@ class Idea::IdeaForm
   end
 
   def create_news_query(obj_idea)
-    puts obj_idea
     words = URI.escape("#{obj_idea.content}")
     uri = URI.parse("https://jlp.yahooapis.jp/KeyphraseService/V1/extract?appid=dj00aiZpPWMwNFNqT2g0NGlNRiZzPWNvbnN1bWVyc2VjcmV0Jng9MzI-&sentence=#{words}&output=json")
     response = Net::HTTP.get_response(uri)
