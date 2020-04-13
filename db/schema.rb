@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_040937) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name", default: "新規ユーザー"
+    t.string "name"
     t.string "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"

@@ -7,6 +7,9 @@ class IdeasController < ApplicationController
   def index
     @ideas = Idea.where(user_id: current_user.id, company_id: params[:company_id]).sorted
     @company_id = params[:company_id]
+    @company = Company.find(@company_id)
+    @employees = @company.users
+    # binding.pry
   end
 
   def public

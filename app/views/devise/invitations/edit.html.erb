@@ -1,5 +1,5 @@
 <div class="field_container">
-  <h2><%= t "devise.invitations.edit.header" %></h2>
+  <h2>ユーザー登録</h2>
 
   <%= form_for(resource, as: resource_name, url: user_company_invitation_path(@company_id), html: { method: :put }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
@@ -10,22 +10,22 @@
 
       <div class="field">
         <%= f.label "ユーザー名" %><br />
-        <%= f.text_field :name, autofocus: true, maxlength: "30" %>
+        <%= f.text_field :name, autofocus: true, maxlength: "30", required: true %>
       </div>
 
       <div class="field">
-        <%= f.label :password %><br />
-        <%= f.password_field :password %>
+        <%= f.label 'パスワード' %><br />
+        <%= f.password_field :password, required: true %>
       </div>
 
       <div class="field">
-        <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation %>
+        <%= f.label 'パスワード(再入力)' %><br />
+        <%= f.password_field :password_confirmation, required: true %>
       </div>
     <% end %>
 
     <div class="actions">
-      <%= f.submit t("devise.invitations.edit.submit_button") %>
+      <%= f.submit '登録' %>
     </div>
   <% end %>
 
