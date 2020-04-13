@@ -1,6 +1,6 @@
 <h1>所属している会社一覧</h1>
 
-<% @companies .each do |company| %>
+<% @companies.each do |company| %>
   <%= link_to company.name, company_ideas_path(company) %>
 <% end %>
 
