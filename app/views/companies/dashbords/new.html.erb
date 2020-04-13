@@ -1,0 +1,7 @@
+<%=form_with model:@form,url: :companies_dashbords do |f|%>
+<div>
+  <%=f.hidden_field :company_id,value:current_company.id%>
+<div>
+  <%=f.submit "リンクを作成"%>
+</div>
+<% end %>

@@ -1,0 +1,24 @@
+<%=form_for @user ,url:profile_path do |user|%>
+<div>
+  <%=user.hidden_field :id,value:current_user.id%>
+  <%=user.fields_for :profile do |profile|%>
+  <p><%=profile.label :image%></p>
+  <p><%=profile.file_field :image%></p>
+</div>
+<div>
+  <p><%=profile.label :name%></p>
+  <p><%=profile.text_field :name%></p>
+</div>
+<div>
+  <p><%=profile.label :sex%></p>
+  <p><%=profile.select :sex ,[["男",0],["女",1],["その他",3]]%></p>
+</div>
+<div>
+  <p><%=profile.label :self_introduction%></p>
+  <p><%=profile.text_field :self_introduction%></p>
+</div>
+ <% end %>
+ <div>
+   <%=user.submit%>
+ </div>
+<% end %>

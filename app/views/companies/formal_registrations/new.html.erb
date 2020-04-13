@@ -1,0 +1,14 @@
+<%=form_with model:@form,url: :companies_formal_registrations do |f|%>
+<div>
+  <%=f.label :email%>
+  <%=f.text_field :email%>
+  <%=f.hidden_field :token,value:params[:token]%>
+</div>
+<div>
+  <%=f.label :password%>
+  <%=f.password_field :password%>
+</div>
+<div>
+  <%=f.submit "送信"%>
+</div>
+<% end %>

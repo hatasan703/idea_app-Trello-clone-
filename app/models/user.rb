@@ -10,4 +10,8 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :members
   has_many :groups ,through: :members
+  has_many :employees
+  has_many :companies ,through: :employees
+  has_one :profile
+  accepts_nested_attributes_for :profile
 end

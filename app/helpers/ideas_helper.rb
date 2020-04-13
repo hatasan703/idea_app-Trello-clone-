@@ -11,7 +11,7 @@ module IdeasHelper
               begin
                 @words = @words << key["Keyphrase"].to_s << " "
               rescue => error
-                
+
               end
             end
           end
@@ -19,5 +19,5 @@ module IdeasHelper
     end
     @words
   end
-  
+
 end

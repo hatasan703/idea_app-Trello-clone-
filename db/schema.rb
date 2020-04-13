@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_103021) do
+ActiveRecord::Schema.define(version: 2020_04_13_084634) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
@@ -23,9 +23,26 @@ ActiveRecord::Schema.define(version: 2020_03_31_103021) do
   end
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name", default: "", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_companies_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_companies_on_reset_password_token", unique: true
+  end
+
+  create_table "employees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.bigint "user_id", null: false
+    t.boolean "suspend", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_employees_on_company_id"
+    t.index ["user_id"], name: "index_employees_on_user_id"
   end
 
   create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -35,7 +52,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_103021) do
   end
 
   create_table "ideas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "title", null: false
+    t.string "title", default: "", null: false
     t.text "content", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
@@ -44,6 +61,14 @@ ActiveRecord::Schema.define(version: 2020_03_31_103021) do
     t.boolean "open", default: false
     t.string "query_word"
     t.index ["user_id"], name: "index_ideas_on_user_id"
+  end
+
+  create_table "inviting_managements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.string "token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_inviting_managements_on_company_id"
   end
 
   create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -106,6 +131,17 @@ ActiveRecord::Schema.define(version: 2020_03_31_103021) do
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
+  create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "image"
+    t.string "name", null: false
+    t.integer "sex", null: false
+    t.string "self_introduction", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -120,7 +156,10 @@ ActiveRecord::Schema.define(version: 2020_03_31_103021) do
 
   add_foreign_key "comments", "ideas"
   add_foreign_key "comments", "users"
+  add_foreign_key "employees", "companies"
+  add_foreign_key "employees", "users"
   add_foreign_key "ideas", "users"
+  add_foreign_key "inviting_managements", "companies"
   add_foreign_key "likes", "ideas"
   add_foreign_key "likes", "users"
   add_foreign_key "memos", "ideas"
@@ -130,4 +169,5 @@ ActiveRecord::Schema.define(version: 2020_03_31_103021) do
   add_foreign_key "plan_contents", "users"
   add_foreign_key "plans", "ideas"
   add_foreign_key "plans", "users"
+  add_foreign_key "profiles", "users"
 end
