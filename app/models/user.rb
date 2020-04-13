@@ -12,4 +12,11 @@ class User < ApplicationRecord
   has_many :groups ,through: :members
   has_many :employees
   has_many :companies ,through: :employees
+
+  attr_accessor :invitation_instructions
+  attr_reader :raw_invitation_token
+
+  def self.invite_guest!(attributes={}, invited_by=nil, company_id)
+    self.invite!(attributes, invited_by, company_id)
+  end
 end

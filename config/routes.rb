@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'companies#index'
+  root 'top#index'
   resources :companies, only: [:index, :new, :create]
   resources :companies do
     resources :ideas, only: [:index, :create, :update] do 
@@ -18,9 +18,10 @@ Rails.application.routes.draw do
   resources :management_authorizations ,only: [:edit, :update, :destroy]
 
   devise_for :users
+
   resources :companies do
-    devise_for :users, controller: {
-      invitations: 'users/invitations'
+    devise_for :users, controllers: {
+      invitations: 'users/invitations',
     }
   end
 
