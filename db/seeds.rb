@@ -13,7 +13,6 @@ if Rails.env == "development"
   (1..10).each do |i|
     User.create!(email: "test#{i}@example.com", password: "password", password_confirmation: "password")
   end
-  Company.create!(email:"admin@example.com",password:"password",password_confirmation:"password")
   User.all.each do |user|
     user.employees.create!(user_id: user.id,company_id:1)
     (1..10).each do |i|
