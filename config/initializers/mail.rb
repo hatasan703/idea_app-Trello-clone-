@@ -3,8 +3,8 @@ ActionMailer::Base.smtp_settings = {
   address: 'smtp.gmail.com',
   domain: 'gmail.com',
   port: 587,
-  user_name: 'hatakeda.primal@gmail.com',
-  password: 'rzlslvmljlomtyjv',
+  user_name: Rails.application.credentials.gmail_address,
+  password: Rails.application.credentials.gmail_password,
   authentication: 'login',
   enable_starttls_auto: true
 }
