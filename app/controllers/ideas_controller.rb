@@ -9,7 +9,6 @@ class IdeasController < ApplicationController
     @company_id = params[:company_id]
     @company = Company.find(@company_id)
     @employees = @company.users
-    # binding.pry
   end
 
   def public

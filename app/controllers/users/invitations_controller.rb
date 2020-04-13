@@ -42,4 +42,12 @@ class Users::InvitationsController < Devise::InvitationsController
   def invite_params
     params.require(:user).permit(:email)
   end
+
+  def after_invite_path_for(resource)
+    companies_path
+  end
+
+  def after_accept_path_for(resource)
+    companies_path
+  end
 end
