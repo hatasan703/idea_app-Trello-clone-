@@ -5,20 +5,24 @@ class IdeasController < ApplicationController
 
 
   def index
-      @ideas = Idea.where(user_id: current_user.id).sorted
+    @ideas = Idea.where(user_id: current_user.id, company_id: params[:company_id]).sorted
+    @company_id = params[:company_id]
+    @company = Company.find(@company_id)
+    @employees = @company.users
   end
 
   def public
-    @ideas = Idea.where(open: true).order(created_at: "DESC")
+    @ideas = Idea.where(open: true, company_id: params[:company_id]).order(created_at: "DESC")
     @user = current_user
     shared_data[:user_id] = @user.try(:id)
   end
 
   def news
      # ニュース取得
-     @news_query=URI.encode(@idea.query_word)
+     @news_query=URI.encode(@idea.query_word+"+ビジネス+新規事業+起業")
+     p @news_query
      @rss = FeedNormalizer::FeedNormalizer.parse(open("https://news.google.com/atom/search?q=#{@news_query}&hl=ja&gl=JP&ceid=JP:ja"))
- 
+
      respond_to do |format|
        format.html # show.html.erb
        format.json { render json: @idea }
@@ -31,8 +35,8 @@ class IdeasController < ApplicationController
 
   def create
     # ニュースクエリ取得、保存
-    @idea_content = params[:idea][:content]
-    params[:idea][:query_word] = get_query_word(@idea_content)
+    # @idea_content = params[:idea][:content]
+    # params[:idea][:query_word] = get_query_word(@idea_content)
 
     @idea = Idea.new(idea_params)
     respond_to do |format|
@@ -88,7 +92,7 @@ class IdeasController < ApplicationController
   private
   def idea_params
     params.require(:idea).permit(:title, :content, :position, :open, :query_word)
-    .merge(user_id: current_user.id)
+    .merge(user_id: current_user.id, company_id: params[:company_id])
   end
 
   def redirect_to_top

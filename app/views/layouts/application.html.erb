@@ -16,17 +16,23 @@
   <body>
   <%= render 'shared/shared_data' %>
     <header class="header">
-      <li class="header_logo"><%= link_to image_tag("logo.svg"), ideas_path %></li>
+      <li class="header_logo"><%= link_to image_tag("logo.svg"), companies_path %></li>
       <li class="header_middle"></li>
         <div class="header_right">
           <% if user_signed_in? %>
-            <span><i class="fa fa-user" aria-hidden="true"></i>@hatakeda</span>|
+            <span><i class="fa fa-user" aria-hidden="true"></i> <%= current_user.name %> </span>|
             <span><i class="fa fa-star" aria-hidden="true"></i>12</span>|
             <span><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "logout" %></span>
+            <%if current_user.profile == nil%>
+            <span><%=link_to"プロフィールを作成",edit_profile_path(current_user.id)%></span>
+            <% else %>
+            <span><%=link_to "登録情報を変更",edit_user_registration_path%></span>
+            <span><%=link_to"プロフィールを編集",edit_profile_path(current_user.id)%></span>
+            <% end %>
           <% else %>
             <div>
-              <span><%= link_to "ログイン", new_user_session_path, class: 'login'%></span> 
-              <span><%= link_to "ユーザー登録", new_user_registration_path, class: 'login'%></span> 
+              <span><%= link_to "ログイン", new_user_session_path, class: 'login'%></span>
+              <span><%= link_to "ユーザー登録", new_user_registration_path, class: 'login'%></span>
             </div>
           <% end %>
         </div>

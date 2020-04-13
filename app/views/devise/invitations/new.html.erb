@@ -1,0 +1,20 @@
+<div class="field_container">
+
+  <h2>新規ユーザーを招待する</h2>
+
+  <%= form_for(resource, as: resource_name, url: user_company_invitation_path(@company_id), html: { method: :post }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <% resource.class.invite_key_fields.each do |field| -%>
+      <div class="field">
+        <%= f.label 'メールアドレス', required: true %><br />
+        <%= f.text_field field %>
+      </div>
+    <% end -%>
+
+    <div class="actions">
+      <%= f.submit '送信' %>
+    </div>
+  <% end %>
+
+</div>

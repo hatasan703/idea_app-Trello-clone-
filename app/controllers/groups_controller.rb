@@ -26,9 +26,6 @@ class GroupsController < ApplicationController
   # POST /groups
   # POST /groups.json
   def create
-    # user = current_user.user_types.build
-    # user.save
-    puts group_params
     @group = Group.new(group_params)
 
     respond_to do |format|

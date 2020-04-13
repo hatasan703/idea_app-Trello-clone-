@@ -1,0 +1,27 @@
+
+<table border="2" style="border-collapse: collapse; border-color: red">
+  <tr>
+    <th>画像</th>
+    <th>名前</th>
+    <th>性別</th>
+    <th>自己紹介</th>
+  </tr>
+  <tr>
+    <td>
+      <% if current_user.profile.image?%>
+       <%=image_tag current_user.profile.image.url%>
+      <% else %>
+        NOIMAGE
+      <% end %>
+    </td>
+    <td>
+      <%=current_user.profile.name%>
+    </td>
+    <td>
+      <%=current_user.profile.sex%>
+    </td>
+    <td>
+      <%=current_user.profile.self_introduction%>
+    </td>
+  </tr>
+</table>
