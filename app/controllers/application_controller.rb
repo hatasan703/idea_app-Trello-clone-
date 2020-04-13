@@ -7,8 +7,13 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    companies_path
+    if resource.is_a?(Company)
+      companies_dashbords_path
+    else
+      companies_path
+    end
   end
+
   def after_sign_out_path_for(resource)
     new_user_session_path
   end

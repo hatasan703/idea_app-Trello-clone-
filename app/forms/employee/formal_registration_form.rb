@@ -15,7 +15,6 @@ class Employee::FormalRegistrationForm
     new_user = User.new(email:email,password:password)
     new_user.tap(&:save)
     employee= Employee.new(company_id:company_id,user_id:new_user.id)
-    # employee.tap(&:save)
     if employee.tap(&:save)
       company_id_from_token.destroy
     end

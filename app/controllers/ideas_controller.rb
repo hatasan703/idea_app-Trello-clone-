@@ -19,9 +19,10 @@ class IdeasController < ApplicationController
 
   def news
      # ニュース取得
-     @news_query=URI.encode(@idea.query_word)
+     @news_query=URI.encode(@idea.query_word+"+ビジネス+新規事業+起業")
+     p @news_query
      @rss = FeedNormalizer::FeedNormalizer.parse(open("https://news.google.com/atom/search?q=#{@news_query}&hl=ja&gl=JP&ceid=JP:ja"))
- 
+
      respond_to do |format|
        format.html # show.html.erb
        format.json { render json: @idea }
@@ -34,8 +35,8 @@ class IdeasController < ApplicationController
 
   def create
     # ニュースクエリ取得、保存
-    @idea_content = params[:idea][:content]
-    params[:idea][:query_word] = get_query_word(@idea_content)
+    # @idea_content = params[:idea][:content]
+    # params[:idea][:query_word] = get_query_word(@idea_content)
 
     @idea = Idea.new(idea_params)
     respond_to do |format|

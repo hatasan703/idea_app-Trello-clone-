@@ -19,4 +19,6 @@ class User < ApplicationRecord
   def self.invite_guest!(attributes={}, invited_by=nil, company_id)
     self.invite!(attributes, invited_by, company_id)
   end
+  has_one :profile
+  accepts_nested_attributes_for :profile
 end
