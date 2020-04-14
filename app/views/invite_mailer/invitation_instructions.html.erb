@@ -1,6 +1,6 @@
 <p><%= t("devise.mailer.invitation_instructions.hello", email: @resource.email) %></p>
 
-<p><%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url) %></p>
+<p>Pbotの<%= Company.find(@company_id).name %>に招待されました。以下のリンクから承認できます。</p>
 
 <p><%= link_to t("devise.mailer.invitation_instructions.accept"), accept_user_company_invitation_url(@company_id, @resource, invitation_token: @token) %></p>
 
