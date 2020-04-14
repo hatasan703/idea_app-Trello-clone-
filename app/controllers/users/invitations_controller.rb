@@ -9,8 +9,17 @@ class Users::InvitationsController < Devise::InvitationsController
     @from    = params[:from]
     @subject = params[:invite_subject]
     @content = params[:invite_content]
-    @user = User.invite_guest!(invite_params, current_user, @company_id)
+    @user = User.find_by(email: params[:user][:email])
+  
 
+    if @user.present?
+      # 既存ユーザー招待
+      @user.invite!(current_user, @company_id)
+    else
+      # 新規ユーザー招待
+      @user = User.invite_user!(invite_params, current_user, @company_id)
+    end
+    
     if @user.errors.empty?
       @user.update_column :invitation_sent_at, Time.now.utc
       flash[:notice] = "successfully sent invite to #{@user.email}"
@@ -23,7 +32,14 @@ class Users::InvitationsController < Devise::InvitationsController
   def edit
     @company_id = params[:company_id]
     @user_id = params[:format]
-    super
+    # 既存ユーザーの場合
+    if @user.name.present?
+      Employee.create(company_id: @company_id, user_id: @user_id)
+      sign_in @user
+      redirect_to company_ideas_path(@company_id)
+    else
+      super
+    end
   end
 
   def update
@@ -41,10 +57,6 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def invite_params
     params.require(:user).permit(:email)
-  end
-
-  def after_invite_path_for(resource)
-    companies_path
   end
 
   def after_accept_path_for(resource)
