@@ -37,7 +37,6 @@ class IdeasController < ApplicationController
     # ニュースクエリ取得、保存
     # @idea_content = params[:idea][:content]
     # params[:idea][:query_word] = get_query_word(@idea_content)
-
     @idea = Idea.new(idea_params)
     respond_to do |format|
       if @idea.save

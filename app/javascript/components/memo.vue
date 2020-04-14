@@ -100,10 +100,11 @@ export default {
 
       // メモのcontentをアイディアのcontentとして追加
       var data = new FormData
-      data.append("idea[content]", this.content)
+      data.append("idea[content]]", this.content)
+      data.append("idea[title]", "タイトルを入力してください")
 
       Rails.ajax({
-        url: "/ideas",
+        url: "ideas",
         type: "POST",
         data: data,
         dataType: "json",
