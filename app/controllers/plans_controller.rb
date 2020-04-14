@@ -16,12 +16,14 @@ class PlansController < ApplicationController
 
   def create
     @plans = Plan.create(plan_params)
-    redirect_to edit_idea_plan_path
+    @idea_id = params[:idea_id]
+    redirect_to edit_idea_plan_path(@idea_id, @plans)
   end
 
   def update
     @plan = Plan.update(plan_params)
-    redirect_to edit_idea_plan_path
+    @idea_id = params[:idea_id]
+    redirect_to edit_idea_plan_path(@idea_id, @plan)
   end
 
   private
