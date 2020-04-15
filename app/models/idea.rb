@@ -6,6 +6,7 @@ class Idea < ApplicationRecord
   acts_as_list scope: :user
   acts_as_list scope: :company
   belongs_to :user
+  belongs_to :company
   has_many :memos, ->{ order(position: :asc)  }, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
