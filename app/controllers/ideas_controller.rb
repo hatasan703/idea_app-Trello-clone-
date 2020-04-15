@@ -5,14 +5,17 @@ class IdeasController < ApplicationController
 
 
   def index
-    @ideas = Idea.where(user_id: current_user.id, company_id: params[:company_id]).sorted
     @company_id = params[:company_id]
     @company = Company.find(@company_id)
+    @ideas = @company.ideas.where(user_id: current_user.id).sorted
     @employees = @company.users
   end
 
   def public
-    @ideas = Idea.where(open: true, company_id: params[:company_id]).order(created_at: "DESC")
+    @company = Company.find(params[:company_id])
+    @ideas = @company.ideas.where(open: true).order(created_at: "DESC")
+
+    #Vueにデータを渡す
     @user = current_user
     shared_data[:user_id] = @user.try(:id)
   end
