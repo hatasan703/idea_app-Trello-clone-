@@ -1,14 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe Member, type: :model do
+RSpec.describe Memo, type: :model do
   describe "モデル" do
-    let!(:group){build(:group)}
-    let!(:user){build(:user)}
     let(:association) do
        described_class.reflect_on_association(target)
     end
     context "アソシエーション" do
-      let(:target){:group}
+      let(:target){:idea}
       it{expect(association.macro).to eq :belongs_to}
 
       let(:target){:user}
@@ -16,16 +14,16 @@ RSpec.describe Member, type: :model do
     end
     context "保存" do
       let(:user){create(:user)}
-      let(:group){create(:group)}
+      let(:company){create(:company)}
+      let(:idea){create(:idea,user_id:user.id,company_id:company.id)}
       it "失敗" do
-        members = Member.new()
-        members.valid?
-        expect(members.errors.messages[:user_id]).to include("が入力されていません。")
-        expect(members.errors.messages[:group_id]).to include("が入力されていません。")
+        memo = Memo.new()
+        memo.valid?
+        expect(memo.errors.messages[:content]).to include("が入力されていません。")
       end
       it "成功" do
-        members = Member.new(group:group,user:user)
-        expect(members).to be_valid
+        memo = Memo.new(user:user,idea:idea,content:"memo")
+        expect(memo).to be_valid
       end
     end
   end

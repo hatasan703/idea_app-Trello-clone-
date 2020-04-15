@@ -2,9 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Idea, type: :model do
   describe "モデル" do
-    before do
-      @user = create(:user)
-    end
+    let!(:user){build(:user)}
+    let!(:company){build(:company)}
     let(:association) do
        described_class.reflect_on_association(target)
     end
@@ -46,7 +45,7 @@ RSpec.describe Idea, type: :model do
     ###############################
     context "保存の際" do
       it " 成功するか" do
-        ideas = Idea.new(user_id:@user.id,content:"新規事業とは？")
+        ideas = Idea.new(user:user,company:company,content:"新規事業とは？")
         expect(ideas).to be_valid
       end
       it "バリデーションが効くか" do
