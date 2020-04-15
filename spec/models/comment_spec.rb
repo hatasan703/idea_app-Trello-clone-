@@ -5,10 +5,11 @@ RSpec.describe Comment, type: :model do
     let(:association) do
        described_class.reflect_on_association(target)
     end
-    context "アソシエーション" do
+    context "useに関するアソシエーション" do
       let(:target){:user}
       it{expect(association.macro).to eq :belongs_to}
-
+    end
+    context "ideaに関するアソシエーション" do
       let(:target){:idea}
       it{expect(association.macro).to eq :belongs_to}
     end

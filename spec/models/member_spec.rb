@@ -7,10 +7,11 @@ RSpec.describe Member, type: :model do
     let(:association) do
        described_class.reflect_on_association(target)
     end
-    context "アソシエーション" do
+    context "groupに関するアソシエーション" do
       let(:target){:group}
       it{expect(association.macro).to eq :belongs_to}
-
+    end
+    context "userに関するアソシエーション" do
       let(:target){:user}
       it{expect(association.macro).to eq :belongs_to}
     end

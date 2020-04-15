@@ -5,10 +5,11 @@ RSpec.describe Company, type: :model do
     let(:association) do
        described_class.reflect_on_association(target)
     end
-    context "アソシエーション" do
+    context "employeesに関するアソシエーション" do
       let(:target){:employees}
       it{expect(association.macro).to eq :has_many}
-
+    end
+    context "userに関するアソシエーション" do
       let(:target){:users}
       it{expect(association.macro).to eq :has_many}
     end

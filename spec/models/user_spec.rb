@@ -72,7 +72,7 @@ RSpec.describe User, type: :model do
       it "パスワード短い" do
         user = User.new(email:"test@primal-biz.co.jp",password:"pass")
         user.valid?
-        expect(user.errors.messages[:password]).to include("は6文字以上に設定して下さい。")
+        expect(user.errors.messages[:password]).to include("は6文字以上で入力してください")
       end
     end
     context "成功パターン" do
