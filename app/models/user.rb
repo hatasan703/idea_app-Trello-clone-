@@ -22,7 +22,18 @@ class User < ApplicationRecord
     self.invite!(attributes, invited_by, company_id)
   end
 
-  def invite_to_company
+  def update_after_invite
+    if self.errors.empty?
+      self.update_column :invitation_sent_at, Time.now.utc
+    end
+  end
+
+  def invited_judg
+    if self.companies.find_by(id: @company_id).nil?
+      true
+    else
+      false
+    end
   end
 
 end

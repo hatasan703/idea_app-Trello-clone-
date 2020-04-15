@@ -1,40 +1,30 @@
 class Users::InvitationsController < Devise::InvitationsController
+  before_action :set_company_id
+
   def new
-    @company_id = params[:company_id]
     super
   end
 
   def create
-    @company_id = params[:company_id]
-    @from    = params[:from]
-    @subject = params[:invite_subject]
-    @content = params[:invite_content]
     @user = User.find_by(email: params[:user][:email])
   
-
-    if @user.present?
+    if @user.nil?
+      # 新規ユーザー招待
+      @user = User.invite_user!(invite_params, current_user, @company_id)
+    elsif @user.invited_judg
       # 既存ユーザー招待
       @user.invite!(current_user, @company_id)
     else
-      # 新規ユーザー招待
-      @user = User.invite_user!(invite_params, current_user, @company_id)
+      # あとで会社招待済み処理
     end
-    
-    if @user.errors.empty?
-      @user.update_column :invitation_sent_at, Time.now.utc
-      flash[:notice] = "successfully sent invite to #{@user.email}"
-      respond_with @user, :location => root_path
-    else
-      render :new
-    end
+    @user.update_after_invite
+    redirect_to company_ideas_path(@company_id)
+
   end
 
   def edit
-    @company_id = params[:company_id]
-    @user_id = params[:format]
-    # 既存ユーザーの場合
     if @user.name.present?
-      Employee.create(company_id: @company_id, user_id: @user_id)
+      Employee.join_to_company(@company_id, @user.id)
       sign_in @user
       redirect_to company_ideas_path(@company_id)
     else
@@ -43,10 +33,8 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def update
-    @company_id = params[:company_id]
-    @user_id = params[:user][:user_id]
-    Employee.create(company_id: @company_id, user_id: @user_id)
     super
+    Employee.join_to_company(@company_id, @user.id)
   end
 
   def destroy
@@ -61,5 +49,9 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def after_accept_path_for(resource)
     companies_path
+  end
+
+  def set_company_id
+    @company_id = params[:company_id]
   end
 end
