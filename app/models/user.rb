@@ -28,8 +28,8 @@ class User < ApplicationRecord
     end
   end
 
-  def invited_judg
-    if self.companies.find_by(id: @company_id).nil?
+  def invited_judg(company_id)
+    if self.companies.find_by(id: company_id).nil?
       true
     else
       false

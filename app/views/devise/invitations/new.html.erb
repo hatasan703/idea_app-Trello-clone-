@@ -1,7 +1,7 @@
 <div class="field_container">
 
   <h2>新規ユーザーを招待する</h2>
-
+  <div class="invite_error"><%= flash[:error] %></div>
   <%= form_for(resource, as: resource_name, url: user_company_invitation_path(@company_id), html: { method: :post }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -18,3 +18,9 @@
   <% end %>
 
 </div>
+
+<style>
+.invite_error{
+  color: orange;
+}
+</style>

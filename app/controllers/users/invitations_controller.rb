@@ -7,18 +7,20 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def create
     @user = User.find_by(email: params[:user][:email])
-  
+
     if @user.nil?
       # 新規ユーザー招待
       @user = User.invite_user!(invite_params, current_user, @company_id)
-    elsif @user.invited_judg
+      after_invite
+    elsif @user.invited_judg(@company_id)
       # 既存ユーザー招待
       @user.invite!(current_user, @company_id)
+      after_invite
     else
-      # あとで会社招待済み処理
+      flash[:error] = '既に招待されているユーザーです'
+      render 'new'
     end
-    @user.update_after_invite
-    redirect_to company_ideas_path(@company_id)
+    
 
   end
 
@@ -53,5 +55,10 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def set_company_id
     @company_id = params[:company_id]
+  end
+
+  def after_invite
+    @user.update_after_invite
+    redirect_to company_ideas_path(@company_id)
   end
 end
