@@ -14,6 +14,7 @@
       </div>
       <div class="idea_content">{{ idea.content }}</div>
       <p v-if='idea.plan' @click="planningPage" class="pranning_page">プランニングへ</p>
+      <p v-if='company_admin==true' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
     </div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
         <div>{{comment.content}}</div>
@@ -43,6 +44,7 @@ export default {
       editing: false,
       message: "",
       user_id: sharedData.user_id,
+      company_admin: sharedData.company_admin,
       likeList: [],
       // plan_id: this.idea.plan.id,
     }
@@ -169,6 +171,10 @@ export default {
 
 .idea_content{
   font-size: 13px;
+}
+
+.idea_user_name{
+  text-align: right;
 }
 
 .card-body{
