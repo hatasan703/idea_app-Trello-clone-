@@ -2,13 +2,13 @@
   <div class="idea">
     <div class="idea_card">
       <div class="idea_title">{{ idea.title }}
-        <div>
-          <div v-if="isLiked" @click="deleteLike()">
+        <div class="count">
+          <span v-if="isLiked" @click="deleteLike()">
             <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count }}
-          </div>
-          <div v-else @click="registerLike()">
+          </span>
+          <span v-else @click="registerLike()">
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ count }}
-          </div>
+          </span>
           <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
         </div>
       </div>

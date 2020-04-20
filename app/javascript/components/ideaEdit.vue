@@ -2,8 +2,14 @@
   <div class="idea_edit">
     <div class="idea_card">
       <div class="idea_title">{{ title }}</div>
-      <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
-      <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
+      <div class="idea_action">
+        <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
+        <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
+        <span class="count">
+          <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ idea.likes.length }}
+          <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
+        </span>
+      </div>
       <div class="idea_content">{{ content }}</div>
       <p @click="planningNew" class="create_plan">プランニングへ</p>
     </div>
@@ -118,6 +124,10 @@ export default {
 
 .idea_content{
   font-size: 13px;
+}
+
+.count{
+margin-left: 80px;
 }
 
 .content_form{
