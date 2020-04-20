@@ -23,6 +23,9 @@ Rails.application.routes.draw do
     devise_for :users, controllers: {
       invitations: 'users/invitations',
     }
+    member do
+      delete "users/:user_id" => "companies#destroy_member"
+    end
   end
   # namespace :companies do
   #   resources :dashbords

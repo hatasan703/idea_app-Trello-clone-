@@ -4,6 +4,11 @@
 <div>所属ユーザー</div>
 <% @employees.each do |user| %>
   <%= user.name %>
+  <% if company_admin? %>
+    <%= link_to "/companies/#{@company_id}/users/#{user.id}", method: :delete, data: { confirm: 'メンバーから削除しますか？' } do %>
+      <i class="fa fa-remove" aria-hidden="true"></i>
+    <% end %>
+  <% end %>
 <% end %>
 <hr >
 <%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: :memos) }%>

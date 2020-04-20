@@ -20,4 +20,12 @@ module IdeasHelper
     @words
   end
 
+  def company_admin?
+      if current_user.employees.find_by(company_id: @company_id).admin == true
+        true
+      else
+        false
+      end
+  end
+
 end

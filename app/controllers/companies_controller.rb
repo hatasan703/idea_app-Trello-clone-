@@ -15,6 +15,15 @@ class CompaniesController < ApplicationController
     redirect_to companies_path
   end
 
+  def destroy_member
+    company = Company.find(params[:id])
+    if company.admin_user?(current_user)
+      employee = company.employees.find_by(user_id: params[:user_id])
+      employee.destroy
+    end
+    redirect_to company_ideas_path(company)
+  end
+
   private
   def company_params
     params.require(:company).permit(:name, employees_attributes:[:id, :user_id, :admin])

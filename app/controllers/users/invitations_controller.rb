@@ -20,7 +20,6 @@ class Users::InvitationsController < Devise::InvitationsController
       flash[:error] = '既に招待されているユーザーです'
       render 'new'
     end
-    
 
   end
 
@@ -37,10 +36,6 @@ class Users::InvitationsController < Devise::InvitationsController
   def update
     super
     Employee.join_to_company(@company_id, @user.id)
-  end
-
-  def destroy
-    super
   end
 
   private
