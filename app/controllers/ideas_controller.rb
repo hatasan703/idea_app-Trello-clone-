@@ -1,5 +1,4 @@
 class IdeasController < ApplicationController
-  before_action :redirect_to_top, except: [:public]
   before_action :set_idea, only: [:edit, :update, :show, :destroy, :move, :news]
   include IdeasHelper
 
@@ -95,10 +94,6 @@ class IdeasController < ApplicationController
   def idea_params
     params.require(:idea).permit(:title, :content, :position, :open, :query_word)
     .merge(user_id: current_user.id, company_id: params[:company_id])
-  end
-
-  def redirect_to_top
-    redirect_to controller: :top, action: :index unless user_signed_in?
   end
 
   def set_idea

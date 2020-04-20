@@ -1,5 +1,4 @@
 class PlansController < ApplicationController
-  before_action :redirect_to_top
   before_action :set_planning_page, only: [:new, :edit]
 
   def new
@@ -37,10 +36,6 @@ class PlansController < ApplicationController
           user_id: current_user.id, 
           idea_id: params[:idea_id]
         )
-  end
-
-  def redirect_to_top
-    redirect_to controller: :top, action: :index unless user_signed_in?
   end
 
   def set_planning_page
