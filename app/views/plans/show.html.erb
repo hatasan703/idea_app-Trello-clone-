@@ -1,0 +1,21 @@
+<div class="planning_container">
+  <div class="planning_idea">
+    <p class="planning_idea_title"><%= @idea.title %></p>
+    <p class="planning_idea_content"><%= @idea.content %></p>
+  </div>
+  <div class="plan_image">
+    <% if @plan.image? %>
+        <%= image_tag @plan.image.url, class: "file-preview" %>
+    <% else %>
+      <%= image_tag 'bm/default-bm.png', class: "file-preview", alt: 'ビジネスモデル' %>
+    <% end %>
+  </div>
+
+  <div class="planning_contents">
+    <% @plan.plan_contents.each do |plan| %>
+      <p class="plan_question_title">【確認事項】 <%= plan.plan_question.title %></p>
+      <p class="plan_question_content"><%= plan.plan_question.content %></p>
+      <p class="plan_content"><%= plan.content %></p>
+    <% end %>
+  </div>
+</div>

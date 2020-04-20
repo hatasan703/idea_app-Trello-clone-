@@ -1,5 +1,6 @@
 class PlansController < ApplicationController
-  before_action :set_planning_page, only: [:new, :edit]
+  before_action :set_planning_page, only: [:new, :edit, :show]
+  before_action :redirect_to_root, except: :show
 
   def new
     redirect_to edit_idea_plan_path(@idea, @plan) if @plan.present?
@@ -11,6 +12,9 @@ class PlansController < ApplicationController
 
   def edit
     @plan_contents = @plan.plan_contents if @plan.present?
+  end
+
+  def show
   end
 
   def create
@@ -42,8 +46,13 @@ class PlansController < ApplicationController
     @num = 0
     @plan_questions = PlanQuestion.all
     @idea = Idea.find(params[:idea_id])
-    @plan = Plan.find_by(idea_id: @idea.id)
+    @plan = @idea.plan
   end
 
+  def redirect_to_root
+    unless Idea.find(params[:idea_id]).user_id == current_user.id
+      redirect_to root_path
+    end
+  end
 
 end

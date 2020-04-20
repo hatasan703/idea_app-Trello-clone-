@@ -13,6 +13,7 @@
         </div>
       </div>
       <div class="idea_content">{{ idea.content }}</div>
+      <p v-if='idea.plan' @click="planningPage" class="pranning_page">プランニングへ</p>
     </div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
         <div>{{comment.content}}</div>
@@ -43,9 +44,9 @@ export default {
       message: "",
       user_id: sharedData.user_id,
       likeList: [],
+      // plan_id: this.idea.plan.id,
     }
   },
-
   computed: {
     // いいね数を返す
     count() {
@@ -140,6 +141,11 @@ export default {
     },
 
 
+    planningPage: function() {
+      location.href = `/ideas/${this.idea.id}/plans/${this.idea.plan.id}`
+    },
+
+
   }
   
 }
@@ -167,6 +173,15 @@ export default {
 
 .card-body{
   padding: 10px;
+}
+
+.pranning_page{
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #0056b3;
+}
+.pranning_page:hover{
+  opacity: 0.5;
 }
 
 </style>

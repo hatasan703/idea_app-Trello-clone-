@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :ideas do
-    resources :plans, only: [:index, :new, :edit, :create, :update]
+    resources :plans
     collection do
       get :public
     end

@@ -8,7 +8,7 @@
     <% if @plan.image? %>
       <%= image_tag @plan.image.url, class: "file-preview" %>
     <% else %>
-      <p>noimage</p>
+      <%= image_tag 'bm/default-bm.png', class: "file-preview", alt: 'ビジネスモデル' %>
     <% end %>
     <label for="file-sample" id="input-label" class="upload_btn">ビジネスモデルを選択</label>
     <%= f.file_field :image, id:"file-sample", class: "hidden" %><label for="file-sample" id="input-label"></label>

@@ -1,5 +1,5 @@
 <h1 class="page_title">みんなのアイディア</h1>
-<div class="page_title"><%= link_to "みんなのアイディアへ", company_ideas_path %></div>
+<div class="page_title"><%= link_to "自分のアイディアへ", company_ideas_path %></div>
 <hr >
 
-<%= tag.div id: :idea_public, data: { ideas: @ideas.to_json(include: [:memos, :comments]) } %>
+<%= tag.div id: :idea_public, data: { ideas: @ideas.to_json(include: [:memos, :comments, :plan]) } %>
