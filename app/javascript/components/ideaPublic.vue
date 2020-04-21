@@ -17,6 +17,7 @@ export default {
       ideas: this.comment_ideas,
       editing: false,
       message: "",
+      comment: "",
     }
   },
 

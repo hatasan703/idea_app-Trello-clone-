@@ -2,10 +2,16 @@
   <div class="idea_edit">
     <div class="idea_card">
       <div class="idea_title">{{ title }}</div>
-      <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
-      <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
+      <div class="idea_action">
+        <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
+        <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
+        <span class="count">
+          <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ likeCount }}
+          <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ commentCount }}
+        </span>
+      </div>
       <div class="idea_content">{{ content }}</div>
-      <p @click="planningPage" class="create_plan">プランニングへ</p>
+      <p @click="planningNew" class="create_plan">プランニングへ</p>
     </div>
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
@@ -42,6 +48,23 @@ export default {
       open: this.idea.open,
     }
   },
+
+  computed: {
+    // いいね数を返す
+    likeCount() {
+      if (this.idea.likes) {return this.idea.likes.length}
+    },
+    // コメント数を返す
+    commentCount() {
+      if (this.idea.comments) {return this.idea.comments.length}
+    },
+    // ログインユーザが既にいいねしているかを判定する
+    isLiked() {
+      if (this.likeList.length === 0) { return false }
+      return Boolean(this.findLikeId())
+    }
+  },
+
   methods: {
     closeModal: function(event) {
       if (event.target.classList.contains("modal")) { this.editing = false }
@@ -93,7 +116,7 @@ export default {
       location.href = `/ideas/${this.idea.id}/news`
     },
 
-    planningPage: function() {
+    planningNew: function() {
       location.href = `/ideas/${this.idea.id}/plans/new`
     },
     
@@ -120,6 +143,10 @@ export default {
   font-size: 13px;
 }
 
+.count{
+margin-left: 80px;
+}
+
 .content_form{
   height: 300px;
 }
@@ -132,7 +159,6 @@ export default {
 
 .create_plan:hover{
   opacity: 0.5;  
-  
 }
 
 </style>

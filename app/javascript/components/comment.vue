@@ -2,21 +2,23 @@
   <div class="idea">
     <div class="idea_card">
       <div class="idea_title">{{ idea.title }}
-        <div>
-          <div v-if="isLiked" @click="deleteLike()">
+        <div class="count">
+          <span v-if="isLiked" @click="deleteLike()">
             <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count }}
-          </div>
-          <div v-else @click="registerLike()">
+          </span>
+          <span v-else @click="registerLike()">
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ count }}
-          </div>
+          </span>
           <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
         </div>
       </div>
       <div class="idea_content">{{ idea.content }}</div>
+      <p v-if='idea.plan' @click="planningPage" class="pranning_page">プランニングへ</p>
+      <p v-if='isAdmin' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
     </div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
         <div>{{comment.content}}</div>
-        <div v-if='(user_id==comment.user_id)' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+        <div v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
       </div>
 
       <div class="comment_form">
@@ -42,10 +44,10 @@ export default {
       editing: false,
       message: "",
       user_id: sharedData.user_id,
+      company_admin: sharedData.company_admin,
       likeList: [],
     }
   },
-
   computed: {
     // いいね数を返す
     count() {
@@ -55,7 +57,11 @@ export default {
     isLiked() {
       if (this.likeList.length === 0) { return false }
       return Boolean(this.findLikeId())
-    }
+    },
+    // 会社管理者かどうかを判定
+    isAdmin() {
+      if (this.company_admin==true) { return true }
+    },
   },
   // Vueインスタンスの作成・初期化直後に実行される
   created: function() {
@@ -77,7 +83,7 @@ export default {
       data.append("comment[content]", this.message)
 
       Rails.ajax({
-        url: `/ideas/${this.idea.id}/comment`,
+        url: `/ideas/${this.idea.id}/comments`,
         type: "POST",
         data: data,
         dataType: "json",
@@ -140,6 +146,11 @@ export default {
     },
 
 
+    planningPage: function() {
+      location.href = `/ideas/${this.idea.id}/plans/${this.idea.plan.id}`
+    },
+
+
   }
   
 }
@@ -148,6 +159,17 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.idea{
+  color: #172b4d;
+  background: #ebecf0;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0 20px 20px;
+  padding: 10px;
+  vertical-align: top;
+  width: 250px;
+}
 
 
 .idea_card{
@@ -165,8 +187,21 @@ export default {
   font-size: 13px;
 }
 
+.idea_user_name{
+  text-align: right;
+}
+
 .card-body{
   padding: 10px;
+}
+
+.pranning_page{
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #0056b3;
+}
+.pranning_page:hover{
+  opacity: 0.5;
 }
 
 </style>

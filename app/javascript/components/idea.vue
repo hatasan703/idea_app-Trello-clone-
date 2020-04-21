@@ -94,8 +94,4 @@ export default {
   min-height: 10px;
 }
 
-// .memo_form{
-//   height: 40px;
-// }
-
 </style>

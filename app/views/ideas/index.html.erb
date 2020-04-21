@@ -1,9 +1,15 @@
-<h1 class="page_title">あなたのアイディア</h1>
-<div class="page_title"><%= link_to "みんなのアイディアへ", public_company_ideas_path %></div>
-<%= link_to "この会社に招待する", new_user_company_invitation_path(@company_id) %>
-<div>所属ユーザー</div>
-<% @employees.each do |user| %>
-  <%= user.name %>
-<% end %>
-<hr >
-<%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: :memos) }%>
+<div class="ideas_header">
+  <h1 class="company_title"><%= link_to @company.name, company_path(@company) %></h1>
+  <div class="switch_page_btn"><%= link_to "みんなのアイディアへ", public_company_ideas_path %></div>
+  <div>所属ユーザー：</div>
+  <% @employees.each do |user| %>
+    <%= user.name %>
+    <% if company_admin? %>
+      <%= link_to "/companies/#{@company_id}/users/#{user.id}", method: :delete, data: { confirm: 'メンバーから削除しますか？' } do %>
+        <i class="fa fa-remove" aria-hidden="true"></i>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= link_to "この会社に招待する", new_user_company_invitation_path(@company_id) %>
+</div>
+<%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: [:memos, :likes, :comments]) }%>

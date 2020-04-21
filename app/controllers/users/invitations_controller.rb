@@ -1,40 +1,41 @@
 class Users::InvitationsController < Devise::InvitationsController
+  before_action :set_company_id
+
   def new
-    @company_id = params[:company_id]
     super
   end
 
   def create
-    @company_id = params[:company_id]
-    @from    = params[:from]
-    @subject = params[:invite_subject]
-    @content = params[:invite_content]
-    @user = User.invite_guest!(invite_params, current_user, @company_id)
+    @user = User.find_by(email: params[:user][:email])
 
-    if @user.errors.empty?
-      @user.update_column :invitation_sent_at, Time.now.utc
-      flash[:notice] = "successfully sent invite to #{@user.email}"
-      respond_with @user, :location => root_path
+    if @user.nil?
+      # 新規ユーザー招待
+      @user = User.invite_user!(invite_params, current_user, @company_id)
+      after_invite
+    elsif @user.invited_judg(@company_id)
+      # 既存ユーザー招待
+      @user.invite!(current_user, @company_id)
+      after_invite
     else
-      render :new
+      flash[:error] = '既に招待されているユーザーです'
+      render 'new'
     end
+
   end
 
   def edit
-    @company_id = params[:company_id]
-    @user_id = params[:format]
-    super
+    if @user.name.present?
+      Employee.join_to_company(@company_id, @user.id)
+      sign_in @user
+      redirect_to company_ideas_path(@company_id)
+    else
+      super
+    end
   end
 
   def update
-    @company_id = params[:company_id]
-    @user_id = params[:user][:user_id]
-    Employee.create(company_id: @company_id, user_id: @user_id)
     super
-  end
-
-  def destroy
-    super
+    Employee.join_to_company(@company_id, @user.id)
   end
 
   private
@@ -43,11 +44,16 @@ class Users::InvitationsController < Devise::InvitationsController
     params.require(:user).permit(:email)
   end
 
-  def after_invite_path_for(resource)
+  def after_accept_path_for(resource)
     companies_path
   end
 
-  def after_accept_path_for(resource)
-    companies_path
+  def set_company_id
+    @company_id = params[:company_id]
+  end
+
+  def after_invite
+    @user.update_after_invite
+    redirect_to company_ideas_path(@company_id)
   end
 end

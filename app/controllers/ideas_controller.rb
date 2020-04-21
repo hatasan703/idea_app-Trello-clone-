@@ -1,20 +1,23 @@
 class IdeasController < ApplicationController
-  before_action :redirect_to_top, except: [:public]
   before_action :set_idea, only: [:edit, :update, :show, :destroy, :move, :news]
   include IdeasHelper
 
 
   def index
-    @ideas = Idea.where(user_id: current_user.id, company_id: params[:company_id]).sorted
     @company_id = params[:company_id]
     @company = Company.find(@company_id)
+    @ideas = @company.ideas.where(user_id: current_user.id).sorted
     @employees = @company.users
   end
 
   def public
-    @ideas = Idea.where(open: true, company_id: params[:company_id]).order(created_at: "DESC")
+    @company = Company.find(params[:company_id])
+    @ideas = @company.ideas.where(open: true).order(created_at: "DESC")
+
+    #Vueにデータを渡す
     @user = current_user
     shared_data[:user_id] = @user.try(:id)
+    shared_data[:company_admin] = @user.employees.find(params[:company_id]).admin
   end
 
   def news
@@ -56,9 +59,9 @@ class IdeasController < ApplicationController
   def update
     if current_user.id == @idea.user_id
       # ニュースクエリ取得、保存
-      @idea_content = params[:idea][:content]
-      params[:idea][:query_word] = get_query_word(@idea_content)
-
+      # @idea_content = params[:idea][:content]
+      # params[:idea][:query_word] = get_query_word(@idea_content)
+      
       respond_to do |format|
         if @idea.update(idea_params)
           format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
@@ -92,10 +95,6 @@ class IdeasController < ApplicationController
   def idea_params
     params.require(:idea).permit(:title, :content, :position, :open, :query_word)
     .merge(user_id: current_user.id, company_id: params[:company_id])
-  end
-
-  def redirect_to_top
-    redirect_to controller: :top, action: :index unless user_signed_in?
   end
 
   def set_idea

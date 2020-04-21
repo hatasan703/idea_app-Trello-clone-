@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {
+    :sessions => 'users/sessions'   
+  } 
   root 'companies#index'
   devise_scope :user do
     authenticated :user do
@@ -10,8 +12,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :companies, only: [:index, :new, :create]
   resources :companies do
+    resources :users, only: :show
     resources :ideas, only: [:index, :create, :update] do 
       collection do
         get :public
@@ -19,23 +21,27 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :companies do
+  resources :companies, only: [] do
     devise_for :users, controllers: {
       invitations: 'users/invitations',
     }
+    member do
+      delete "users/:user_id" => "companies#destroy_member"
+    end
   end
   # namespace :companies do
   #   resources :dashbords
   #   resources :formal_registrations ,param: :token
   # end
-  get "accept/:token"=>"companies/formal_registrations#new",param: :token ,as: :inviting
+  # get "accept/:token"=>"companies/formal_registrations#new",param: :token ,as: :inviting
   resources :groups
-  resources :joingroups
+  resources :joingroups, only: [:update, :destroy]
   resources :management_authorizations ,only: [:edit, :update, :destroy]
 
   resources :users
-  resources :ideas do
-    resources :plans, only: [:index, :new, :edit, :create, :update]
+  resources :ideas, only: [:destroy] do
+    resources :plans
+    resources :comments, only: [:create]
     collection do
       get :public
     end
@@ -49,14 +55,13 @@ Rails.application.routes.draw do
       patch :move
     end
   end
-
-  post  "ideas/:id/comment" => "comments#create"
-  resources :comments
+  
+  resources :comments, only: :destroy
 
   namespace :api, { format: 'json' } do
     resources :likes, only: [:index, :create, :destroy]
   end
   resources :profiles
-  resources :search_user_profiles
+  resources :search_user_profiles, only: [:index, :new]
 
 end

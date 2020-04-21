@@ -1,0 +1,51 @@
+// users#show
+// ユーザーのアイディアボード 閲覧画面
+
+.idea_field{
+  padding: 30px;
+  &_title{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px;
+  }
+}
+.idea{
+  color: #172b4d;
+  background: #ebecf0;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0 20px 20px;
+  padding: 10px;
+  vertical-align: top;
+  width: 250px;
+}
+
+
+.idea_card{
+  display: inline-block;
+  min-width: 230px;
+  padding: 10px;
+}
+
+.idea_title{
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.idea_content{
+  font-size: 13px;
+}
+
+.count{
+margin-left: 80px;
+}
+
+.create_plan{
+  font-size: 15px;
+  color: #007bff;
+  cursor: pointer;
+  &:hover{
+    opacity: 0.5;  
+  }
+}
