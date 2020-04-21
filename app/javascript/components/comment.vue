@@ -14,11 +14,11 @@
       </div>
       <div class="idea_content">{{ idea.content }}</div>
       <p v-if='idea.plan' @click="planningPage" class="pranning_page">プランニングへ</p>
-      <p v-if='company_admin==true' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
+      <p v-if='isAdmin' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
     </div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
         <div>{{comment.content}}</div>
-        <div v-if='(user_id==comment.user_id)' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+        <div v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
       </div>
 
       <div class="comment_form">
@@ -46,7 +46,6 @@ export default {
       user_id: sharedData.user_id,
       company_admin: sharedData.company_admin,
       likeList: [],
-      // plan_id: this.idea.plan.id,
     }
   },
   computed: {
@@ -58,7 +57,11 @@ export default {
     isLiked() {
       if (this.likeList.length === 0) { return false }
       return Boolean(this.findLikeId())
-    }
+    },
+    // 会社管理者かどうかを判定
+    isAdmin() {
+      if (this.company_admin==true) { return true }
+    },
   },
   // Vueインスタンスの作成・初期化直後に実行される
   created: function() {
