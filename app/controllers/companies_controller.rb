@@ -23,11 +23,9 @@ class CompaniesController < ApplicationController
   end
 
   def destroy_member
-    if @company.admin_user?(current_user)
-      employee = company.employees.find_by(user_id: params[:user_id])
-      employee.destroy
-    end
-    redirect_to company_ideas_path(company)
+    employee = @company.remove_employee(current_user, params[:user_id])
+    employee.destroy if employee
+    redirect_to company_ideas_path(@company)
   end
 
   private

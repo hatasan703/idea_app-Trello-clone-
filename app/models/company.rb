@@ -12,4 +12,12 @@ class Company < ApplicationRecord
     end
   end
 
+  def remove_employee(current_user, id)
+    if current_user.employees.find_by(company_id: self.id).admin == true
+       self.employees.find_by(user_id: id)
+    else
+      false
+    end
+  end
+
 end

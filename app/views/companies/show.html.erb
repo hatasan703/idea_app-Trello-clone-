@@ -1,6 +1,5 @@
 <h1>会社管理画面</h1>
-
-
+<%= link_to "この会社に招待する", new_user_company_invitation_path(@company.id) %>
 <table>
   <tr>
     <td>ユーザー名　</td>
@@ -13,7 +12,12 @@
   </tr>
   <% @users.each do |user| %>
     <tr>
-      <td><%= user.name %></td>
+      <td>
+        <%= link_to "/companies/#{@company.id}/users/#{user.id}", method: :delete, data: { confirm: 'メンバーから削除しますか？' } do %>
+          <i class="fa fa-remove" aria-hidden="true"></i>
+         <% end %>
+        <%= user.name %>
+      </td>
       <td><%= idea_count(user) %></td>
       <td><%= open_idea_count(user) %></td>
       <td><%= user.comments.length %></td>
