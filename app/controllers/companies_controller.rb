@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_action :set_company, only: :show
+  before_action :set_company, only: [:show, :destroy_member]
   def index
     @user = current_user
     @companies = @user.companies
@@ -7,6 +7,9 @@ class CompaniesController < ApplicationController
 
   def show
     @users = @company.users
+    unless @company.admin_user?(current_user)
+      redirect_to root_path
+    end
   end
 
   def new
@@ -20,8 +23,7 @@ class CompaniesController < ApplicationController
   end
 
   def destroy_member
-    company = Company.find(params[:id])
-    if company.admin_user?(current_user)
+    if @company.admin_user?(current_user)
       employee = company.employees.find_by(user_id: params[:user_id])
       employee.destroy
     end
