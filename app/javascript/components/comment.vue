@@ -157,6 +157,17 @@ export default {
 
 <style lang="scss" scoped>
 
+.idea{
+  color: #172b4d;
+  background: #ebecf0;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0 20px 20px;
+  padding: 10px;
+  vertical-align: top;
+  width: 250px;
+}
+
 
 .idea_card{
   display: inline-block;
