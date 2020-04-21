@@ -83,7 +83,7 @@ export default {
       data.append("comment[content]", this.message)
 
       Rails.ajax({
-        url: `/ideas/${this.idea.id}/comment`,
+        url: `/ideas/${this.idea.id}/comments`,
         type: "POST",
         data: data,
         dataType: "json",

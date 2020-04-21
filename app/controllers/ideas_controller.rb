@@ -59,9 +59,9 @@ class IdeasController < ApplicationController
   def update
     if current_user.id == @idea.user_id
       # ニュースクエリ取得、保存
-      @idea_content = params[:idea][:content]
-      params[:idea][:query_word] = get_query_word(@idea_content)
-
+      # @idea_content = params[:idea][:content]
+      # params[:idea][:query_word] = get_query_word(@idea_content)
+      
       respond_to do |format|
         if @idea.update(idea_params)
           format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
