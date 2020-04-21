@@ -6,8 +6,8 @@
         <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
         <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
         <span class="count">
-          <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ idea.likes.length }}
-          <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
+          <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ likeCount }}
+          <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ commentCount }}
         </span>
       </div>
       <div class="idea_content">{{ content }}</div>
@@ -48,6 +48,23 @@ export default {
       open: this.idea.open,
     }
   },
+
+  computed: {
+    // いいね数を返す
+    likeCount() {
+      if (this.idea.likes) {return this.idea.likes.length}
+    },
+    // コメント数を返す
+    commentCount() {
+      if (this.idea.comments) {return this.idea.comments.length}
+    },
+    // ログインユーザが既にいいねしているかを判定する
+    isLiked() {
+      if (this.likeList.length === 0) { return false }
+      return Boolean(this.findLikeId())
+    }
+  },
+
   methods: {
     closeModal: function(event) {
       if (event.target.classList.contains("modal")) { this.editing = false }
