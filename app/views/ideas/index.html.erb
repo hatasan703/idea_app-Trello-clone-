@@ -1,5 +1,5 @@
 <div class="ideas_header">
-  <h1 class="company_title"><%= @company.name %></h1>
+  <h1 class="company_title"><%= link_to @company.name, company_path(@company) %></h1>
   <div class="switch_page_btn"><%= link_to "みんなのアイディアへ", public_company_ideas_path %></div>
   <div>所属ユーザー：</div>
   <% @employees.each do |user| %>

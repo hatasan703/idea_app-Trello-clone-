@@ -1,0 +1,25 @@
+<h1>会社管理画面</h1>
+
+
+<table>
+  <tr>
+    <td>ユーザー名　</td>
+    <td>アイディア投稿数　</td>
+    <td>公開アイディア数　</td>
+    <td>コメント数　</td>
+    <td>いいね数　</td>
+    <td>最終利用日時　</td>
+    <td>アイディア</td>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= idea_count(user) %></td>
+      <td><%= open_idea_count(user) %></td>
+      <td><%= user.comments.length %></td>
+      <td><%= user.likes.length %></td>
+      <td><%= last_login_at(user) %></td>
+      <td>アイディアへ</td>
+    </tr>
+  <% end %>
+</table>

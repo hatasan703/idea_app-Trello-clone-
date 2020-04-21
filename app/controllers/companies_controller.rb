@@ -1,7 +1,12 @@
 class CompaniesController < ApplicationController
+  before_action :set_company, only: :show
   def index
     @user = current_user
     @companies = @user.companies
+  end
+
+  def show
+    @users = @company.users
   end
 
   def new
@@ -26,6 +31,10 @@ class CompaniesController < ApplicationController
   private
   def company_params
     params.require(:company).permit(:name, employees_attributes:[:id, :user_id, :admin])
+  end
+
+  def set_company
+    @company = Company.find(params[:id])
   end
 end
 

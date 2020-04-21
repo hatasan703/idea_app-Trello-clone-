@@ -8,6 +8,10 @@
   font-size: 18px;
   font-weight: 700;
   text-align: center;
+  a{
+    color: #fff;
+    text-decoration: none;
+  }
   &:hover{
     background-color: hsla(0,0%,100%,.32);
     cursor: pointer;
