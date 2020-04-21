@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   end
 
   resources :companies do
-  resources :ideas, only: [:index, :create, :update] do 
+    resources :users, only: :show
+    resources :ideas, only: [:index, :create, :update] do 
       collection do
         get :public
       end

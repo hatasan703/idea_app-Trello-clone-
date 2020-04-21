@@ -1,0 +1,28 @@
+<div class="idea_field">
+  <h1 class="idea_field_title">閲覧画面</h1>
+  <% @ideas.each do |idea| %>
+    <div class="idea">
+      <div class="idea_card">
+        <div class="idea_title"><%= idea.title %></div>
+        <div class="idea_action">
+          <%= link_to news_idea_path(idea) do %>
+            <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+          <% end %>
+          <span class="count">
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i> <%= idea.likes.length %>
+            <i class="fa fa-commenting-o" aria-hidden="true"></i> <%= idea.comments.length %>
+          </span>
+        </div>
+        <div class="idea_content"><%= idea.content %></div>
+        <% if idea.plan %>
+          <%= link_to "プランニングへ", idea_plan_path(idea, idea.plan), class: "create_plan" %>
+        <% end %>
+      </div>
+      <% idea.memos.each do |memo| %>
+        <div class="card card-body mb-3" >
+          <p><%= memo.content %></p>
+        </div> 
+      <% end %>
+    </div>
+  <% end %>
+</div>

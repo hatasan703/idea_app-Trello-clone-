@@ -36,4 +36,14 @@ class User < ApplicationRecord
     end
   end
 
+  def admin?(current_user, id)
+    if current_user.employees.find_by(company_id: id).admin == true
+      true
+    elsif self == current_user
+      true
+    else
+      false
+    end
+  end
+
 end

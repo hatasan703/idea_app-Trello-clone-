@@ -19,7 +19,7 @@
       <td><%= user.comments.length %></td>
       <td><%= user.likes.length %></td>
       <td><%= last_login_at(user) %></td>
-      <td>アイディアへ</td>
+      <td><%= link_to "アイディアへ", company_user_path(@company, user) %></td>
     </tr>
   <% end %>
 </table>
