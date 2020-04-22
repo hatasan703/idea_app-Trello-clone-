@@ -11,26 +11,26 @@ class MemosController < ApplicationController
   
   def create
     @memo = Memo.new(memo_params)
+    company_id = Idea.find(params[:memo][:idea_id]).company_id
     respond_to do |format|
       if @memo.save
-        format.html { redirect_to @memo, notice: 'Memo was successfully created.' }
+        format.html { redirect_to company_ideas_path(company_id) }
         format.json { render :show, status: :created, location: @memo }
       else
-        format.html { render :new }
-        format.json { render json: @memo.errors, status: :unprocessable_entity }
+        redirect_to company_ideas_path(company_id)
       end
     end
   end
 
   def update
+    company_id = Idea.find(params[:memo][:idea_id]).company_id
     if current_user.id == @memo.user_id
       respond_to do |format|
         if @memo.update(memo_params)
           format.html { redirect_to @memo, notice: 'Memo was successfully updated.' }
           format.json { render :show, status: :ok, location: @memo }
         else
-          format.html { render :edit }
-          format.json { render json: @memo.errors, status: :unprocessable_entity }
+          redirect_to company_ideas_path(company_id)
         end
       end
     end

@@ -5,13 +5,13 @@ class CommentsController < ApplicationController
   
   def create
     @comment = Comment.new(comment_params)
+    company_id = Idea.find(params[:idea_id]).company_id
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to public_company_ideas_path(company_id) }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        redirect_to public_company_ideas_path(company_id)
       end
     end
   end
