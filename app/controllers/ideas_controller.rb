@@ -1,5 +1,5 @@
 class IdeasController < ApplicationController
-  before_action :set_idea, only: [:edit, :update, :show, :destroy, :move, :news]
+  before_action :set_idea, except: [:index, :public, :new]
   include IdeasHelper
 
 
@@ -76,7 +76,7 @@ class IdeasController < ApplicationController
     if current_user.id == @idea.user_id
       @idea.destroy
       respond_to do |format|
-        format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
+        format.html { redirect_to company_ideas_path(params[:company_id]) }
         format.json { head :no_content }
       end
     end

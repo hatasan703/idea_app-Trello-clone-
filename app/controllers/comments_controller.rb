@@ -1,11 +1,10 @@
 class CommentsController < ApplicationController
 
-  before_action :set_comment, only: [:destroy]
+  before_action :set_comment, only: [:create, :destroy]
 
   
   def create
     @comment = Comment.new(comment_params)
-    company_id = Idea.find(params[:idea_id]).company_id
     respond_to do |format|
       if @comment.save
         format.html { redirect_to public_company_ideas_path(company_id) }
@@ -17,10 +16,12 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    company_id = Idea.find(params[:idea_id]).company_id
+
     if current_user.id == @comment.user_id
       @comment.destroy
       respond_to do |format|
-        format.html { redirect_to comments_url, notice: 'comment was successfully destroyed.' }
+        format.html { redirect_to public_company_ideas_path(company_id) }
         format.json { head :no_content }
       end
     end
@@ -34,5 +35,6 @@ class CommentsController < ApplicationController
 
   def set_comment
     @comment = Comment.find(params[:id])
+    company_id = Idea.find(params[:idea_id]).company_id
   end
 end

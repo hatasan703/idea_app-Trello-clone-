@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :companies do
     resources :users, only: :show
-    resources :ideas, only: [:index, :create, :update] do 
+    resources :ideas, except: [:new, :edit] do 
       collection do
         get :public
       end
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   resources :management_authorizations ,only: [:edit, :update, :destroy]
 
   resources :users
-  resources :ideas, only: [:destroy] do
+  resources :ideas, only: [] do
     resources :plans
     resources :comments, only: [:create]
     collection do

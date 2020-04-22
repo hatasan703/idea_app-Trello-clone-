@@ -100,6 +100,7 @@ export default {
       Rails.ajax({
         beforeSend: () => true,
         url: `/ideas/${this.idea.id}`,
+        url: `/companies/${this.idea.company_id}/ideas/${this.idea.id}`,
         type: "DELETE",
         data: data,
         dataType: "json",
