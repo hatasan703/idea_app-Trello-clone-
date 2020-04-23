@@ -1,7 +1,17 @@
 <template>
   <div class="idea_edit">
     <div class="idea_card">
-      <i @click="editing=true" class="fa fa-bars" aria-hidden="true"></i>
+
+      <div class="dropdown">
+        <button class="" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li @click="editing=true" class="dropdown_action">編集する</li>
+          <li @click="destroy" class="dropdown_action">削除する</li>
+        </ul>
+      </div>
+      
       <div class="idea_title">{{ title }}</div>
       <div class="idea_content">{{ content }}</div>
       <div class="idea_action">
@@ -27,7 +37,6 @@
             <input type="checkbox" v-model="open" true-value=true false-value=false>
             <label for="open">公開　</label>
             <button @click="save" type="button" class="btn btn-primary">保存</button>
-            <button @click="destroy" type="button" class="btn btn-primary">削除</button>
           </div>
         </div>
       </div>

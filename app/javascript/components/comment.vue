@@ -7,7 +7,7 @@
           <i class="fa fa-bars" aria-hidden="true"></i>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li @click="privateAction" class="private_btn">非公開にする</li>
+          <li @click="privateAction" class="dropdown_action">非公開にする</li>
         </ul>
       </div>
 
@@ -207,15 +207,6 @@ export default {
 .idea_card{
   display: inline-block;
   min-width: 230px;
-}
-
-.private_btn{
-  cursor: pointer;
-  font-size: 13px;
-  text-align: center;
-}
-.private_btn:hover{
-  opacity: 0.5;
 }
 
 .idea_title{
