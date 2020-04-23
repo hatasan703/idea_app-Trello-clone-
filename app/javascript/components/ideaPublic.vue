@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <comment v-for="idea in ideas" :key="idea.id" :idea="idea" :comment="comment">
     </comment>
   </div>

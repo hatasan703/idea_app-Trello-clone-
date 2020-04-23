@@ -1,17 +1,17 @@
 <template>
   <div class="idea_edit">
     <div class="idea_card">
+      <i @click="editing=true" class="fa fa-bars" aria-hidden="true"></i>
       <div class="idea_title">{{ title }}</div>
+      <div class="idea_content">{{ content }}</div>
       <div class="idea_action">
-        <i @click="editing=true" class="fa fa-edit" aria-hidden="true"></i>
         <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
+        <i @click="planningNew" class="fa fa-line-chart" aria-hidden="true"></i>
         <span class="count">
           <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ likeCount }}
           <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ commentCount }}
         </span>
       </div>
-      <div class="idea_content">{{ content }}</div>
-      <p @click="planningNew" class="create_plan">プランニングへ</p>
     </div>
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
@@ -132,7 +132,6 @@ export default {
 .idea_card{
   display: inline-block;
   min-width: 230px;
-  padding: 10px;
 }
 
 .idea_title{
@@ -144,8 +143,13 @@ export default {
   font-size: 13px;
 }
 
+.idea_action{
+  margin: 5px 0;
+}
+
 .count{
-margin-left: 80px;
+margin-left: 40%;
+font-size: 15px;
 }
 
 .content_form{

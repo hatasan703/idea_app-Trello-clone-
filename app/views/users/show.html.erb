@@ -4,6 +4,12 @@
     <div class="idea">
       <div class="idea_card">
         <div class="idea_title"><%= idea.title %></div>
+        <div class="idea_content"><%= idea.content %></div>
+        <% if idea.plan %>
+          <%= link_to idea_plan_path(idea, idea.plan), class: "create_plan" do %>
+            <i class="fa fa-line-chart pranning_page" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
         <div class="idea_action">
           <%= link_to news_idea_path(idea) do %>
             <i class="fa fa-newspaper-o" aria-hidden="true"></i>
@@ -13,10 +19,6 @@
             <i class="fa fa-commenting-o" aria-hidden="true"></i> <%= idea.comments.length %>
           </span>
         </div>
-        <div class="idea_content"><%= idea.content %></div>
-        <% if idea.plan %>
-          <%= link_to "プランニングへ", idea_plan_path(idea, idea.plan), class: "create_plan" %>
-        <% end %>
       </div>
       <% idea.memos.each do |memo| %>
         <div class="card card-body mb-3" >
