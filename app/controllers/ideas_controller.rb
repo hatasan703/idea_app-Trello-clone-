@@ -72,6 +72,20 @@ class IdeasController < ApplicationController
     end
   end
 
+  def hidden
+    # binding.pry
+    if current_user.employees.find(params[:company_id]).admin == true
+      respond_to do |format|
+        if @idea.update(idea_params)
+          format.html { redirect_to company_ideas_path(params[:company_id]) }
+          format.json { head :no_content }
+        else
+          redirect_to company_ideas_path(params[:company_id])
+        end
+      end
+    end
+  end
+
   def destroy
     if current_user.id == @idea.user_id
       @idea.destroy

@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       collection do
         get :public
       end
+      member do
+        patch :hidden
+      end
     end
   end
 
@@ -41,7 +44,7 @@ Rails.application.routes.draw do
   resources :users
   resources :ideas, only: [] do
     resources :plans
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :destroy]
     collection do
       get :public
     end
@@ -55,8 +58,6 @@ Rails.application.routes.draw do
       patch :move
     end
   end
-  
-  resources :comments, only: :destroy
 
   namespace :api, { format: 'json' } do
     resources :likes, only: [:index, :create, :destroy]
