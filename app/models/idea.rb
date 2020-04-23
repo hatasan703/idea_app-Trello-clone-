@@ -29,4 +29,12 @@ class Idea < ApplicationRecord
     end
     self.query_word =news_query
   end
+
+  def admin_user?(current_user)
+    if current_user.employees.find(self.company_id).admin == true
+      true
+    else
+      false
+    end
+  end
 end
