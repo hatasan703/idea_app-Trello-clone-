@@ -1,5 +1,5 @@
 class IdeasController < ApplicationController
-  before_action :set_idea, except: [:index, :public, :new]
+  before_action :set_idea, except: [:index,:create, :public, :new]
   include IdeasHelper
 
 
@@ -44,7 +44,7 @@ class IdeasController < ApplicationController
     respond_to do |format|
       if @idea.save
         format.html { redirect_to company_ideas_path(params[:company_id]) }
-        format.json { render :show, status: :created, location: @idea }
+        format.json { render :show, status: :created }
       else
         redirect_to company_ideas_path(params[:company_id])
       end
@@ -64,7 +64,7 @@ class IdeasController < ApplicationController
       respond_to do |format|
         if @idea.update(idea_params)
           format.html { redirect_to company_ideas_path(params[:company_id]) }
-          format.json { render :show, status: :ok, location: @idea }
+          format.json { render :show, status: :ok }
         else
           redirect_to company_ideas_path(params[:company_id])
         end

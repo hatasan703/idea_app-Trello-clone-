@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 
-  before_action :set_comment, only: [:create, :destroy]
+  before_action :set_comment, only: [:destroy]
 
   
   def create
@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     respond_to do |format|
       if @comment.save
         format.html { redirect_to public_company_ideas_path(company_id) }
-        format.json { render :show, status: :created, location: @comment }
+        format.json { render :show, status: :created }
       else
         redirect_to public_company_ideas_path(company_id)
       end
@@ -17,7 +17,6 @@ class CommentsController < ApplicationController
 
   def destroy
     company_id = Idea.find(params[:idea_id]).company_id
-
     if current_user.id == @comment.user_id
       @comment.destroy
       respond_to do |format|
