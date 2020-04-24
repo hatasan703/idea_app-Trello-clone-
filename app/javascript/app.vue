@@ -78,7 +78,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "assets/test.scss";
 
 .dragArea {
   min-height: 10px;
@@ -90,10 +89,11 @@ export default {
   border-radius: 3px;
   display: inline-block;
   margin: 0 0 20px 20px;
-  padding: 10px;
+  padding: 10px 15px;
   vertical-align: top;
   width: 250px;
 }
+
 
 
 </style>

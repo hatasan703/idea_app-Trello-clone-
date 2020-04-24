@@ -18,8 +18,12 @@ class CompaniesController < ApplicationController
   end
 
   def create
-    company = Company.create(company_params)
-    redirect_to companies_path
+    company = Company.new(company_params)
+    if company.save
+      redirect_to company_ideas_path(company)
+    else
+      redirect_to companies_path
+    end
   end
 
   def destroy_member

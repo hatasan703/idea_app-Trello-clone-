@@ -14,9 +14,12 @@ Rails.application.routes.draw do
 
   resources :companies do
     resources :users, only: :show
-    resources :ideas, only: [:index, :create, :update] do 
+    resources :ideas, except: [:new, :edit] do 
       collection do
         get :public
+      end
+      member do
+        patch :hidden
       end
     end
   end
@@ -39,9 +42,9 @@ Rails.application.routes.draw do
   resources :management_authorizations ,only: [:edit, :update, :destroy]
 
   resources :users
-  resources :ideas, only: [:destroy] do
+  resources :ideas, only: [] do
     resources :plans
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :destroy]
     collection do
       get :public
     end
@@ -55,8 +58,6 @@ Rails.application.routes.draw do
       patch :move
     end
   end
-  
-  resources :comments, only: :destroy
 
   namespace :api, { format: 'json' } do
     resources :likes, only: [:index, :create, :destroy]

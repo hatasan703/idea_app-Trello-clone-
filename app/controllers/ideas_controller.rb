@@ -1,5 +1,6 @@
 class IdeasController < ApplicationController
-  before_action :set_idea, only: [:edit, :update, :show, :destroy, :move, :news]
+  before_action :set_idea, except: [:index,:create, :public, :new]
+  before_action :is_matched_user?, only: [:update, :destroy, :move]
   include IdeasHelper
 
 
@@ -43,11 +44,10 @@ class IdeasController < ApplicationController
     @idea = Idea.new(idea_params)
     respond_to do |format|
       if @idea.save
-        format.html { redirect_to @idea, notice: 'Idea was successfully created.' }
-        format.json { render :show, status: :created, location: @idea }
+        format.html { redirect_to company_ideas_path(params[:company_id]) }
+        format.json { render :show, status: :created }
       else
-        format.html { render :new }
-        format.json { render json: @idea.errors, status: :unprocessable_entity }
+        redirect_to company_ideas_path(params[:company_id])
       end
     end
   end
@@ -57,38 +57,44 @@ class IdeasController < ApplicationController
   end
 
   def update
-    if current_user.id == @idea.user_id
       # ニュースクエリ取得、保存
       # @idea_content = params[:idea][:content]
       # params[:idea][:query_word] = get_query_word(@idea_content)
       
+    respond_to do |format|
+      if @idea.update(idea_params)
+        format.html { redirect_to company_ideas_path(params[:company_id]) }
+        format.json { render :show, status: :ok }
+      else
+        redirect_to company_ideas_path(params[:company_id])
+      end
+    end
+  end
+
+  def hidden
+    if @idea.admin_user?(current_user)
       respond_to do |format|
         if @idea.update(idea_params)
-          format.html { redirect_to @idea, notice: 'Idea was successfully updated.' }
-          format.json { render :show, status: :ok, location: @idea }
+          format.html { redirect_to company_ideas_path(params[:company_id]) }
+          format.json { head :no_content }
         else
-          format.html { render :edit }
-          format.json { render json: @idea.errors, status: :unprocessable_entity }
+          redirect_to company_ideas_path(params[:company_id])
         end
       end
     end
   end
 
   def destroy
-    if current_user.id == @idea.user_id
-      @idea.destroy
-      respond_to do |format|
-        format.html { redirect_to ideas_url, notice: 'Idea was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+    @idea.destroy
+    respond_to do |format|
+      format.html { redirect_to company_ideas_path(params[:company_id]) }
+      format.json { head :no_content }
     end
   end
 
   def move
-    if current_user.id == @idea.user_id
-      @idea.insert_at(idea_params[:position].to_i)
-      render action: :show
-    end
+    @idea.insert_at(idea_params[:position].to_i)
+    render action: :show
   end
 
   private
@@ -99,6 +105,12 @@ class IdeasController < ApplicationController
 
   def set_idea
     @idea = Idea.find(params[:id])
+  end
+
+  def is_matched_user?
+    unless current_user.id == @idea.user_id
+      redirect_to company_ideas_path(params[:company_id])
+    end
   end
 
 end

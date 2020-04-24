@@ -1,7 +1,21 @@
 <template>
   <div class="idea">
     <div class="idea_card">
-      <div class="idea_title">{{ idea.title }}
+      
+      <div v-if='isAdmin' class="dropdown">
+        <button class="" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li @click="privateAction" class="dropdown_action">非公開にする</li>
+        </ul>
+      </div>
+
+
+      <div class="idea_title">{{ idea.title }}</div>
+      <div class="idea_content">{{ idea.content }}</div>
+      <div class="idea_action">
+        <i v-if='idea.plan' @click="planningPage" class="fa fa-line-chart pranning_page" aria-hidden="true"></i>
         <div class="count">
           <span v-if="isLiked" @click="deleteLike()">
             <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count }}
@@ -11,10 +25,8 @@
           </span>
           <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
         </div>
+        <p v-if='isAdmin' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
       </div>
-      <div class="idea_content">{{ idea.content }}</div>
-      <p v-if='idea.plan' @click="planningPage" class="pranning_page">プランニングへ</p>
-      <p v-if='isAdmin' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
     </div>
       <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
         <div>{{comment.content}}</div>
@@ -71,6 +83,27 @@ export default {
   },
 
   methods: {
+
+      // アイディア非公開(ideas#update)
+    privateAction: function() {
+      var data = new FormData
+      data.append("idea[open]", false)
+
+      Rails.ajax({
+        beforeSend: () => true,
+        url: `${this.idea.id}/hidden`,
+        type: "PATCH",
+        data: data,
+        dataType: "json",
+        success: (data) => {
+          const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
+          window.store.ideas.splice(idea_index, 1, data)
+          this.editing = false
+        }
+      })
+    },
+
+
     startEditing: function() {
       this.editing = true
       this.$nextTick(() => { this.$refs.message.focus() }) //コメント追加時にフォームを入力状態にする
@@ -102,7 +135,7 @@ export default {
       var data = new FormData
       data.append("comment[content]", comment.content)
       Rails.ajax({
-        url: `/comments/${comment.id}`,
+        url: `/ideas/${this.idea.id}/comments/${comment.id}`,
         type: "DELETE",
         data: data,
         dataType: "json",
@@ -158,7 +191,7 @@ export default {
 
 
 
-<style lang="scss" scoped>
+<style>
 
 .idea{
   color: #172b4d;
@@ -166,16 +199,14 @@ export default {
   border-radius: 3px;
   display: inline-block;
   margin: 0 0 20px 20px;
-  padding: 10px;
+  padding: 10px 15px;
   vertical-align: top;
   width: 250px;
 }
 
-
 .idea_card{
   display: inline-block;
   min-width: 230px;
-  padding: 10px;
 }
 
 .idea_title{

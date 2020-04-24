@@ -37,7 +37,29 @@
   border-radius: 3px;
   display: inline-block;
   margin: 0 0 20px 20px;
-  padding: 10px;
+  padding: 10px 15px;
   vertical-align: top;
   width: 250px;
+}
+
+.fa:hover{
+  opacity: 0.5;
+}
+
+.dropdown-menu{
+  padding: 0;
+  padding-bottom: 5px;
+}
+
+.dropdown_action{
+  text-align: center;
+  font-size: 13px;
+  padding-top: 5px;
+  cursor: pointer;
+
+  &:hover{
+    opacity: 0.5;
+    background:#2C3E50;
+    color: #fff;
+  }
 }
