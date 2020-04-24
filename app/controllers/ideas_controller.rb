@@ -1,24 +1,23 @@
 class IdeasController < ApplicationController
-  before_action :set_idea, except: [:index,:create, :public, :new]
+  before_action :set_idea
   before_action :is_matched_user?, only: [:update, :destroy, :move]
   include IdeasHelper
 
 
   def index
-    @company_id = params[:company_id]
     @company = Company.find(@company_id)
     @ideas = @company.ideas.where(user_id: current_user.id).sorted
     @employees = @company.users
   end
 
   def public
-    @company = Company.find(params[:company_id])
+    @company = Company.find(@company_id)
     @ideas = @company.ideas.where(open: true).order(created_at: "DESC")
 
     #Vueにデータを渡す
     @user = current_user
     shared_data[:user_id] = @user.try(:id)
-    shared_data[:company_admin] = @user.employees.find(params[:company_id]).admin
+    shared_data[:company_admin] = @user.employees.find(@company_id).admin
   end
 
   def news
@@ -33,10 +32,6 @@ class IdeasController < ApplicationController
      end
   end
 
-  def new
-    @idea = Idea.new
-  end
-
   def create
     # ニュースクエリ取得、保存
     # @idea_content = params[:idea][:content]
@@ -44,16 +39,12 @@ class IdeasController < ApplicationController
     @idea = Idea.new(idea_params)
     respond_to do |format|
       if @idea.save
-        format.html { redirect_to company_ideas_path(params[:company_id]) }
+        format.html { redirect_to company_ideas_path(@company_id) }
         format.json { render :show, status: :created }
       else
-        redirect_to company_ideas_path(params[:company_id])
+        redirect_to company_ideas_path(@company_id)
       end
     end
-  end
-
-  def edit
-    @memos = @idea.memos.rank(:row_order)
   end
 
   def update
@@ -63,10 +54,10 @@ class IdeasController < ApplicationController
       
     respond_to do |format|
       if @idea.update(idea_params)
-        format.html { redirect_to company_ideas_path(params[:company_id]) }
+        format.html { redirect_to company_ideas_path(@company_id) }
         format.json { render :show, status: :ok }
       else
-        redirect_to company_ideas_path(params[:company_id])
+        redirect_to company_ideas_path(@company_id)
       end
     end
   end
@@ -75,10 +66,10 @@ class IdeasController < ApplicationController
     if @idea.admin_user?(current_user)
       respond_to do |format|
         if @idea.update(idea_params)
-          format.html { redirect_to company_ideas_path(params[:company_id]) }
+          format.html { redirect_to company_ideas_path(@company_id) }
           format.json { head :no_content }
         else
-          redirect_to company_ideas_path(params[:company_id])
+          redirect_to company_ideas_path(@company_id)
         end
       end
     end
@@ -87,7 +78,7 @@ class IdeasController < ApplicationController
   def destroy
     @idea.destroy
     respond_to do |format|
-      format.html { redirect_to company_ideas_path(params[:company_id]) }
+      format.html { redirect_to company_ideas_path(@company_id) }
       format.json { head :no_content }
     end
   end
@@ -104,12 +95,13 @@ class IdeasController < ApplicationController
   end
 
   def set_idea
-    @idea = Idea.find(params[:id])
+    @idea = Idea.find(params[:id]) if params[:id]
+    @company_id = params[:company_id]
   end
 
   def is_matched_user?
     unless current_user.id == @idea.user_id
-      redirect_to company_ideas_path(params[:company_id])
+      redirect_to company_ideas_path(company_id)
     end
   end
 

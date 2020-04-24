@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
 
   before_action :set_comment, only: [:destroy]
+  before_action :is_matched_user?, only: [:destroy]
 
   
   def create
@@ -16,14 +17,11 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    company_id = Idea.find(params[:idea_id]).company_id
-    if current_user.id == @comment.user_id
       @comment.destroy
       respond_to do |format|
         format.html { redirect_to public_company_ideas_path(company_id) }
         format.json { head :no_content }
       end
-    end
   end
 
 
@@ -36,4 +34,12 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     company_id = Idea.find(params[:idea_id]).company_id
   end
+
+  def is_matched_user?
+    unless current_user.id == @comment.user_id
+      company_id = Idea.find(params[:idea_id]).company_id
+      redirect_to public_company_ideas_path(company_id)
+    end
+  end
+
 end

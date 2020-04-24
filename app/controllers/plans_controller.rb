@@ -1,6 +1,6 @@
 class PlansController < ApplicationController
   before_action :set_planning_page, only: [:new, :edit, :show]
-  before_action :redirect_to_root, except: :show
+  before_action :is_matched_user?, except: :show
 
   def new
     redirect_to edit_idea_plan_path(@idea, @plan) if @plan.present?
@@ -49,8 +49,8 @@ class PlansController < ApplicationController
     @plan = @idea.plan
   end
 
-  def redirect_to_root
-    unless Idea.find(params[:idea_id]).user_id == current_user.id
+  def is_matched_user?
+    unless current_user.id == Idea.find(params[:idea_id]).user_id
       redirect_to root_path
     end
   end
