@@ -3,7 +3,6 @@ class PlansController < ApplicationController
   before_action :is_matched_user?, except: :show
 
   def new
-    redirect_to edit_idea_plan_path(@idea, @plan) if @plan.present?
     @plan = Plan.new
     4.times do
       @plan.plan_contents.build
@@ -11,7 +10,11 @@ class PlansController < ApplicationController
   end
 
   def edit
-    @plan_contents = @plan.plan_contents if @plan.present?
+    if @plan.present?
+      @plan_contents = @plan.plan_contents
+    else
+      redirect_to new_idea_plan_path
+    end
   end
 
   def show
