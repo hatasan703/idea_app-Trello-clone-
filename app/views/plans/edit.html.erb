@@ -18,12 +18,11 @@
 
     <div class="planning_form">
       <%= f.fields_for :plan_contents do |plan| %>
-        <p class="plan_question_title">【確認事項】 <%= @plan_questions[@num].title %></p>
-        <p class="plan_question_content"><%= @plan_questions[@num].content %></p>
+        <p class="plan_question_title">【確認事項】 <%= plan.object.plan_question.title %></p>
+        <p class="plan_question_content"><%= plan.object.plan_question.content %></p>
         <%= plan.text_area :content, rows:4, class:"form-control" %><br>
         <%= plan.hidden_field :user_id, value: current_user.id %>
-        <%= plan.hidden_field :plan_question_id, value: @plan_questions[@num].id %>
-        <% @num+= 1 %>
+        <%= plan.hidden_field :plan_question_id, value: plan.object.plan_question.id %>
       <% end %>
     </div>
     <%= f.submit "更新する",class:"btn btn-info planning_btn" %><br>

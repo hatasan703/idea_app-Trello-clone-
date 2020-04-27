@@ -1,10 +1,10 @@
 class PlansController < ApplicationController
-  before_action :set_planning_page, only: [:new, :edit, :show]
+  before_action :set_planning_page, except: :create
   before_action :is_matched_user?, except: :show
 
   def new
     @plan = Plan.new
-    4.times do
+    @plan_questions.length.times do
       @plan.plan_contents.build
     end
   end
@@ -27,7 +27,7 @@ class PlansController < ApplicationController
   end
 
   def update
-    @plan = Plan.update(plan_params)
+    @plan.update(plan_params)
     @idea_id = params[:idea_id]
     redirect_to edit_idea_plan_path(@idea_id, @plan)
   end
@@ -46,8 +46,7 @@ class PlansController < ApplicationController
   end
 
   def set_planning_page
-    @num = 0
-    @plan_questions = PlanQuestion.all
+    @plan_questions = PlanQuestion.where(abolition: false)
     @idea = Idea.find(params[:idea_id])
     @plan = @idea.plan
   end
