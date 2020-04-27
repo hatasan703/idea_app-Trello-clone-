@@ -43,8 +43,6 @@ Rails.application.routes.draw do
 
   resources :users
   resources :ideas, only: [] do
-    resources :plans
-    resources :comments, only: [:create, :destroy]
     collection do
       get :public
     end
@@ -52,10 +50,12 @@ Rails.application.routes.draw do
       get :news
       patch :move
     end
-  end
-  resources :memos do
-    member do
-      patch :move
+    resources :plans
+    resources :comments, only: [:create, :destroy]
+    resources :memos do
+      member do
+        patch :move
+      end
     end
   end
 

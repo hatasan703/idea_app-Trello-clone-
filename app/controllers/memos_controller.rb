@@ -4,12 +4,11 @@ class MemosController < ApplicationController
 
   
   def create
-    binding.pry
     @memo = Memo.new(memo_params)
     respond_to do |format|
       if @memo.save
         format.html { redirect_to company_ideas_path(@company_id) }
-        format.json { render :show, status: :created, location: @memo }
+        format.json { render :show, status: :created }
       else
         redirect_to company_ideas_path(@company_id)
       end
@@ -20,7 +19,7 @@ class MemosController < ApplicationController
     respond_to do |format|
       if @memo.update(memo_params)
         format.html { redirect_to company_ideas_path(@company_id) }
-        format.json { render :show, status: :ok, location: @memo }
+        format.json { render :show, status: :ok }
       else
         redirect_to company_ideas_path(@company_id)
       end
@@ -48,20 +47,17 @@ class MemosController < ApplicationController
     if params[:id]
       @company_id = Idea.find(Memo.find(params[:id]).idea_id).company_id
     else
-      @company_id = Idea.find(params[:memo][:idea_id]).company_id
+      @company_id = Idea.find(params[:idea_id]).company_id
     end
     
   end
 
-  def sort
-    memo = Memo.find(params[:memo_id])
-    params[:idea_id] = memo.idea_id
-    memo.update(memo_params)
-    render body: nil 
-  end
-
   def memo_params
-    params.require(:memo).permit(:idea_id, :content, :position).merge(user_id: current_user.id)
+    params.require(:memo).permit(:content, :position)
+    .merge(
+      user_id: current_user.id, 
+      idea_id: params[:idea_id]
+    )
   end
 
   def is_matched_user?
