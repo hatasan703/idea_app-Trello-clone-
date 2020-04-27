@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Ideas::CommentsController < ApplicationController
 
   before_action :set_comment, only: [:destroy]
   before_action :is_matched_user?, only: [:destroy]

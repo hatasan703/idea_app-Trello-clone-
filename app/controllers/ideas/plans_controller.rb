@@ -1,4 +1,4 @@
-class PlansController < ApplicationController
+class Ideas::PlansController < ApplicationController
   before_action :set_planning_page, except: :create
   before_action :is_matched_user?, except: :show
 

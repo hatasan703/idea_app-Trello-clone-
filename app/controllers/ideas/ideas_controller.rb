@@ -1,4 +1,4 @@
-class IdeasController < ApplicationController
+class Ideas::IdeasController < ApplicationController
   before_action :set_idea
   before_action :is_matched_user?, only: [:update, :destroy, :move]
   include IdeasHelper

@@ -14,12 +14,14 @@ Rails.application.routes.draw do
 
   resources :companies do
     resources :users, only: :show
-    resources :ideas, except: [:new, :edit] do 
-      collection do
-        get :public
-      end
-      member do
-        patch :hidden
+    scope module: 'ideas' do
+      resources :ideas, except: [:new, :edit] do 
+        collection do
+          get :public
+        end
+        member do
+          patch :hidden
+        end
       end
     end
   end
@@ -32,29 +34,27 @@ Rails.application.routes.draw do
       delete "users/:user_id" => "companies#destroy_member"
     end
   end
-  # namespace :companies do
-  #   resources :dashbords
-  #   resources :formal_registrations ,param: :token
-  # end
-  # get "accept/:token"=>"companies/formal_registrations#new",param: :token ,as: :inviting
+
   resources :groups
   resources :joingroups, only: [:update, :destroy]
   resources :management_authorizations ,only: [:edit, :update, :destroy]
 
   resources :users
-  resources :ideas, only: [] do
-    collection do
-      get :public
-    end
-    member do
-      get :news
-      patch :move
-    end
-    resources :plans
-    resources :comments, only: [:create, :destroy]
-    resources :memos do
+  scope module: 'ideas' do
+    resources :ideas, only: [] do
+      collection do
+        get :public
+      end
       member do
+        get :news
         patch :move
+      end
+      resources :plans
+      resources :comments, only: [:create, :destroy]
+      resources :memos do
+        member do
+          patch :move
+        end
       end
     end
   end

@@ -1,4 +1,4 @@
-class MemosController < ApplicationController
+class Ideas::MemosController < ApplicationController
   before_action :set_memo
   before_action :is_matched_user?, only: [:update, :destroy, :move]
 
