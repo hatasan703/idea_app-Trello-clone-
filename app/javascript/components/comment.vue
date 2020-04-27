@@ -112,7 +112,6 @@ export default {
     // コメントの新規作成
     submitMessage: function() {
       var data = new FormData
-      data.append("comment[idea_id]", this.idea.id)
       data.append("comment[content]", this.message)
 
       Rails.ajax({

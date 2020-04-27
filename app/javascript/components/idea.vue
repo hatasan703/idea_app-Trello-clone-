@@ -39,7 +39,7 @@ export default {
       this.$nextTick(() => { this.$refs.message.focus() }) //メモ追加時にフォームを入力状態にする
     },
 
-    // アイディアのソートと別アイディアへの移動
+    // メモのソートと別アイディアへの移動
     memoMoved: function(event) {
       const evt = event.added || event.moved
         if (evt == undefined) { return }
@@ -51,11 +51,10 @@ export default {
         })
 
       var data =  new FormData
-      data.append("memo[idea_id]", window.store.ideas[idea_index].id)
       data.append("memo[position]", evt.newIndex + 1)
 
       Rails.ajax({
-        url: `/memos/${element.id}/move`,
+        url: `/ideas/${window.store.ideas[idea_index].id}/memos/${element.id}/move`,
         type: "PATCH",
         data: data,
         dataType: "json"
@@ -65,11 +64,10 @@ export default {
      // メモの新規作成
     submitMessage: function() {
       var data = new FormData
-      data.append("memo[idea_id]", this.idea.id)
       data.append("memo[content]", this.message)
 
       Rails.ajax({
-        url: "/memos",
+        url: `/ideas/${this.idea.id}/memos`,
         type: "POST",
         data: data,
         dataType: "json",

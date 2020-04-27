@@ -127,7 +127,11 @@ export default {
     },
 
     planningNew: function() {
-      location.href = `/ideas/${this.idea.id}/plans/new`
+      if (this.idea.plan) {
+        location.href = `/ideas/${this.idea.id}/plans/${this.idea.plan.id}/edit`
+      }else{
+        location.href = `/ideas/${this.idea.id}/plans/new`
+      }
     },
     
 

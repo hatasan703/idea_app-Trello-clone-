@@ -45,7 +45,7 @@ export default {
       data.append("memo[content]", this.content)
 
       Rails.ajax({
-        url: `/memos/${this.memo.id}`,
+        url: `/ideas/${this.idea.id}/memos/${this.memo.id}`,
         type: "PATCH",
         data: data,
         dataType: "json",
@@ -63,7 +63,7 @@ export default {
       var data = new FormData
       data.append("memo[content]", this.content)
       Rails.ajax({
-        url: `/memos/${this.memo.id}`,
+        url: `/ideas/${this.idea.id}/memos/${this.memo.id}`,
         type: "DELETE",
         data: data,
         dataType: "json",
@@ -85,7 +85,7 @@ export default {
       data.append("memo[content]", this.content)
 
       Rails.ajax({
-        url: `/memos/${this.memo.id}`,
+        url: `/ideas/${this.idea.id}/memos/${this.memo.id}`,
         type: "DELETE",
         data: data,
         dataType: "json",
