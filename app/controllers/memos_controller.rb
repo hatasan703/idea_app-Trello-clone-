@@ -4,6 +4,7 @@ class MemosController < ApplicationController
 
   
   def create
+    binding.pry
     @memo = Memo.new(memo_params)
     respond_to do |format|
       if @memo.save

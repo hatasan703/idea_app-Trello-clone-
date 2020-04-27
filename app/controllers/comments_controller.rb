@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
         format.html { redirect_to public_company_ideas_path(@company_id) }
         format.json { render :show, status: :created }
       else
-        redirect_to public_company_ideas_path(c@ompany_id)
+        redirect_to public_company_ideas_path(@company_id)
       end
     end
   end
@@ -27,7 +27,11 @@ class CommentsController < ApplicationController
 
   private
   def comment_params
-    params.require(:comment).permit(:idea_id, :content).merge(user_id: current_user.id)
+    params.require(:comment).permit(:idea_id, :content)
+    .merge(
+      user_id: current_user.id,
+       idea_id: params[:idea_id],
+      )
   end
 
   def set_comment
