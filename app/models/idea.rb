@@ -10,7 +10,7 @@ class Idea < ApplicationRecord
   has_many :memos, ->{ order(position: :asc)  }, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_one :plan
+  has_one :plan, dependent: :destroy
 
   scope :sorted, ->{ order(position: :asc)  }
   validates :content, presence: true
