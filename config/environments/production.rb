@@ -3,20 +3,6 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 
-  Rails.application.configure do
-     config.action_mailer.default_url_options = {  :host => 'https://p-robo.herokuapp.com' }
-     config.action_mailer.delivery_method = :smtp
-     config.action_mailer.smtp_settings = {
-       address: "smtp.gmail.com",
-       domain: 'gmail.com',
-       port: 587,
-       authentication: :login,
-       enable_starttls_auto: true,
-       user_name: Rails.application.credentials.gmail_address,
-       password: Rails.application.credentials.gmail_password,
-     }
-   #中略#
-   end
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
@@ -29,7 +15,7 @@ Rails.application.configure do
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  config.require_master_key = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
@@ -77,7 +63,7 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "pbot2_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: 'example.com'}
+  config.action_mailer.default_url_options = { host: 'p-robo.herokuapp.com'}
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
