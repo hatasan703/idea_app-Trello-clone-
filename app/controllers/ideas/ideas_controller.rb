@@ -17,7 +17,7 @@ class Ideas::IdeasController < ApplicationController
     #Vueにデータを渡す
     @user = current_user
     shared_data[:user_id] = @user.try(:id)
-    shared_data[:company_admin] = @user.employees.find(@company_id).admin
+    shared_data[:company_admin] = @user.employees.find_by(company_id: @company_id).admin
   end
 
   def news
