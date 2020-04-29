@@ -6,7 +6,7 @@
 
   <div>所属ユーザー：</div>
   <% @employees.each do |user| %>
-    <%= user.name %>
+    <li class="member_name"><%= link_to user.name, profile_path(user) %></li>
     <% if company_admin? %>
       <%= link_to "/companies/#{@company_id}/users/#{user.id}", method: :delete, data: { confirm: 'メンバーから削除しますか？' } do %>
         <i class="fa fa-remove" aria-hidden="true"></i>

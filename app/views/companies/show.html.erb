@@ -16,7 +16,7 @@
         <%= link_to "/companies/#{@company.id}/users/#{user.id}", method: :delete, data: { confirm: 'メンバーから削除しますか？' } do %>
           <i class="fa fa-remove" aria-hidden="true"></i>
          <% end %>
-        <%= user.name %>
+        <%= link_to user.name, profile_path(user) %>
       </td>
       <td><%= idea_count(user) %></td>
       <td><%= open_idea_count(user) %></td>
