@@ -8,11 +8,13 @@ class Ideas::IdeasController < ApplicationController
     @company = Company.find(@company_id)
     @ideas = @company.ideas.where(user_id: current_user.id).sorted
     @employees = @company.users
+    @admin = current_user.employees.find_by(company_id: @company.id).admin
   end
 
   def public
     @company = Company.find(@company_id)
     @ideas = @company.ideas.where(open: true).order(created_at: "DESC")
+    @admin = current_user.employees.find_by(company_id: @company.id).admin
 
     #Vueにデータを渡す
     @user = current_user

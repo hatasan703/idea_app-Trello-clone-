@@ -1,6 +1,16 @@
 <div class="ideas_header">
   <h1 class="company_title"><%= @company.name %></h1>
   <span class="btn_divider"></span>
+  <%= link_to root_path do %>
+    <i class="fa fa-home idea_header_icon" aria-hidden="true"></i>
+  <% end %>
+  <span class="btn_divider"></span>
+  <% if @admin %>
+    <%= link_to company_path(@company) do %>
+      <i class="fa fa-cog idea_header_icon" aria-hidden="true"></i>
+    <% end %>
+    <span class="btn_divider"></span>
+  <% end %>
   <div class="switch_page_btn"><%= link_to "自分のアイディアへ", company_ideas_path %></div>
 </div>
 

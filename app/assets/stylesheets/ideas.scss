@@ -5,6 +5,14 @@
   display: flex;
   color: #fff;
 }
+
+.idea_header_icon{
+  font-size: 20px;
+  color: #fff;
+  padding: 2px;
+  border-radius: 3px;
+  background-color: hsla(0,0%,100%,.32);
+}
 .company_title{
   width: 100px;
   font-size: 18px;
@@ -75,6 +83,7 @@
 }
 
 .fa:hover{
+  cursor: pointer;
   opacity: 0.5;
 }
 
