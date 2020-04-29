@@ -1,8 +1,14 @@
-<h1>所属している会社一覧</h1>
+<div class="company_field">
+  <div class="side_bar">
+    <li><i class="fa fa-bank" aria-hidden="true"></i> 会社</li>
+  </div>
+  <div class="company_lists">
+    <% @companies.each do |company| %>
+      <%= link_to company.name, company_ideas_path(company) %>
+    <% end %>
+    <%= link_to new_company_path, class: 'create_compnay_btn' do %>
+      <i class="fa fa-plus" aria-hidden="true"> 会社を作成する</i>
+    <% end %>
+  </div>
 
-<% @companies.each do |company| %>
-  <%= link_to company.name, company_ideas_path(company) %>
-<% end %>
-
-<br><br>
-<%= link_to '会社を作成する', new_company_path %>
+</div>

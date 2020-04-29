@@ -1,3 +1,47 @@
-// Place all the styles related to the companies controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.company_field{
+  display: flex;
+}
+
+.side_bar{
+  margin: 40px 0 0;
+  padding: 0 16px;
+  width: 240px;
+  color: #fff;
+
+  li:hover{
+    background: rgba(255, 255, 255, 0.32);
+  }
+}
+
+.fa-bank,
+.fa-plus{
+  color: #fff;
+}
+
+.company_lists{
+  margin: 40px 0 0;
+  width: 100%;
+  display: flex;
+  text-align: center;
+
+  a{
+    color: #fff;
+    line-height: 5;
+    width: 180px;
+    height: 90px;
+    margin: 0 20px 20px 0;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+
+    &:hover{
+      background: rgba(255, 255, 255, 0.32);
+    }
+  }
+
+  .create_compnay_btn{
+    background-color: #ebecf0;
+    i{
+      color: #172b4d;
+    }
+  }
+}
