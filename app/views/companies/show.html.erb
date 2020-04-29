@@ -27,3 +27,16 @@
     </tr>
   <% end %>
 </table>
+
+<div class="edit_field">
+  <%= form_with model: @company do |f| %>
+    <div class="field">
+      <%= f.label "会社名" %><br>
+      <%= f.text_field :name %><br>
+    </div>
+    <div class="actions">
+      <%= f.submit "更新" %>
+    </div>
+  <% end %>
+  <%= link_to "会社を削除する", company_path(@company), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+</div>

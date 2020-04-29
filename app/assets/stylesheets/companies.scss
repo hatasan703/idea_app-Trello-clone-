@@ -45,3 +45,30 @@
     }
   }
 }
+
+// 会社管理画面
+.edit_field{
+  margin-top: 50px;
+  text-align: center;
+}
+
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  color: #fff;
+}
+
+table tr{
+  border-bottom: solid 1px #eee;
+  cursor: pointer;
+}
+
+table tr:hover{
+  background-color: rgb(65, 84, 104);
+}
+
+table th,table td{
+  text-align: center;
+  padding: 15px 0;
+}

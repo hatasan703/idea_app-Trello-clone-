@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_action :set_company, only: [:show, :destroy_member]
+  before_action :set_company, only: [:show, :update, :destroy, :destroy_member]
   def index
     @user = current_user
     @companies = @user.companies
@@ -23,6 +23,20 @@ class CompaniesController < ApplicationController
       redirect_to company_ideas_path(company)
     else
       redirect_to companies_path
+    end
+  end
+
+  def update
+    if @company.admin_user?(current_user)
+      @company.update(company_params)
+      redirect_to company_ideas_path(@company)
+    end
+  end
+
+  def destroy
+    if @company.admin_user?(current_user)
+      @company.destroy
+      redirect_to root_path
     end
   end
 
