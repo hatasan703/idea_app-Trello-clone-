@@ -1,3 +1,5 @@
+// ideaボードヘッダー
+
 .ideas_header{
   padding: 8px;
   display: flex;
@@ -10,26 +12,52 @@
   text-align: center;
   a{
     color: #fff;
+    padding: 10px;
     text-decoration: none;
   }
   &:hover{
+    border-radius: 3px;
     background-color: hsla(0,0%,100%,.32);
     cursor: pointer;
   }
 }
 .switch_page_btn{
+  border-radius: 3px;
   font-size: 1em;
   margin: 0 10px;
   background-color: hsla(0,0%,100%,.24);
   a{
     color: #fff;
+    padding: 10px;
     text-decoration: none;
   }
   &:hover{
     background-color: hsla(0,0%,100%,.32);
-    cursor: pointer;
   }
 }
+
+.invite_btn{
+  background: rgba(255, 255, 255, 0.24);
+  margin-left: 10px;
+  border-radius: 3px;
+  &:hover{
+    background-color: hsla(0,0%,100%,.32);
+  }
+
+  a{
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+  }
+}
+
+.btn_divider{
+  border-left: 1px solid hsla(0,0%,100%,.24);
+  height: 22px;
+  margin: 0 8px;  
+}
+
+// ボード
 
 .idea{
   color: #172b4d;

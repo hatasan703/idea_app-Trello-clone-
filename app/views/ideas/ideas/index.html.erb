@@ -1,6 +1,9 @@
 <div class="ideas_header">
   <h1 class="company_title"><%= link_to @company.name, company_path(@company) %></h1>
+  <span class="btn_divider"></span>
   <div class="switch_page_btn"><%= link_to "みんなのアイディアへ", public_company_ideas_path %></div>
+  <span class="btn_divider"></span>
+
   <div>所属ユーザー：</div>
   <% @employees.each do |user| %>
     <%= user.name %>
@@ -10,6 +13,9 @@
       <% end %>
     <% end %>
   <% end %>
-  <%= link_to "この会社に招待する", new_user_company_invitation_path(@company_id) %>
+  <span class="btn_divider"></span>
+  <div class="invite_btn">
+    <%= link_to "招待", new_user_company_invitation_path(@company_id) %>
+  </div>
 </div>
 <%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: [:memos, :likes, :comments, :plan]) }%>
