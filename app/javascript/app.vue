@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="idea add_idea">
-      <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i> アイディアを追加</a>
+      <i v-if="!editing" v-on:click="startEditing" class="fa fa-plus-circle" aria-hidden="true">アイディアを追加</i>
       <label v-if="editing" for="">タイトル</label>
       <textarea v-if="editing" ref="title" v-model="title" class="form-control mb-1 content_form"></textarea>
       <label v-if="editing" for="">詳細</label>
       <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
       <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">アイディアを追加</button>
-      <a v-if="editing" v-on:click="editing=false">キャンセル</a>
+      <i v-if="editing" v-on:click="editing=false" class="fa fa-remove" aria-hidden="true"></i>
     </div>
     <draggable v-model="ideas" :options="{group: 'ideas'}" class="board dragArea" @end="ideaMoved">
       <idea v-for="idea in ideas" :key="idea.id" :idea="idea">
@@ -94,6 +94,11 @@ export default {
   width: 250px;
 }
 
+.fa-remove{
+  color: #6b778c;
+  margin: 10px 0 0 5px;
+  font-size: 20px;
+}
 
 
 </style>
