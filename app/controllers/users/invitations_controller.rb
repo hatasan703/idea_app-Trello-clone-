@@ -2,7 +2,12 @@ class Users::InvitationsController < Devise::InvitationsController
   before_action :set_company_id
 
   def new
-    super
+    @user = current_user
+    if @user.employees.find_by(company_id: @company_id).admin
+      super
+    else
+      redirect_to root_path
+    end
   end
 
   def create

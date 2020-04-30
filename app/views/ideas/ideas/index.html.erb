@@ -23,9 +23,11 @@
       <% end %>
     <% end %>
   <% end %>
-  <span class="btn_divider"></span>
-  <div class="invite_btn">
-    <%= link_to "招待", new_user_company_invitation_path(@company_id) %>
-  </div>
+  <% if @admin %>
+    <span class="btn_divider"></span>
+    <div class="invite_btn">
+      <%= link_to "招待", new_user_company_invitation_path(@company_id) %>
+    </div>
+  <% end %>
 </div>
 <%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: [:memos, :likes, :comments, :plan]) }%>
