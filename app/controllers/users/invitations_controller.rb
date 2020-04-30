@@ -50,7 +50,7 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def after_accept_path_for(resource)
-    companies_path
+    company_ideas_path(@company_id)
   end
 
   def set_company_id
