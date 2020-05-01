@@ -10,6 +10,8 @@
           <li @click="editing=true" class="dropdown_action">編集する</li>
           <li @click="destroy" class="dropdown_action">削除する</li>
         </ul>
+        <i v-if="idea.open" @click="closeIdea" class="fa fa-unlock" aria-hidden="true"></i>
+        <i v-else @click="openIdea" class="fa fa-lock" aria-hidden="true"></i>
       </div>
       
       <div class="idea_title">{{ title }}</div>
@@ -47,6 +49,7 @@
 
 
 <script>
+import VuejsDialog from 'vuejs-dialog';
 export default {
   props: ['idea'],
   data: function() {
@@ -100,6 +103,48 @@ export default {
         }
       })
     },
+
+    // アイディア公開
+    openIdea: function() {
+      var data = new FormData
+      data.append("idea[title]", this.title)
+      data.append("idea[content]", this.content)
+      data.append("idea[open]", true)
+
+      Rails.ajax({
+        beforeSend: () => true,
+        url: `ideas/${this.idea.id}`,
+        type: "PATCH",
+        data: data,
+        dataType: "json",
+        success: (data) => {
+          const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
+          window.store.ideas.splice(idea_index, 1, data)
+          this.editing = false
+        }
+      })
+    },
+
+    // アイディア非公開
+    closeIdea: function() {
+      var data = new FormData
+      data.append("idea[title]", this.title)
+      data.append("idea[content]", this.content)
+      data.append("idea[open]", false)
+
+      Rails.ajax({
+        beforeSend: () => true,
+        url: `ideas/${this.idea.id}`,
+        type: "PATCH",
+        data: data,
+        dataType: "json",
+        success: (data) => {
+          const idea_index = window.store.ideas.findIndex((item) => item.id == this.idea.id)
+          window.store.ideas.splice(idea_index, 1, data)
+          this.editing = false
+        }
+      })
+    },
     
     // アイディア削除
      destroy: function() {
@@ -133,7 +178,6 @@ export default {
         location.href = `/ideas/${this.idea.id}/plans/new`
       }
     },
-    
 
   }
 }
