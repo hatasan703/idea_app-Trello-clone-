@@ -8,8 +8,9 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if resource.is_a?(Company)
-      companies_dashbords_path
+    if @user.companies.length == 1
+      company_id = @user.companies.first.id
+      company_ideas_path(company_id)
     else
       companies_path
     end
