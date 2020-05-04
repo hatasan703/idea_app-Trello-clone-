@@ -21,10 +21,25 @@
         <i @click="planningNew" class="fa fa-line-chart" aria-hidden="true"></i>
         <span class="count">
           <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ likeCount }}
-          <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ commentCount }}
+          <i @click="commentShow=true" class="fa fa-commenting-o" aria-hidden="true"></i> {{ commentCount }}
         </span>
       </div>
     </div>
+
+    <div v-if='commentShow' class="modal-backdrop show"></div>
+    <div v-if='commentShow' @click="closeComment" class="modal show" style="display: block">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h3>コメント一覧</h3>
+            <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
+              <div>{{comment.content}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div v-if='editing' class="modal-backdrop show"></div>
     <div v-if='editing' @click="closeModal" class="modal show" style="display: block">
       <div class="modal-dialog">
@@ -55,6 +70,7 @@ export default {
   data: function() {
     return {
       editing: false,
+      commentShow: false,
       title: this.idea.title,
       content: this.idea.content,
       open: this.idea.open,
@@ -81,6 +97,10 @@ export default {
     closeModal: function(event) {
       if (event.target.classList.contains("modal")) { this.editing = false }
     },
+    closeComment: function(event) {
+      if (event.target.classList.contains("modal")) { this.commentShow = false }
+    },
+    
 
     // アイディア(content)編集（モーダル）
     save: function() {
