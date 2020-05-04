@@ -12,8 +12,7 @@
     <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 memo_form"></textarea>
     <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">メモを追加</button>
     <i v-if="editing" v-on:click="editing=false" class="fa fa-remove" aria-hidden="true"></i>
-
-
+    
   </div>
 </template>
 

@@ -59,6 +59,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :plans, only: [] do
+    resources :plan_comments, only: [:create, :destroy]
+  end
+
   namespace :api, { format: 'json' } do
     resources :likes, only: [:index, :create, :destroy]
   end

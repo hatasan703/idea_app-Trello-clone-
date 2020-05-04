@@ -18,6 +18,8 @@ class Ideas::PlansController < ApplicationController
   end
 
   def show
+    @comment = PlanComment.new
+    @comments = @plan.plan_comments
   end
 
   def create

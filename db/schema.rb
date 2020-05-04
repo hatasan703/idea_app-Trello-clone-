@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_083953) do
+ActiveRecord::Schema.define(version: 2020_05_04_062339) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
@@ -97,6 +97,16 @@ ActiveRecord::Schema.define(version: 2020_04_27_083953) do
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
+  create_table "plan_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "content", null: false
+    t.bigint "user_id", null: false
+    t.bigint "plan_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plan_id"], name: "index_plan_comments_on_plan_id"
+    t.index ["user_id"], name: "index_plan_comments_on_user_id"
+  end
+
   create_table "plan_contents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
     t.bigint "user_id", null: false
@@ -175,6 +185,8 @@ ActiveRecord::Schema.define(version: 2020_04_27_083953) do
   add_foreign_key "likes", "users"
   add_foreign_key "memos", "ideas"
   add_foreign_key "memos", "users"
+  add_foreign_key "plan_comments", "plans"
+  add_foreign_key "plan_comments", "users"
   add_foreign_key "plan_contents", "plan_questions"
   add_foreign_key "plan_contents", "plans"
   add_foreign_key "plan_contents", "users"
