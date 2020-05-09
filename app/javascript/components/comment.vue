@@ -35,12 +35,10 @@
               {{ comment.user.name }}
             </div>
           </div>
-          <div class="comment">
-            <div class="comment_content">
-              <p>{{comment.content}}
-                <span v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-              </p>
-            </div>
+          <div class="comment_content">
+            <p>{{comment.content}}
+              <span v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+            </p>
           </div>
         </div>
       </div>
@@ -258,6 +256,11 @@ export default {
   overflow: hidden;
 }
 
+.user_name{
+  font-size: 13px;
+  word-wrap: break-word;
+}
+
 .comments .user_icon {
   float: left;
   margin-right: -50px;
@@ -268,10 +271,6 @@ export default {
   width: 100%;
   height: auto;
   border-radius: 50%;
-}
-.comments .comment {
-  width: 100%;
-  text-align: left;
 }
 .comment_content {
   display: inline-block;

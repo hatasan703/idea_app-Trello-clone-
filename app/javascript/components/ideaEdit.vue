@@ -39,9 +39,7 @@
                 </div>
                 <div class="comment">
                   <div class="comment_content">
-                    <p>{{comment.content}}
-                      <span v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-                    </p>
+                    <p>{{comment.content}}</p>
                   </div>
                 </div>
               </div>
@@ -267,6 +265,12 @@ font-size: 15px;
   overflow: hidden;
 }
 
+
+.user_name{
+  font-size: 13px;
+  word-wrap: break-word;
+}
+
 .comments .user_icon {
   float: left;
   margin-right: -50px;
@@ -278,10 +282,7 @@ font-size: 15px;
   height: auto;
   border-radius: 50%;
 }
-.comments .comment {
-  width: 100%;
-  text-align: left;
-}
+
 .comment_content {
   display: inline-block;
   position: relative; 
