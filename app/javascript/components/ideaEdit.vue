@@ -35,7 +35,7 @@
             <div v-for="comment in idea.comments" :key="comment.id" class="comment_card">
               <div class="comments">
                 <div class="user_icon">
-                  user
+                  {{ comment.user.name }}
                 </div>
                 <div class="comment">
                   <div class="comment_content">
