@@ -30,10 +30,21 @@
     <div v-if='commentShow' @click="closeComment" class="modal show" style="display: block">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-body">
+          <div class="modal-body comment_modal">
             <h3>コメント一覧</h3>
-            <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
-              <div>{{comment.content}}</div>
+            <div v-for="comment in idea.comments" :key="comment.id" class="comment_card">
+              <div class="comments">
+                <div class="user_icon">
+                  user
+                </div>
+                <div class="comment">
+                  <div class="comment_content">
+                    <p>{{comment.content}}
+                      <span v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -242,5 +253,61 @@ font-size: 15px;
 .create_plan:hover{
   opacity: 0.5;  
 }
+
+
+
+/* コメント */
+.comment_card{
+  display: flex;
+}
+
+.comments {
+  width: 100%;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.comments .user_icon {
+  float: left;
+  margin-right: -50px;
+  width: 40px;
+}
+
+.comments .user_icon img{
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.comments .comment {
+  width: 100%;
+  text-align: left;
+}
+.comment_content {
+  display: inline-block;
+  position: relative; 
+  margin: 0 0 0 50px;
+  padding: 10px;
+  width: 400px;
+  border-radius: 12px;
+  background: #ebecf0;
+  word-wrap: break-word;
+}
+
+.comment_content:after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 3px; 
+  left: -19px;
+  border: 8px solid transparent;
+  border-right: 18px solid #ebecf0;
+  -webkit-transform: rotate(35deg);
+  transform: rotate(35deg);
+}
+.comment_content p {
+  margin: 0;
+  padding: 0;
+}
+
 
 </style>

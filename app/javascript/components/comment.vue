@@ -28,11 +28,22 @@
         <p v-if='isAdmin' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
       </div>
     </div>
-      <div v-for="comment in idea.comments" :key="comment.id" class="card card-body mb-3">
-        <div>{{comment.content}}</div>
-        <div v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+      <div v-for="comment in idea.comments" :key="comment.id" class="comment_card">
+        <div class="comments">
+          <div class="user_icon">
+            <div class="user_name">
+              {{ comment.user.name }}
+            </div>
+          </div>
+          <div class="comment">
+            <div class="comment_content">
+              <p>{{comment.content}}
+                <span v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-
       <div class="comment_form">
         <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i>コメントを追加</a>
         <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
@@ -50,7 +61,9 @@ axios.defaults.headers.common = {
 };
 
 export default {
-  props: ['idea'],
+  props: {
+    idea: '',
+  },
   data: function() {
     return{
       editing: false,
@@ -233,5 +246,59 @@ export default {
 .pranning_page:hover{
   opacity: 0.5;
 }
+
+/* コメント */
+.comment_card{
+  display: flex;
+}
+
+.comments {
+  width: 100%;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.comments .user_icon {
+  float: left;
+  margin-right: -50px;
+  width: 40px;
+}
+
+.comments .user_icon img{
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.comments .comment {
+  width: 100%;
+  text-align: left;
+}
+.comment_content {
+  display: inline-block;
+  position: relative; 
+  margin: 0 0 0 50px;
+  padding: 10px;
+  width: 170px;
+  border-radius: 12px;
+  background: #fff;
+  word-wrap: break-word;
+}
+
+.comment_content:after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 3px; 
+  left: -19px;
+  border: 8px solid transparent;
+  border-right: 18px solid #fff;
+  -webkit-transform: rotate(35deg);
+  transform: rotate(35deg);
+}
+.comment_content p {
+  margin: 0;
+  padding: 0;
+}
+
 
 </style>
