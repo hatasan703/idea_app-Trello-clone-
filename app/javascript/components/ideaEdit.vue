@@ -10,8 +10,12 @@
           <li @click="editing=true" class="dropdown_action">編集する</li>
           <li @click="destroy" class="dropdown_action">削除する</li>
         </ul>
-        <i v-if="idea.open" @click="closeIdea" class="fa fa-unlock" aria-hidden="true"></i>
-        <i v-else @click="openIdea" class="fa fa-lock" aria-hidden="true"></i>
+          <i v-if="idea.open" @click="closeIdea" class="fa fa-unlock" aria-hidden="true">
+            <div class="close_balloon">非公開にする</div>
+          </i>
+          <i v-else @click="openIdea" class="fa fa-lock" aria-hidden="true">
+            <div class="open_balloon">公開する</div>
+          </i>
       </div>
       
       <div class="idea_title">{{ title }}</div>
@@ -252,7 +256,39 @@ font-size: 15px;
   opacity: 0.5;  
 }
 
+// 公開・非公開の吹き出し
 
+.open_balloon,
+.close_balloon {
+  position: relative;
+  display: inline-block;
+  margin: 1.5em 0 1.5em 15px;
+  padding: 7px 10px;
+  max-width: 100%;
+  color: #fff;
+  font-size: 13px;
+  background: #79818d;
+	opacity:		0;
+  position: absolute; 
+  top: -25px; 
+  left: 30px; 
+}
+.open_balloon:before,
+.close_balloon:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -17px;
+  margin-top: -10px;
+  border: 10px solid transparent;
+  border-right: 12px solid #79818d;
+}
+.fa-unlock:hover .close_balloon{
+  opacity: 1;
+}
+.fa-lock:hover .open_balloon{
+  opacity: 1;
+}
 
 /* コメント */
 .comment_card{
