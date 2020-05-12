@@ -15,16 +15,19 @@
       <div class="idea_content">{{ idea.content }}</div>
       <div class="idea_action">
         <i v-if='idea.plan' @click="planningPage" class="fa fa-line-chart pranning_page" aria-hidden="true"></i>
-        <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i>
+        <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i>{{ joinList.length }}
         <div v-if='joinModal' class="modal-backdrop show"></div>
         <div v-if='joinModal' @click="closeJoin" class="modal show" style="display: block">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-body comment_modal">
-                <li>参加メンバー</li>
-                <h3>チームへの参加表明</h3>
-                  <div v-if="isJoined">参加済みです</div>
-                  <div v-else @click="registerJoin">チームへ参加する</div>
+                参加メンバー
+                 <li v-for="user in idea.users" :key="user.id">
+                    {{ user.name }}/
+                  </li>
+                <div class="join_title">チームへの参加表明</div>
+                  <div v-if="isJoined" class="join_btn">参加表明済みです</div>
+                  <div v-else @click="registerJoin" class="button join_btn">参加</div>
               </div>
             </div>
           </div>
@@ -298,6 +301,32 @@ export default {
 }
 .pranning_page:hover{
   opacity: 0.5;
+}
+
+/* 参加表明 */
+
+.join_title{
+  text-align: center;
+  font-size: 13px;
+}
+
+.join_btn{
+  padding: 0.5rem 1rem;
+  font-size: 1.171875rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  text-align: center;
+  color: #fff;
+  background-color: #F39C12;
+  border-color: #F39C12;
+  cursor: pointer;
+}
+.join_btn:hover{
+  opacity: 0.5;
+}
+.button {
+  width: 100px;
+  margin: 0 auto;
 }
 
 /* コメント */

@@ -13,5 +13,4 @@
   <% end %>
   <div class="switch_page_btn"><%= link_to "自分のアイディアへ", company_ideas_path %></div>
 </div>
-
-<%= tag.div id: :idea_public, data: { ideas: @ideas.to_json(include: [:memos, :plan, :user, { comments: { include: :user } }]) } %> 
+<%= tag.div id: :idea_public, data: { ideas: @ideas.to_json(include: [:memos, :plan, :user, :users, { comments: { include: :user } }]) } %> 
