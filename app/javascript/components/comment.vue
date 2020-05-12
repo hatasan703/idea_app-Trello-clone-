@@ -22,7 +22,7 @@
             <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ count }}
           </span>
         </span>
-        <span class="commen_count">
+        <span class="comments_count">
           <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
         </span>
         <span class="join_count">
@@ -316,7 +316,8 @@ export default {
 }
 .pranning_page,
 .good_btn,
-.commen_count{
+.comments_count,
+.news_page_btn{
   margin-right:8px;
 }
 

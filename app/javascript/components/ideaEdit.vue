@@ -21,11 +21,13 @@
       <div class="idea_title">{{ title }}</div>
       <div class="idea_content">{{ content }}</div>
       <div class="idea_action">
-        <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
+        <i @click="newsPage" class="fa fa-newspaper-o news_page_btn" aria-hidden="true"></i>
         <i @click="planningNew" class="fa fa-line-chart" aria-hidden="true"></i>
       </div>
       <div class="count">
-        <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ likeCount }}
+        <span class="good_btn">
+          <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ likeCount }}
+        </span>
         <span class="comments_count">
           <i @click="commentShow=true" class="fa fa-commenting-o" aria-hidden="true"></i> {{ commentCount }}
           <div v-if='commentShow' class="modal-backdrop show"></div>
