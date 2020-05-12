@@ -1,7 +1,6 @@
 <template>
   <div class="idea">
     <div class="idea_card">
-      
       <div v-if='isAdmin' class="dropdown">
         <button class="" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
           <i class="fa fa-bars" aria-hidden="true"></i>
@@ -10,19 +9,32 @@
           <li @click="privateAction" class="dropdown_action">非公開にする</li>
         </ul>
       </div>
-
       <div class="idea_title">{{ idea.title }}</div>
       <div class="idea_content">{{ idea.content }}</div>
-      <div class="idea_action">
+      
+      <div class="count">
         <i v-if='idea.plan' @click="planningPage" class="fa fa-line-chart pranning_page" aria-hidden="true"></i>
-        <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i>{{ joinList.length }}
+        <span class="good_btn">
+          <span v-if="isLiked" @click="deleteLike()">
+            <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count }}
+          </span>
+          <span v-else @click="registerLike()">
+            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ count }}
+          </span>
+        </span>
+        <span class="commen_count">
+          <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
+        </span>
+        <span class="join_count">
+          <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i> {{ joinList.length }}
+        </span>
         <div v-if='joinModal' class="modal-backdrop show"></div>
         <div v-if='joinModal' @click="closeJoin" class="modal show" style="display: block">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-body comment_modal">
                 参加メンバー
-                 <li v-for="user in idea.users" :key="user.id">
+                <li v-for="user in idea.users" :key="user.id">
                     {{ user.name }}/
                   </li>
                 <div class="join_title">チームへの参加表明</div>
@@ -32,40 +44,31 @@
             </div>
           </div>
         </div>
+      </div>
+      <p v-if='isAdmin' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
+    </div>
 
-
-        <div class="count">
-          <span v-if="isLiked" @click="deleteLike()">
-            <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count }}
-          </span>
-          <span v-else @click="registerLike()">
-            <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> {{ count }}
-          </span>
-          <i class="fa fa-commenting-o" aria-hidden="true"></i> {{ idea.comments.length }}
+    <div v-for="comment in idea.comments" :key="comment.id" class="comment_card">
+      <div class="comments">
+        <div class="user_icon">
+          <div class="user_name">
+            {{ comment.user.name }}
+          </div>
         </div>
-        <p v-if='isAdmin' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
+        <div class="comment_content">
+          <p>{{comment.content}}
+            <span v-if='currentUser.id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+          </p>
+        </div>
       </div>
     </div>
-      <div v-for="comment in idea.comments" :key="comment.id" class="comment_card">
-        <div class="comments">
-          <div class="user_icon">
-            <div class="user_name">
-              {{ comment.user.name }}
-            </div>
-          </div>
-          <div class="comment_content">
-            <p>{{comment.content}}
-              <span v-if='currentUser.id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="comment_form">
-        <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i>コメントを追加</a>
-        <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
-        <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">コメントを追加</button>
-        <a v-if="editing" v-on:click="editing=false">キャンセル</a>
-      </div>
+    <div class="comment_form">
+      <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i>コメントを追加</a>
+      <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 content_form"></textarea>
+      <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">コメントを追加</button>
+      <a v-if="editing" v-on:click="editing=false">キャンセル</a>
+    </div>
+
   </div>
 </template>
 
@@ -284,10 +287,14 @@ export default {
 
 .idea_content{
   font-size: 13px;
+  margin-bottom: 1rem;
 }
 
+.count,
 .idea_user_name{
   text-align: right;
+  margin-right:10px;
+  font-size: 0.8rem;
 }
 
 .card-body{
@@ -298,10 +305,17 @@ export default {
   font-size: 0.8rem;
   cursor: pointer;
   color: #0056b3;
+  margin-right: 5px;
 }
 .pranning_page:hover{
   opacity: 0.5;
 }
+.pranning_page,
+.good_btn,
+.commen_count{
+  margin-right:8px;
+}
+
 
 /* 参加表明 */
 
