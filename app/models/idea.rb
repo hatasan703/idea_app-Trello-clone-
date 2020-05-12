@@ -10,10 +10,13 @@ class Idea < ApplicationRecord
   has_many :memos, ->{ order(position: :asc)  }, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :idea_members, dependent: :destroy
+  has_many :users, through: :idea_members
   has_one :plan, dependent: :destroy
 
   scope :sorted, ->{ order(position: :asc)  }
   validates :content, presence: true
+
   def create_news_query
     words = URI.escape("#{self.content}")
     uri = URI.parse("https://jlp.yahooapis.jp/KeyphraseService/V1/extract?appid=dj00aiZpPWMwNFNqT2g0NGlNRiZzPWNvbnN1bWVyc2VjcmV0Jng9MzI-&sentence=#{words}&output=json")

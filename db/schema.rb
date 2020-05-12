@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_04_062339) do
+ActiveRecord::Schema.define(version: 2020_05_11_052039) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
@@ -42,6 +42,15 @@ ActiveRecord::Schema.define(version: 2020_05_04_062339) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "idea_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "idea_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["idea_id"], name: "index_idea_members_on_idea_id"
+    t.index ["user_id"], name: "index_idea_members_on_user_id"
   end
 
   create_table "ideas", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -178,6 +187,8 @@ ActiveRecord::Schema.define(version: 2020_05_04_062339) do
   add_foreign_key "comments", "users"
   add_foreign_key "employees", "companies"
   add_foreign_key "employees", "users"
+  add_foreign_key "idea_members", "ideas"
+  add_foreign_key "idea_members", "users"
   add_foreign_key "ideas", "companies"
   add_foreign_key "ideas", "users"
   add_foreign_key "inviting_managements", "companies"

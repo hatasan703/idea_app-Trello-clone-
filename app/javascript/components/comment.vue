@@ -11,11 +11,26 @@
         </ul>
       </div>
 
-
       <div class="idea_title">{{ idea.title }}</div>
       <div class="idea_content">{{ idea.content }}</div>
       <div class="idea_action">
         <i v-if='idea.plan' @click="planningPage" class="fa fa-line-chart pranning_page" aria-hidden="true"></i>
+        <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i>
+        <div v-if='joinModal' class="modal-backdrop show"></div>
+        <div v-if='joinModal' @click="closeJoin" class="modal show" style="display: block">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body comment_modal">
+                <li>参加メンバー</li>
+                <h3>チームへの参加表明</h3>
+                  <div v-if="isJoined">参加済みです</div>
+                  <div v-else @click="registerJoin">チームへ参加する</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <div class="count">
           <span v-if="isLiked" @click="deleteLike()">
             <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ count }}
@@ -37,7 +52,7 @@
           </div>
           <div class="comment_content">
             <p>{{comment.content}}
-              <span v-if='user_id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+              <span v-if='currentUser.id == comment.user_id' @click="destroy(comment, $event)" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
             </p>
           </div>
         </div>
@@ -66,9 +81,11 @@ export default {
     return{
       editing: false,
       message: "",
-      user_id: sharedData.user_id,
-      company_admin: sharedData.company_admin,
+      currentUser: sharedData.user,
+      companyAdmin: sharedData.company_admin,
       likeList: [],
+      joinModal: false,
+      joinList: [],
     }
   },
   computed: {
@@ -81,9 +98,14 @@ export default {
       if (this.likeList.length === 0) { return false }
       return Boolean(this.findLikeId())
     },
+    // ログインユーザが既にideaに参加しているかを判定する
+    isJoined() {
+      if (this.joinList.length === 0) { return false }
+      return Boolean(this.findJoinId())
+    },
     // 会社管理者かどうかを判定
     isAdmin() {
-      if (this.company_admin==true) { return true }
+      if (this.companyAdmin==true) { return true }
     },
   },
   // Vueインスタンスの作成・初期化直後に実行される
@@ -92,8 +114,17 @@ export default {
       this.likeList = result
     })
   },
+  created: function() {
+    this.fetchJoinByIdeaId().then(result => {
+      this.joinList = result
+    })
+  },
 
   methods: {
+
+    closeJoin: function(event) {
+      if (event.target.classList.contains("modal")) { this.joinModal = false }
+    },
 
       // アイディア非公開(ideas#update)
     privateAction: function() {
@@ -183,7 +214,7 @@ export default {
     // ログインユーザがいいねしているlikeモデルのidを返す
     findLikeId: function() {
       const like = this.likeList.find((like) => {
-        return (like.user_id === this.user_id)
+        return (like.user_id === this.currentUser.id)
       })
       if (like) { return like.id }
     },
@@ -191,6 +222,30 @@ export default {
 
     planningPage: function() {
       location.href = `/ideas/${this.idea.id}/plans/${this.idea.plan.id}`
+    },
+
+    // idea参加状態(ideas/joins#index)
+    fetchJoinByIdeaId: async function() {
+      const res = await axios.get(`/joins/?idea_id=${this.idea.id}`)
+      if (res.status !== 200) { process.exit() }
+      return res.data
+    },
+
+    // ideaに参加する(ideas/joins#create)
+    registerJoin: async function() {
+      const res = await axios.post('/joins', { idea_id: this.idea.id })
+      if (res.status !== 201) { process.exit() }
+      this.fetchJoinByIdeaId().then(result => {
+        this.joinList = result
+      })
+    },
+
+    // ログインユーザが参加しているしているidea_memberモデルのidを返す
+    findJoinId: function() {
+      const join = this.joinList.find((join) => {
+        return (join.user_id === this.currentUser.id)
+      })
+      if (join) { return join.id }
     },
 
 

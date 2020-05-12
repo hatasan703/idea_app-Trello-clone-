@@ -57,6 +57,7 @@ Rails.application.routes.draw do
         end
       end
     end
+    resources :joins
   end
 
   resources :plans, only: [] do
@@ -65,6 +66,8 @@ Rails.application.routes.draw do
 
   namespace :api, { format: 'json' } do
     resources :likes, only: [:index, :create, :destroy]
+    # resources :joins
+
   end
   resources :profiles
   resources :search_user_profiles, only: [:index, :new]

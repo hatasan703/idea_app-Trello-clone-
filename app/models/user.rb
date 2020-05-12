@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :plan_comments
   has_many :likes, dependent: :destroy
   has_many :members
+  has_many :idea_members, dependent: :destroy
+  has_many :ideas ,through: :idea_members
   has_many :groups ,through: :members
   has_many :employees
   has_many :companies ,through: :employees

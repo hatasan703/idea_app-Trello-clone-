@@ -18,7 +18,7 @@ class Ideas::IdeasController < ApplicationController
 
     #Vueにデータを渡す
     @user = current_user
-    shared_data[:user_id] = @user.try(:id)
+    shared_data[:user] = @user
     shared_data[:company_admin] = @user.employees.find_by(company_id: @company_id).admin
   end
 
@@ -38,9 +38,12 @@ class Ideas::IdeasController < ApplicationController
     # ニュースクエリ取得、保存
     # @idea_content = params[:idea][:content]
     # params[:idea][:query_word] = get_query_word(@idea_content)
+    
     @idea = Idea.new(idea_params)
+    @idea.users << current_user
     respond_to do |format|
       if @idea.save
+        binding.pry
         format.html { redirect_to company_ideas_path(@company_id) }
         format.json { render :show, status: :created }
       else
