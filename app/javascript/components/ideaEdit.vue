@@ -23,10 +23,52 @@
       <div class="idea_action">
         <i @click="newsPage" class="fa fa-newspaper-o" aria-hidden="true"></i>
         <i @click="planningNew" class="fa fa-line-chart" aria-hidden="true"></i>
-        <span class="count">
-          <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ likeCount }}
+      </div>
+      <div class="count">
+        <i class="fa fa-thumbs-up" aria-hidden="true"></i> {{ likeCount }}
+        <span class="comments_count">
           <i @click="commentShow=true" class="fa fa-commenting-o" aria-hidden="true"></i> {{ commentCount }}
+          <div v-if='commentShow' class="modal-backdrop show"></div>
+          <div v-if='commentShow' @click="closeComment" class="modal show" style="display: block">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body comment_modal">
+                  <h3>コメント一覧</h3>
+                  <div v-for="comment in idea.comments" :key="comment.id" class="comment_card">
+                    <div class="comments">
+                      <div class="user_icon">
+                        {{ comment.user.name }}
+                      </div>
+                      <div class="comment">
+                        <div class="comment_content">
+                          <p>{{comment.content}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </span>
+        <span class="join_count">
+          <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i> {{ idea.users.length }}
+          <div v-if='joinModal' class="modal-backdrop show"></div>
+          <div v-if='joinModal' @click="closeJoin" class="modal show" style="display: block">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <div class="div">参加メンバー</div>
+                  <li v-for="user in idea.users" :key="user.id">
+                    {{ user.name }}/
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </span>
+
+
       </div>
     </div>
 
@@ -84,6 +126,7 @@ export default {
     return {
       editing: false,
       commentShow: false,
+      joinModal: false,
       title: this.idea.title,
       content: this.idea.content,
       open: this.idea.open,
@@ -112,6 +155,9 @@ export default {
     },
     closeComment: function(event) {
       if (event.target.classList.contains("modal")) { this.commentShow = false }
+    },
+    closeJoin: function(event) {
+      if (event.target.classList.contains("modal")) { this.joinModal = false }
     },
     
 
@@ -221,7 +267,7 @@ export default {
 
 .idea_card{
   display: inline-block;
-  min-width: 230px;
+  // min-width: 230px;
 }
 
 .idea_title{
@@ -234,12 +280,8 @@ export default {
 }
 
 .idea_action{
-  margin: 5px 0;
-}
-
-.count{
-margin-left: 40%;
-font-size: 15px;
+  text-align: right;
+  margin-right: 15px;
 }
 
 .content_form{
@@ -344,6 +386,10 @@ font-size: 15px;
 .comment_content p {
   margin: 0;
   padding: 0;
+}
+
+.count{
+  margin-bottom: 10px;
 }
 
 

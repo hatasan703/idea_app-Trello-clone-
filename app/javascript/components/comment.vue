@@ -27,24 +27,25 @@
         </span>
         <span class="join_count">
           <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i> {{ joinList.length }}
-        </span>
-        <div v-if='joinModal' class="modal-backdrop show"></div>
-        <div v-if='joinModal' @click="closeJoin" class="modal show" style="display: block">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-body comment_modal">
-                参加メンバー
-                <li v-for="user in idea.users" :key="user.id">
+          <div v-if='joinModal' class="modal-backdrop show"></div>
+          <div v-if='joinModal' @click="closeJoin" class="modal show" style="display: block">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-body">
+                  参加メンバー
+                  <li v-for="user in idea.users" :key="user.id">
                     {{ user.name }}/
                   </li>
-                <div class="join_title">チームへの参加表明</div>
+                  <div class="join_title">チームへの参加表明</div>
                   <div v-if="isJoined" class="join_btn">参加表明済みです</div>
                   <div v-else @click="registerJoin" class="button join_btn">参加</div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </span>
       </div>
+      
       <p v-if='isAdmin' class="idea_user_name"><i class="fa fa-user" aria-hidden="true"></i>{{ idea.user.name }}</p>
     </div>
 
@@ -293,8 +294,11 @@ export default {
 .count,
 .idea_user_name{
   text-align: right;
-  margin-right:10px;
+  margin-right: 15px;
   font-size: 0.8rem;
+}
+.modal-content{
+  text-align: left;
 }
 
 .card-body{
