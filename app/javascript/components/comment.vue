@@ -32,10 +32,10 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-body">
-                  参加メンバー
-                  <li v-for="user in idea.users" :key="user.id">
+                  参加メンバー:
+                  <span v-for="user in idea.users" :key="user.id">
                     {{ user.name }}/
-                  </li>
+                  </span>
                   <div class="join_title">チームへの参加表明</div>
                   <div v-if="isJoined" class="join_btn">参加表明済みです</div>
                   <div v-else @click="registerJoin" class="button join_btn">参加</div>
@@ -244,6 +244,8 @@ export default {
       if (res.status !== 201) { process.exit() }
       this.fetchJoinByIdeaId().then(result => {
         this.joinList = result
+      console.log(this.joinList)
+
       })
     },
 
