@@ -17,6 +17,8 @@ class Idea < ApplicationRecord
   scope :sorted, ->{ order(position: :asc)  }
   scope :filter_by_self, ->(current_user) { where(user_id: current_user.id)  }
   scope :opened, ->{ where(open: true).order(created_at: "DESC")  }
+  scope :filter_by_company, ->(company_id) { where(company_id: company_id)  }
+
   
   validates :content, presence: true
 

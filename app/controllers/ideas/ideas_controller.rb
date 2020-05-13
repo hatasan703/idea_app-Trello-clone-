@@ -117,5 +117,4 @@ class Ideas::IdeasController < ApplicationController
       redirect_to company_ideas_path(company_id)
     end
   end
-
 end
