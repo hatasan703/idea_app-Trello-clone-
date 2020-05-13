@@ -15,6 +15,9 @@ class Idea < ApplicationRecord
   has_one :plan, dependent: :destroy
 
   scope :sorted, ->{ order(position: :asc)  }
+  scope :filter_by_self, ->(current_user) { where(user_id: current_user.id)  }
+  scope :opened, ->{ where(open: true).order(created_at: "DESC")  }
+  
   validates :content, presence: true
 
   def create_news_query
