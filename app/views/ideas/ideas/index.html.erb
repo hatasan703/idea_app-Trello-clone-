@@ -30,4 +30,4 @@
     </div>
   <% end %>
 </div>
-<%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: [:memos, :likes, :comments, :plan]) }%>
+<%= tag.div id: :boards, data: { ideas: @ideas.to_json(include: [:memos, :likes, :plan, :users, { comments: { include: :user } }]) }%>

@@ -18,4 +18,44 @@
       <p class="plan_content"><%= plan.content %></p>
     <% end %>
   </div>
+
+  <h3>コメント一覧</h3>
+  <% @comments.each do |comment| %>
+    <div class="plan_comment">
+      <div class="plan_comment_user">
+        <%= comment.user.name %>
+      </div>
+      <div class="plan_comment_content">
+        <%= comment.content %>
+      </div>
+    </div>
+  <% end %>
+  <%= form_with model: @comment, url: plan_plan_comments_path(@plan) do |f| %>
+    <div class="field">
+      <%= f.text_field :content, placeholder: 'コメント' %><br>
+    </div>
+    <div class="actions">
+      <%= f.submit "送信" %>
+    </div>
+  <% end %>
 </div>
+
+<style>
+
+.plan_comment{
+  margin: 10px auto;
+  width: 50%;
+  
+}
+.plan_comment{
+  display: flex;
+}
+.plan_comment_user{
+  margin-right: 5px;
+}
+.plan_comment_content{
+  width: 350px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+</style>

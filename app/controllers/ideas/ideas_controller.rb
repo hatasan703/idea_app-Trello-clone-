@@ -6,19 +6,19 @@ class Ideas::IdeasController < ApplicationController
 
   def index
     @company = Company.find(@company_id)
-    @ideas = @company.ideas.where(user_id: current_user.id).sorted
+    @ideas = @company.ideas.filter_by_self(current_user).sorted
     @employees = @company.users
     @admin = current_user.employees.find_by(company_id: @company.id).admin
   end
 
   def public
     @company = Company.find(@company_id)
-    @ideas = @company.ideas.where(open: true).order(created_at: "DESC")
+    @ideas = @company.ideas.opened
     @admin = current_user.employees.find_by(company_id: @company.id).admin
 
     #Vueにデータを渡す
     @user = current_user
-    shared_data[:user_id] = @user.try(:id)
+    shared_data[:user] = @user
     shared_data[:company_admin] = @user.employees.find_by(company_id: @company_id).admin
   end
 
@@ -38,7 +38,9 @@ class Ideas::IdeasController < ApplicationController
     # ニュースクエリ取得、保存
     # @idea_content = params[:idea][:content]
     # params[:idea][:query_word] = get_query_word(@idea_content)
+    
     @idea = Idea.new(idea_params)
+    @idea.users << current_user
     respond_to do |format|
       if @idea.save
         format.html { redirect_to company_ideas_path(@company_id) }
@@ -92,8 +94,17 @@ class Ideas::IdeasController < ApplicationController
 
   private
   def idea_params
-    params.require(:idea).permit(:title, :content, :position, :open, :query_word)
-    .merge(user_id: current_user.id, company_id: params[:company_id])
+    params.require(:idea).permit(
+      :title, 
+      :content, 
+      :position, 
+      :open, 
+      :query_word
+      )
+    .merge(
+      user_id: current_user.id, 
+      company_id: params[:company_id]
+      )
   end
 
   def set_idea
@@ -106,5 +117,4 @@ class Ideas::IdeasController < ApplicationController
       redirect_to company_ideas_path(company_id)
     end
   end
-
 end

@@ -1,6 +1,6 @@
 class Ideas::CommentsController < ApplicationController
 
-  before_action :set_comment, only: [:destroy]
+  before_action :set_comment, only: [:create, :destroy]
   before_action :is_matched_user?, only: [:destroy]
 
   
@@ -35,7 +35,7 @@ class Ideas::CommentsController < ApplicationController
   end
 
   def set_comment
-    @comment = Comment.find(params[:id])
+    @comment = Comment.find(params[:id]) if params[:id]
     @company_id = Idea.find(params[:idea_id]).company_id
   end
 

@@ -6,12 +6,13 @@
     <draggable v-model="idea.memos" :options="{group: 'memos'}" class="dragArea" @change="memoMoved">
       <memo v-for="memo in idea.memos" :key="memo.id" :memo="memo" :idea='idea'></memo>
     </draggable>
-
-    <a v-if="!editing" v-on:click="startEditing"><i class="fa fa-plus-circle" aria-hidden="true"></i> メモを追加</a>
+    <i v-if="!editing" v-on:click="startEditing" class="fa fa-plus-circle" aria-hidden="true">
+      メモを追加
+    </i> 
     <textarea v-if="editing" ref="message" v-model="message" class="form-control mb-1 memo_form"></textarea>
     <button v-if="editing" v-on:click="submitMessage" class="btn btn-secondary">メモを追加</button>
-    <a v-if="editing" v-on:click="editing=false">キャンセル</a>
-
+    <i v-if="editing" v-on:click="editing=false" class="fa fa-remove" aria-hidden="true"></i>
+    
   </div>
 </template>
 
@@ -91,5 +92,11 @@ export default {
 .dragArea {
   min-height: 10px;
 }
+
+.fa-remove{
+  color: #6b778c;
+  margin: 10px 0 0 5px;
+  font-size: 20px;
+} 
 
 </style>

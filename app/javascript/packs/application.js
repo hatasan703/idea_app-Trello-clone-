@@ -18,6 +18,7 @@
 import Vue from 'vue/dist/vue.esm'
 import App from '../app.vue'
 import IdeaPublic from '../components/ideaPublic.vue'
+// import Comment from '../components/comment.vue'
 
 window.store = {}
 
@@ -41,9 +42,8 @@ document.addEventListener("turbolinks:load", function() {
     const app = new Vue({
       el: element,
       data: window.store,
-      template: "<IdeaPublic :comment_ideas='ideas' />",
+      template: "<IdeaPublic :public_ideas='ideas' />",
       components: { IdeaPublic }
     });
   }
-
 });

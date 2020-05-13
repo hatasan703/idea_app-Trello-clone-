@@ -1,6 +1,6 @@
 <template>
   <div>
-    <comment v-for="idea in ideas" :key="idea.id" :idea="idea" :comment="comment">
+    <comment v-for="idea in ideas" :key="idea.id" :idea="idea">
     </comment>
   </div>
 </template>
@@ -10,14 +10,15 @@ import comment from 'components/comment'
 
 export default {
   components: { comment },
-  props: ["comment_ideas"],
+  props: {
+    public_ideas: '',
+  },
   data: function() {
     return{
-      ideaPublic: this.comment_ideas,
-      ideas: this.comment_ideas,
+      ideaPublic: this.public_ideas,
+      ideas: this.public_ideas,
       editing: false,
       message: "",
-      comment: "",
     }
   },
 
