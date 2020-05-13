@@ -37,7 +37,10 @@
                     {{ user.name }}/
                   </span>
                   <div class="join_title">チームへの参加表明</div>
-                  <div v-if="isJoined" class="join_btn">参加表明済みです</div>
+                  <div v-if="isJoined">
+                    <li v-if="isJoined" class="join_btn">参加表明済みです</li>
+                    <li @click="deleteJoin" class="delete_join_btn">参加を取り消す</li>
+                  </div>
                   <div v-else @click="registerJoin" class="button join_btn">参加</div>
                 </div>
               </div>
@@ -249,6 +252,14 @@ export default {
       })
     },
 
+     // ideasへの参加を取り消す(ideas/joins#destroy)
+    deleteJoin: async function() {
+      const joinId = this.findJoinId()
+      const res = await axios.delete(`/joins/${joinId}`)
+      if (res.status !== 200) { process.exit() }
+      this.joinList = this.joinList.filter(n => n.id !== joinId)
+    },
+
     // ログインユーザが参加しているしているidea_memberモデルのidを返す
     findJoinId: function() {
       const join = this.joinList.find((join) => {
@@ -256,6 +267,7 @@ export default {
       })
       if (join) { return join.id }
     },
+    
 
 
   }
@@ -345,6 +357,20 @@ export default {
 .join_btn:hover{
   opacity: 0.5;
 }
+
+.delete_join_btn{
+  margin-top: 10px;
+  text-align: right;
+  border:1px solid#172B4D;
+  border-radius: 0.3rem;
+  margin-left: 81%;
+  font-size: 12px;
+  cursor: pointer;
+}
+.delete_join_btn:hover{
+  opacity: 0.5;
+}
+
 .button {
   width: 100px;
   margin: 0 auto;

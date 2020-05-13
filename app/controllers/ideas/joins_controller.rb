@@ -16,6 +16,8 @@ class Ideas::JoinsController < ApplicationController
   end
 
   def destroy
+    current_user.idea_members.find(params[:id]).destroy!
+    head :ok
   end
 
   private
