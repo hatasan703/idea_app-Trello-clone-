@@ -54,7 +54,7 @@
           </div>
         </span>
         <span class="join_count">
-          <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i> {{ idea.users.length }}
+          <i @click="joinModal=true" class="fa fa-handshake-o" aria-hidden="true"></i> {{ joinUserCount }}
           <div v-if='joinModal' class="modal-backdrop show"></div>
           <div v-if='joinModal' @click="closeJoin" class="modal show" style="display: block">
             <div class="modal-dialog">
@@ -132,6 +132,7 @@ export default {
       title: this.idea.title,
       content: this.idea.content,
       open: this.idea.open,
+      joinUserCount: this.idea.users.length,
     }
   },
 
