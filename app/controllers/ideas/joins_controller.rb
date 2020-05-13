@@ -2,8 +2,7 @@ class Ideas::JoinsController < ApplicationController
   before_action :set_idea_id
 
   def index
-    render json: IdeaMember.where(idea_id: @idea_id).select(:id, :user_id, :idea_id) if @idea_id
-    # 後で修正
+    render json: IdeaMember.filter_by_idea(@idea_id).select(:id, :user_id, :idea_id)
   end
   def create
     @company = Idea.find(@idea_id).company
