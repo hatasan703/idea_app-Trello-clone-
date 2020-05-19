@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if @user.companies.length == 1
+    if current_user.companies.length == 1
       company_id = @user.companies.first.id
       company_ideas_path(company_id)
     else
