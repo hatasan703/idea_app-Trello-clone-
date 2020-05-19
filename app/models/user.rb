@@ -16,6 +16,9 @@ class User < ApplicationRecord
   has_many :employees
   has_many :companies ,through: :employees
   has_one :profile
+  has_many :messages, dependent: :destroy
+  has_many :entries, dependent: :destroy
+  
   accepts_nested_attributes_for :profile
 
   attr_accessor :invitation_instructions

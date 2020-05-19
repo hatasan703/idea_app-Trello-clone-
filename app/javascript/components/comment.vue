@@ -55,7 +55,7 @@
     <div v-for="comment in idea.comments" :key="comment.id" class="comment_card">
       <div class="comments">
         <div class="user_icon">
-          <div class="user_name">
+          <div class="user_name" @click="profilePage(comment.user.id)">
             {{ comment.user.name }}
           </div>
         </div>
@@ -233,6 +233,9 @@ export default {
     planningPage: function() {
       location.href = `/ideas/${this.idea.id}/plans/${this.idea.plan.id}`
     },
+    profilePage: function(user_id) {
+      location.href = `/profiles/${user_id}`
+    },
 
     // idea参加状態(ideas/joins#index)
     fetchJoinByIdeaId: async function() {
@@ -390,6 +393,10 @@ export default {
 .user_name{
   font-size: 13px;
   word-wrap: break-word;
+  cursor: pointer;
+}
+.user_name:hover{
+  opacity: 0.5;
 }
 
 .comments .user_icon {

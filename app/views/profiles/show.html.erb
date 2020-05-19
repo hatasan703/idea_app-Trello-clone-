@@ -1,3 +1,16 @@
-<%= @user.name %>さんのプロフィール
-<br>
-作成中
+<h2><%= @user.name %>さんのプロフィール</h2>
+
+<% if @user.id == current_user.id %>
+
+<% else %>
+  <% if @isRoom == true %>
+    <p><a href="/rooms/<%= @roomId %>"><%= @user.name %>さんにDMを送る</a>
+  <% else %>
+    <%= form_with model: @room do |f| %>
+      <%= fields_for @entry do |e| %>
+        <%= e.hidden_field :user_id, :value=> @user.id %>
+      <% end %>
+      <%= f.submit "チャットを始める" %>
+    <% end %>
+  <% end %>
+<% end %>

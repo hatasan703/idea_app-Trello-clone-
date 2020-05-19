@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_11_052039) do
+ActiveRecord::Schema.define(version: 2020_05_18_063024) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 2020_05_11_052039) do
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_employees_on_company_id"
     t.index ["user_id"], name: "index_employees_on_user_id"
+  end
+
+  create_table "entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_entries_on_room_id"
+    t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
   create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -106,6 +115,16 @@ ActiveRecord::Schema.define(version: 2020_05_11_052039) do
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
+  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "room_id"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "plan_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "content", null: false
     t.bigint "user_id", null: false
@@ -157,6 +176,13 @@ ActiveRecord::Schema.define(version: 2020_05_11_052039) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_rooms_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -187,6 +213,8 @@ ActiveRecord::Schema.define(version: 2020_05_11_052039) do
   add_foreign_key "comments", "users"
   add_foreign_key "employees", "companies"
   add_foreign_key "employees", "users"
+  add_foreign_key "entries", "rooms"
+  add_foreign_key "entries", "users"
   add_foreign_key "idea_members", "ideas"
   add_foreign_key "idea_members", "users"
   add_foreign_key "ideas", "companies"
@@ -196,6 +224,8 @@ ActiveRecord::Schema.define(version: 2020_05_11_052039) do
   add_foreign_key "likes", "users"
   add_foreign_key "memos", "ideas"
   add_foreign_key "memos", "users"
+  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
   add_foreign_key "plan_comments", "plans"
   add_foreign_key "plan_comments", "users"
   add_foreign_key "plan_contents", "plan_questions"
@@ -204,4 +234,5 @@ ActiveRecord::Schema.define(version: 2020_05_11_052039) do
   add_foreign_key "plans", "ideas"
   add_foreign_key "plans", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "rooms", "users"
 end

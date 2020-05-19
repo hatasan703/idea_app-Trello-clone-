@@ -70,4 +70,7 @@ Rails.application.routes.draw do
   resources :profiles
   resources :search_user_profiles, only: [:index, :new]
 
+  resources :messages, only: :create
+  resources :rooms, only: [:create, :show, :index]
+
 end
