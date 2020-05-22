@@ -397,6 +397,7 @@ export default {
 }
 .user_name:hover{
   opacity: 0.5;
+  background: #a8aab1;
 }
 
 .comments .user_icon {
