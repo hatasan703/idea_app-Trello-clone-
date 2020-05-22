@@ -1,7 +1,10 @@
 <h2><%= @user.name %>さんのプロフィール</h2>
 
+<h4>メッセージ送受信履歴</h4>
 <% if @user.id == current_user.id %>
-
+  <% @currentUserEntry.each do |entry| %>
+    <%= link_to "#{room_user_name(entry)}さんとのメッセージ", room_path(entry.room_id) %>
+  <% end %>
 <% else %>
   <% if @isRoom == true %>
     <p><a href="/rooms/<%= @roomId %>"><%= @user.name %>さんにDMを送る</a>
