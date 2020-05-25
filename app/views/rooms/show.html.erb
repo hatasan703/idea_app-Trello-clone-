@@ -1,25 +1,75 @@
-<h1>DM</h1>
+<div class="wrapper">
 
-<% @entries.each do |e| %>
-  <% unless current_user.id == e.user.id %>
-    <h5><strong><a href="/profiles/<%= e.user.id %>"><%= e.user.name%>さん</a></strong></h5>
-  <% end %>
-<% end %>
+  <div class="side_content">
+  <div class="header">
+    <div class="header__name">
+      <%= current_user.name %>
+    </div>
+    <ul class="header__icons">
+      <li class="icon_list">
+        <%= fa_icon 'pencil-square-o', class: 'icon' %>
+      </li>
+      <li class="icon_list">
+          <%= fa_icon 'cog', class: 'icon' %>
+      </li>
+    </ul>
+  </div>
+  <div class="groups">
+    <% @room_list.each do |room| %>
+      <div class="group">
+        <div class="group__name">
+          <%= link_to room_user_name(room), room_path(room) %>
+        </div>
+        <div class="group__message">
+          <%= room.messages.last.content %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-<hr>
-<% if @messages.present? %>
-  <% @messages.each do |m| %>
-    <small><a href="/profiles/<%= m.user_id %>"><%= m.user.name %>さん：</a></small>
-    <strong><%= m.content %></strong>
-    <hr>
-  <% end %>
-<% else %>
-  <h3 class="text-center">メッセージはまだありません</h3>
-<% end %>
 
-<%= form_for @message do |f| %>
-  <%= f.text_field :content, :placeholder => "メッセージを入力して下さい" , :size => 70 %>
-  <%= f.hidden_field :room_id, :value => @room.id %>
-  <br>
-  <%= f.submit "送信する" %>
-<% end %>
+</div>
+<div class="main_content">
+  <div class="header">
+    <div class="left-header">
+      <div class="left-header__title">
+        <% @entries.each do |e| %>
+          <% unless current_user.id == e.user.id %>
+            <h5><strong><a href="/profiles/<%= e.user.id %>"><%= e.user.name %>さん</a></strong></h5>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="messages">
+    <% if @messages.present? %>
+      <% @messages.each do |m| %>
+        <div class="message__user-name">
+          <a href="/profiles/<%= m.user_id %>"><%= m.user.name %>さん：</a>
+        </div>
+        <div class="message__date">
+          <%= m.created_at %>
+        </div>
+        <div class="message__user-message">
+          <%= m.content %>
+        </div>
+      <% end %>
+    <% else %>
+      <h3 class="text-center">メッセージはまだありません</h3>
+    <% end %>
+  </div>
+
+  <div class="chat_form">
+    <%= form_for @message do |f| %>
+    <div class="chat_form_message">
+      <%= f.text_field :content, :placeholder => "メッセージを入力して下さい" , :size => 70 %>
+    </div>
+      <%= f.hidden_field :room_id, :value => @room.id %>
+      <%# <br> %>
+      <div class="chat_form_submit">
+        <%= f.submit "送信する" %>
+      </div>
+    <% end %>
+  </div>
+</div>
