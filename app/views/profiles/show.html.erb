@@ -2,8 +2,10 @@
 
 <% if @user.id == current_user.id %>
   <h4>メッセージ送受信履歴</h4>
-  <% @currentUserEntry.each do |entry| %>
-    <%= link_to "#{user_name(entry)}さんとのメッセージ", room_path(entry.room_id) %>
+  <% if @is_colleague.present? %>
+    <% @currentUserEntry.each do |entry| %>
+      <%= link_to "#{user_name(entry)}さんとのメッセージ", room_path(entry.room_id) %><br>
+    <% end %>
   <% end %>
 <% else %>
   <% if @isRoom == true %>
