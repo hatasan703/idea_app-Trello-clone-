@@ -3,7 +3,7 @@
 <% if @user.id == current_user.id %>
   <h4>メッセージ送受信履歴</h4>
   <% @currentUserEntry.each do |entry| %>
-    <%= link_to "#{room_user_name(entry)}さんとのメッセージ", room_path(entry.room_id) %>
+    <%= link_to "#{user_name(entry)}さんとのメッセージ", room_path(entry.room_id) %>
   <% end %>
 <% else %>
   <% if @isRoom == true %>
