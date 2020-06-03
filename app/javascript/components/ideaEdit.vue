@@ -132,7 +132,6 @@ export default {
       title: this.idea.title,
       content: this.idea.content,
       open: this.idea.open,
-      joinUserCount: this.idea.users.length,
     }
   },
 
@@ -144,6 +143,10 @@ export default {
     // コメント数を返す
     commentCount() {
       if (this.idea.comments) {return this.idea.comments.length}
+    },
+    // 参加数を返す
+    joinUserCount() {
+      if (this.idea.users) {return this.idea.users.length}
     },
     // ログインユーザが既にいいねしているかを判定する
     isLiked() {

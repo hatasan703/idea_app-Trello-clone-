@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Pbot2</title>
+    <title>IdeaApp</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -16,7 +16,7 @@
   <body>
   <%= render 'shared/shared_data' %>
     <header class="header">
-      <li class="header_logo"><%= link_to image_tag("logo.svg"), root_path %></li>
+      <li class="header_logo"><%= link_to 'IdeaApp', root_path %></li>
       <li class="header_middle"></li>
         <div class="header_right">
           <% if user_signed_in? %>
