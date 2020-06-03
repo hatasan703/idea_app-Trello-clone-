@@ -91,3 +91,4 @@ gem 'carrierwave'
 gem 'rmagick'
 
 gem 'devise_invitable'
+gem 'rename'
